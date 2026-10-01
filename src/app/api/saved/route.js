@@ -1,10 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-<<<<<<< HEAD
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-=======
 import { authOptions } from '@/lib/auth';
->>>>>>> origin/main
 import dbInit, { SavedProperty } from '@/lib/dbInit';
 
 // GET /api/saved?property_id=5  — check if saved

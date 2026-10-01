@@ -1,199 +1,3 @@
-<<<<<<< HEAD
-// 'use client';
-// import Link          from 'next/link';
-// import { useSession, signOut } from 'next-auth/react';
-// import { usePathname }         from 'next/navigation';
-
-// const C = {
-//   primary:     '#2e5d42',
-//   primaryPale: '#e8f0eb',
-//   accent:      '#c8a96e',
-//   text:        '#1a2e22',
-//   muted:       '#6b7c72',
-//   border:      '#d6ddd8',
-// };
-
-// export default function Navbar() {
-//   const { data: session } = useSession();
-//   const pathname          = usePathname();
-
-//   const navLink = (href, label) => {
-//     const active = pathname === href || pathname.startsWith(href + '?');
-//     return (
-//       <Link
-//         href={href}
-//         style={{
-//           fontSize:      '14px',
-//           fontFamily:    "'Jost', sans-serif",
-//           fontWeight:    active ? '600' : '400',
-//           color:         active ? C.primary : C.muted,
-//           textDecoration:'none',
-//           padding:       '4px 0',
-//           borderBottom:  active ? `2px solid ${C.primary}` : '2px solid transparent',
-//           transition:    'all 0.2s',
-//         }}
-//       >
-//         {label}
-//       </Link>
-//     );
-//   };
-
-//   return (
-//     <>
-//       <style>{`@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Jost:wght@300;400;500;600&display=swap');`}</style>
-
-//       <nav style={{
-//         background:   '#fff',
-//         borderBottom: `1px solid ${C.border}`,
-//         padding:      '0 24px',
-//         position:     'sticky',
-//         top:          0,
-//         zIndex:       100,
-//         boxShadow:    '0 1px 4px rgba(0,0,0,0.06)',
-//       }}>
-//         <div style={{
-//           maxWidth:       '1200px',
-//           margin:         '0 auto',
-//           display:        'flex',
-//           alignItems:     'center',
-//           justifyContent: 'space-between',
-//           height:         '64px',
-//         }}>
-
-//           {/* ── Logo ── */}
-//           <Link href="/" style={{
-//             fontFamily:    "'Marcellus', serif",
-//             fontSize:      '22px',
-//             fontWeight:    '400',
-//             color:         C.primary,
-//             textDecoration:'none',
-//             letterSpacing: '0.02em',
-//           }}>
-//             Estate
-//           </Link>
-
-//           {/* ── Nav Links ── */}
-//           <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
-//             {navLink("/", "Home")}
-//             {navLink('/properties',          'All Properties')}
-//             {navLink('/properties?type=buy',  'Buy')}
-//             {navLink('/properties?type=sell', 'Sell')}
-//             {navLink('/properties?type=rent', 'Rent')}
-//             {navLink("/contact", "Contact")}
-
-//             {/* Admin link — sirf admin ko dikhega */}
-//             {session?.user?.role === 'admin' && (
-//               navLink('/admin', 'Admin')
-//             )}
-//           </div>
-
-//           {/* ── Auth Section ── */}
-//           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-//             {session ? (
-//               <>
-//                 {/* Dashboard link */}
-//                 <Link href="/dashboard" style={{
-//                   display:        'flex',
-//                   alignItems:     'center',
-//                   gap:            '8px',
-//                   padding:        '8px 14px',
-//                   background:     C.primaryPale,
-//                   borderRadius:   '8px',
-//                   textDecoration: 'none',
-//                   fontFamily:     "'Jost', sans-serif",
-//                   fontSize:       '14px',
-//                   fontWeight:     '500',
-//                   color:          C.primary,
-//                   transition:     'all 0.2s',
-//                 }}>
-//                   {/* Avatar circle */}
-//                   <div style={{
-//                     width:          '26px',
-//                     height:         '26px',
-//                     borderRadius:   '50%',
-//                     background:     C.primary,
-//                     color:          '#fff',
-//                     display:        'flex',
-//                     alignItems:     'center',
-//                     justifyContent: 'center',
-//                     fontSize:       '12px',
-//                     fontWeight:     '700',
-//                     flexShrink:     0,
-//                   }}>
-//                     {session.user.name?.charAt(0).toUpperCase()}
-//                   </div>
-//                   {session.user.name?.split(' ')[0]}
-//                 </Link>
-
-//                 {/* Logout */}
-//                 <button
-//                   onClick={() => signOut({ callbackUrl: '/login' })}
-//                   style={{
-//                     padding:     '8px 16px',
-//                     background:  'transparent',
-//                     color:       C.muted,
-//                     border:      `1px solid ${C.border}`,
-//                     borderRadius:'8px',
-//                     fontSize:    '14px',
-//                     fontFamily:  "'Jost', sans-serif",
-//                     fontWeight:  '500',
-//                     cursor:      'pointer',
-//                     transition:  'all 0.2s',
-//                   }}
-//                   onMouseEnter={e => {
-//                     e.currentTarget.style.background    = '#fee2e2';
-//                     e.currentTarget.style.color         = '#dc2626';
-//                     e.currentTarget.style.borderColor   = '#fca5a5';
-//                   }}
-//                   onMouseLeave={e => {
-//                     e.currentTarget.style.background    = 'transparent';
-//                     e.currentTarget.style.color         = C.muted;
-//                     e.currentTarget.style.borderColor   = C.border;
-//                   }}
-//                 >
-//                   Logout
-//                 </button>
-//               </>
-//             ) : (
-//               <>
-//                 <Link href="/login" style={{
-//                   padding:        '8px 18px',
-//                   border:         `1px solid ${C.border}`,
-//                   borderRadius:   '8px',
-//                   fontSize:       '14px',
-//                   fontFamily:     "'Jost', sans-serif",
-//                   fontWeight:     '500',
-//                   color:          C.text,
-//                   textDecoration: 'none',
-//                   transition:     'all 0.2s',
-//                 }}>
-//                   Login
-//                 </Link>
-
-//                 <Link href="/signup" style={{
-//                   padding:        '8px 18px',
-//                   background:     C.primary,
-//                   borderRadius:   '8px',
-//                   fontSize:       '14px',
-//                   fontFamily:     "'Jost', sans-serif",
-//                   fontWeight:     '600',
-//                   color:          '#fff',
-//                   textDecoration: 'none',
-//                   transition:     'all 0.2s',
-//                 }}>
-//                   Sign Up
-//                 </Link>
-//               </>
-//             )}
-//           </div>
-//         </div>
-//       </nav>
-//     </>
-//   );
-// }
-
-=======
->>>>>>> origin/main
 "use client";
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
@@ -216,11 +20,7 @@ const jost = Jost({
 
 const links = [
   { label: "Home", href: "/" },
-<<<<<<< HEAD
-  {label:"About",href:"/about"},
-=======
   { label: "About", href: "/about" },
->>>>>>> origin/main
   { label: "All Properties", href: "/properties" },
   { label: "Buy", href: "/properties?type=buy" },
   { label: "Sell", href: "/properties?type=sell" },
@@ -229,11 +29,6 @@ const links = [
 ];
 
 /* ---------- Logo ---------- */
-<<<<<<< HEAD
-// To use your own image instead, replace the <svg> with:
-// <img src="/images/logo.png" alt="" className="h-9 w-auto" />
-=======
->>>>>>> origin/main
 function Logo() {
   return (
     <Link
@@ -258,11 +53,7 @@ function NavbarInner() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-<<<<<<< HEAD
-  const isAdmin = session?.user?.role === "admin";
-=======
   const isAdmin = session?.user?.role?.toLowerCase() === "admin";
->>>>>>> origin/main
   const allLinks = isAdmin
     ? [...links, { label: "Admin", href: "/admin" }]
     : links;
@@ -306,24 +97,13 @@ function NavbarInner() {
     };
   }, [open]);
 
-<<<<<<< HEAD
-
-          {/* ── Nav Links ── */}
-
-         
-=======
->>>>>>> origin/main
   const focusRing =
     "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#52685B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf9f6]";
 
   const logoutBtn = (extra = "") => (
     <button
       type="button"
-<<<<<<< HEAD
-      onClick={() => signOut({ callbackUrl: "/login" })}
-=======
       onClick={() => signOut({ callbackUrl: "/" })}
->>>>>>> origin/main
       className={`inline-flex items-center justify-center gap-2 rounded-lg border border-[#1a2a22]/15 px-4 py-2 text-sm font-medium text-[#52685B] transition hover:border-red-300 hover:bg-red-50 hover:text-red-600 ${focusRing} ${extra}`}
     >
       <FiLogOut size={15} aria-hidden="true" />
@@ -333,11 +113,7 @@ function NavbarInner() {
 
   const dashboardChip = (extra = "") => (
     <Link
-<<<<<<< HEAD
-      href="/dashboard"
-=======
       href={isAdmin ? "/admin" : "/dashboard"}
->>>>>>> origin/main
       className={`inline-flex items-center gap-2 rounded-lg bg-[#f3f0E8] px-3.5 py-2 text-sm font-medium text-[#1a2a22] transition hover:bg-[#1a2a22]/10 ${focusRing} ${extra}`}
     >
       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1a2a22] text-xs font-bold text-[#faf9f6]">
@@ -347,27 +123,6 @@ function NavbarInner() {
     </Link>
   );
 
-<<<<<<< HEAD
-  const loginBtn = (extra = "") => (
-    <Link
-      href="/login"
-      className={`inline-flex items-center justify-center rounded-lg border border-[#1a2a22]/20 px-5 py-2 text-sm font-medium text-[#1a2a22] transition hover:border-[#1a2a22] hover:bg-[#1a2a22] hover:text-[#faf9f6] ${focusRing} ${extra}`}
-    >
-      Login
-    </Link>
-  );
-
-  const signupBtn = (extra = "") => (
-    <Link
-      href="/signup"
-      className={`inline-flex items-center justify-center rounded-lg bg-[#1a2a22] px-5 py-2 text-sm font-semibold text-[#faf9f6] transition hover:bg-[#52685B] ${focusRing} ${extra}`}
-    >
-      Sign Up
-    </Link>
-  );
-
-=======
->>>>>>> origin/main
   return (
     <header
       className={`${jost.className} sticky top-0 z-50 border-b border-[#1a2a22]/10 bg-[#faf9f6]/95 backdrop-blur transition-shadow ${
@@ -402,27 +157,13 @@ function NavbarInner() {
           })}
         </ul>
 
-<<<<<<< HEAD
-        {/* Desktop auth */}
-        <div className="hidden items-center gap-2.5 lg:flex">
-          {session ? (
-=======
         {/* Desktop auth (sirf logged-in user/admin ke liye) */}
         <div className="hidden items-center gap-2.5 lg:flex">
           {session && (
->>>>>>> origin/main
             <>
               {dashboardChip("max-w-[160px]")}
               {logoutBtn()}
             </>
-<<<<<<< HEAD
-          ) : (
-            <>
-              {loginBtn()}
-              {signupBtn()}
-            </>
-=======
->>>>>>> origin/main
           )}
         </div>
 
@@ -491,31 +232,16 @@ function NavbarInner() {
                 })}
               </ul>
 
-<<<<<<< HEAD
-              <div className="mx-auto max-w-7xl border-t border-[#1a2a22]/10 px-4 pb-6 pt-4 sm:px-6">
-                {session ? (
-=======
               {session && (
                 <div className="mx-auto max-w-7xl border-t border-[#1a2a22]/10 px-4 pb-6 pt-4 sm:px-6">
->>>>>>> origin/main
                   <div className="flex flex-col gap-3 sm:flex-row">
                     {dashboardChip("flex-1 justify-center py-3")}
                     {logoutBtn("flex-1 py-3")}
                   </div>
-<<<<<<< HEAD
-                ) : (
-                  <div className="grid grid-cols-2 gap-3">
-                    {loginBtn("py-3")}
-                    {signupBtn("py-3")}
-                  </div>
-                )}
-              </div>
-=======
                 </div>
               )}
 
               {!session && <div className="pb-4" />}
->>>>>>> origin/main
             </motion.div>
           </>
         )}
@@ -524,10 +250,6 @@ function NavbarInner() {
   );
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
 /* useSearchParams needs a Suspense boundary in the App Router */
 export default function Navbar() {
   return (
@@ -539,8 +261,4 @@ export default function Navbar() {
       <NavbarInner />
     </Suspense>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/main

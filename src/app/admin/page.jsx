@@ -10,13 +10,8 @@ import {
   Building2,
   Inbox,
   Plus,
-<<<<<<< HEAD
-  UserCog,
-  Users,
-=======
   CheckCircle2,
   Tag,
->>>>>>> origin/main
 } from 'lucide-react';
 
 const marcellus = Marcellus({
@@ -64,12 +59,8 @@ export default function AdminDashboard() {
   const reduce = useReducedMotion();
   const [stats, setStats] = useState({
     properties: 0,
-<<<<<<< HEAD
-    agents: 0,
-=======
     available: 0,
     sold: 0,
->>>>>>> origin/main
     inquiries: 0,
     users: 0,
     newInquiries: 0,
@@ -88,21 +79,6 @@ export default function AdminDashboard() {
       .finally(() => setLoading(false));
   }, []);
 
-<<<<<<< HEAD
-  // NOTE: hrefs apne admin routes ke hisaab se badal lena
-  const cards = [
-    { label: 'Properties', key: 'properties', icon: Building2, href: '/admin/properties' },
-    { label: 'Agents', key: 'agents', icon: UserCog, href: '/admin/agents' },
-    { label: 'Inquiries', key: 'inquiries', icon: Inbox, href: '/admin/inquiries', badge: stats.newInquiries },
-    { label: 'Users', key: 'users', icon: Users, href: '/admin/users' },
-  ];
-
-  const actions = [
-    { label: 'Add a property', href: '/admin/properties', icon: Plus },
-    { label: 'Review inquiries', href: '/admin/inquiries', icon: Inbox },
-    { label: 'Manage agents', href: '/admin/agents', icon: UserCog },
-    // { label: 'Manage users', href: '/admin/users', icon: Users },
-=======
   const cards = [
     { label: 'Total properties', key: 'properties', icon: Building2, href: '/admin/properties' },
     { label: 'Available', key: 'available', icon: CheckCircle2, href: '/admin/properties' },
@@ -114,7 +90,6 @@ export default function AdminDashboard() {
     { label: 'Add a property', href: '/admin/properties/add', icon: Plus },
     { label: 'Manage properties', href: '/admin/properties', icon: Building2 },
     { label: 'Review inquiries', href: '/admin/inquiries', icon: Inbox },
->>>>>>> origin/main
   ];
 
   const enter = (delay = 0) => ({
@@ -130,11 +105,7 @@ export default function AdminDashboard() {
         <h1 className="text-3xl leading-tight sm:text-4xl">Dashboard</h1>
         <span aria-hidden="true" className={`mt-4 block h-[3px] w-14 rounded-full ${goldBg}`} />
         <p className="mt-4 font-sans text-sm text-[#52685B]">
-<<<<<<< HEAD
-          A quick look at your listings, team and enquiries.
-=======
           A quick look at your listings and inquiries.
->>>>>>> origin/main
         </p>
       </motion.header>
 

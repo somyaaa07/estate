@@ -3,20 +3,10 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
-<<<<<<< HEAD
-const GOLD_LINE =
-  'linear-gradient(90deg, rgba(226,161,13,0) 0%, #e2a10d 25%, #ffcd39 50%, #e2a10d 75%, rgba(226,161,13,0) 100%)';
-
-const typeColors = {
-  buy:  { bg: '#f3f0E8', text: '#1a2a22' },
-  sell: { bg: 'rgba(255,205,57,0.2)', text: '#a06a00' },
-  rent: { bg: '#e6ebe8', text: '#52685B' },
-=======
 const typeColors = {
   buy:  { bg: '#e8f0eb', text: '#2e5d42' },
   sell: { bg: '#f5edd8', text: '#a07830' },
   rent: { bg: '#dce5f5', text: '#3a5a9c' },
->>>>>>> origin/main
 };
 
 export default function PropertiesPage() {
@@ -46,8 +36,6 @@ const fetchProperties = () => {
 };
   useEffect(() => { fetchProperties(); }, []);
 
-<<<<<<< HEAD
-=======
   const changeStatus = async (id, status) => {
     // optimistic update
     setProperties((prev) => prev.map((p) => (p.id === id ? { ...p, status } : p)));
@@ -64,18 +52,13 @@ const fetchProperties = () => {
     }
   };
 
->>>>>>> origin/main
   const deleteProperty = async (id) => {
     if (!confirm('Delete this property?')) return;
     try {
       const res = await fetch(`/api/admin/properties/${id}`, { method: 'DELETE' });
       const data = await res.json();
       if (res.ok) fetchProperties();
-<<<<<<< HEAD
-      else alert('Delete failed: ' + data.error);
-=======
       else alert('Delete failed: ' + (data.error || data.message));
->>>>>>> origin/main
     } catch (err) {
       alert('Something went wrong');
     }
@@ -95,17 +78,10 @@ const fetchProperties = () => {
       >
         <div>
           <p style={{
-<<<<<<< HEAD
-            fontSize: '11px', color: '#52685B', letterSpacing: '0.25em',
-            textTransform: 'uppercase', fontWeight: '500', marginBottom: '6px',
-          }}>Management</p>
-          <h1 style={{ fontFamily: "'Marcellus', serif", fontSize: '38px', color: '#1a2a22', lineHeight: 1 }}>
-=======
             fontSize: '11px', color: '#2e5d42', letterSpacing: '0.25em',
             textTransform: 'uppercase', fontWeight: '500', marginBottom: '6px',
           }}>Management</p>
           <h1 style={{ fontFamily: "'Marcellus', serif", fontSize: '38px', color: '#1a3628', lineHeight: 1 }}>
->>>>>>> origin/main
             Properties
           </h1>
         </div>
@@ -114,28 +90,16 @@ const fetchProperties = () => {
           <Link href="/admin/properties/add" style={{
             display: 'flex', alignItems: 'center', gap: '8px',
             padding: '12px 22px',
-<<<<<<< HEAD
-            background: '#1a2a22',
-            color: '#faf9f6',
-            border: '1px solid rgba(226,161,13,0.5)',
-=======
             background: '#2e5d42',
             color: '#fafaef',
->>>>>>> origin/main
             borderRadius: '10px',
             textDecoration: 'none',
             fontSize: '13px',
             fontWeight: '500',
             letterSpacing: '0.04em',
-<<<<<<< HEAD
-            boxShadow: '0 4px 16px rgba(26,42,34,0.25)',
-          }}>
-            <span style={{ fontSize: '18px', lineHeight: 1, color: '#ffcd39' }}>+</span>
-=======
             boxShadow: '0 4px 16px rgba(46,93,66,0.25)',
           }}>
             <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span>
->>>>>>> origin/main
             Add Property
           </Link>
         </motion.div>
@@ -147,46 +111,23 @@ const fetchProperties = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15 }}
         style={{
-<<<<<<< HEAD
-          position: 'relative',
-          background: '#fff',
-          borderRadius: '16px',
-          overflow: 'hidden',
-          border: '1px solid #e8e3d3',
-          boxShadow: '0 2px 16px rgba(26,42,34,0.07)',
-        }}
-      >
-        {/* Top gold hairline */}
-        <span aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '2px', background: GOLD_LINE }} />
-
-=======
           background: '#fff',
           borderRadius: '16px',
           overflow: 'hidden',
           boxShadow: '0 2px 16px rgba(26,54,40,0.07)',
         }}
       >
->>>>>>> origin/main
         {/* Table Header */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '2.5fr 1.5fr 1fr 1fr 1fr 1fr',
           padding: '14px 24px',
-<<<<<<< HEAD
-          background: '#f3f0E8',
-          borderBottom: '1px solid #e8e3d3',
-        }}>
-          {['Title', 'Price', 'Type', 'City', 'Status', 'Actions'].map(h => (
-            <span key={h} style={{
-              fontSize: '11px', color: '#52685B', fontWeight: '600',
-=======
           background: '#f3f7f4',
           borderBottom: '1px solid #e4ede6',
         }}>
           {['Title', 'Price', 'Type', 'City', 'Availability', 'Actions'].map(h => (
             <span key={h} style={{
               fontSize: '11px', color: '#2e5d42', fontWeight: '600',
->>>>>>> origin/main
               letterSpacing: '0.15em', textTransform: 'uppercase',
             }}>{h}</span>
           ))}
@@ -196,24 +137,15 @@ const fetchProperties = () => {
           {loading ? (
             <div style={{ padding: '48px', textAlign: 'center' }}>
               <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1.4 }}
-<<<<<<< HEAD
-                style={{ color: '#52685B', fontSize: '14px' }}>
-=======
                 style={{ color: '#8a9e95', fontSize: '14px' }}>
->>>>>>> origin/main
                 Loading properties...
               </motion.div>
             </div>
           ) : properties.length === 0 ? (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
               style={{ padding: '60px', textAlign: 'center' }}>
-<<<<<<< HEAD
-              <div style={{ fontSize: '32px', marginBottom: '12px', opacity: 0.5, color: '#e2a10d' }}>⌂</div>
-              <p style={{ color: '#52685B', fontSize: '14px' }}>No properties listed yet</p>
-=======
               <div style={{ fontSize: '32px', marginBottom: '12px', opacity: 0.3 }}>⌂</div>
               <p style={{ color: '#8a9e95', fontSize: '14px' }}>No properties listed yet</p>
->>>>>>> origin/main
             </motion.div>
           ) : (
             properties.map((p, i) => {
@@ -225,35 +157,20 @@ const fetchProperties = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 16 }}
                   transition={{ delay: i * 0.05 }}
-<<<<<<< HEAD
-                  whileHover={{ background: '#faf9f6' }}
-=======
                   whileHover={{ background: '#fafafa' }}
->>>>>>> origin/main
                   style={{
                     display: 'grid',
                     gridTemplateColumns: '2.5fr 1.5fr 1fr 1fr 1fr 1fr',
                     padding: '16px 24px',
-<<<<<<< HEAD
-                    borderBottom: '1px solid #f3f0E8',
-=======
                     borderBottom: '1px solid #f3f7f4',
->>>>>>> origin/main
                     alignItems: 'center',
                   }}
                 >
                   {/* Title */}
-<<<<<<< HEAD
-                  <span style={{ fontSize: '14px', fontWeight: '500', color: '#1a2a22' }}>{p.title}</span>
-
-                  {/* Price */}
-                  <span style={{ fontSize: '13px', color: '#a06a00', fontWeight: '600' }}>
-=======
                   <span style={{ fontSize: '14px', fontWeight: '500', color: '#1a3628' }}>{p.title}</span>
 
                   {/* Price */}
                   <span style={{ fontSize: '13px', color: '#2e5d42', fontWeight: '600' }}>
->>>>>>> origin/main
                     ₹{Number(p.price).toLocaleString('en-IN')}
                   </span>
 
@@ -273,24 +190,6 @@ const fetchProperties = () => {
                   </span>
 
                   {/* City */}
-<<<<<<< HEAD
-                  <span style={{ fontSize: '13px', color: '#52685B' }}>{p.city}</span>
-
-                  {/* Status */}
-                  <span style={{
-                    display: 'inline-flex',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '11px',
-                    fontWeight: '500',
-                    background: p.status === 'active' ? '#f3f0E8' : '#fef0f0',
-                    color: p.status === 'active' ? '#1a2a22' : '#c0392b',
-                    border: p.status === 'active' ? '1px solid rgba(226,161,13,0.5)' : '1px solid transparent',
-                    width: 'fit-content',
-                  }}>
-                    {p.status}
-                  </span>
-=======
                   <span style={{ fontSize: '13px', color: '#4a6358' }}>{p.city}</span>
 
                   {/* Status (Available / Sold) — seedha yahin se badal sakte ho */}
@@ -315,27 +214,17 @@ const fetchProperties = () => {
                     <option value="sold">Sold</option>
                     <option value="rented">Rented</option>
                   </select>
->>>>>>> origin/main
 
                   {/* Actions */}
                   <div style={{ display: 'flex', gap: '8px' }}>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                       <Link href={`/admin/properties/edit/${p.id}`} style={{
                         padding: '6px 14px',
-<<<<<<< HEAD
-                        background: '#f3f0E8',
-                        border: '1px solid #e8e3d3',
-                        borderRadius: '8px',
-                        fontSize: '12px',
-                        textDecoration: 'none',
-                        color: '#1a2a22',
-=======
                         background: '#f3f7f4',
                         borderRadius: '8px',
                         fontSize: '12px',
                         textDecoration: 'none',
                         color: '#2e5d42',
->>>>>>> origin/main
                         fontWeight: '500',
                       }}>
                         Edit
@@ -369,17 +258,10 @@ const fetchProperties = () => {
         {properties.length > 0 && (
           <div style={{
             padding: '12px 24px',
-<<<<<<< HEAD
-            background: '#faf9f6',
-            borderTop: '1px solid #e8e3d3',
-          }}>
-            <p style={{ fontSize: '12px', color: '#52685B' }}>
-=======
             background: '#f9faf9',
             borderTop: '1px solid #e4ede6',
           }}>
             <p style={{ fontSize: '12px', color: '#8a9e95' }}>
->>>>>>> origin/main
               {properties.length} propert{properties.length !== 1 ? 'ies' : 'y'} total
             </p>
           </div>

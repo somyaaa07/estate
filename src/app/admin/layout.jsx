@@ -16,10 +16,6 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
-<<<<<<< HEAD
-  UserCog,
-=======
->>>>>>> origin/main
   Building2,
   X,
 } from 'lucide-react';
@@ -44,10 +40,6 @@ const navLinks = [
     label: 'Properties',
     icon: Building2,
   },
-<<<<<<< HEAD
-  
-=======
->>>>>>> origin/main
   {
     href: '/admin/inquiries',
     label: 'Inquiries',
@@ -257,12 +249,8 @@ export default function AdminLayout({
     exclude karna hai.
   */
   const isAdminLoginPage =
-<<<<<<< HEAD
-    pathname === '/admin/login';
-=======
     pathname === '/admin/login' ||
     pathname === '/admin/signup';
->>>>>>> origin/main
 
   /*
     Role ko lowercase kar rahe hain taaki
@@ -276,44 +264,6 @@ export default function AdminLayout({
     userRole === 'admin';
 
   /* =============================================================
-<<<<<<< HEAD
-     DEBUG
-  ============================================================= */
-
-  useEffect(() => {
-    console.log(
-      '===== ADMIN LAYOUT ====='
-    );
-
-    console.log('PATHNAME:', pathname);
-    console.log('STATUS:', status);
-    console.log(
-      'SESSION:',
-      session
-    );
-    console.log(
-      'ROLE:',
-      session?.user?.role
-    );
-    console.log(
-      'IS ADMIN:',
-      isAdmin
-    );
-    console.log(
-      'ADMIN LOGIN PAGE:',
-      isAdminLoginPage
-    );
-  }, [
-    pathname,
-    status,
-    session,
-    isAdmin,
-    isAdminLoginPage,
-  ]);
-
-  /* =============================================================
-=======
->>>>>>> origin/main
      AUTH REDIRECT
   ============================================================= */
 

@@ -1,61 +1,12 @@
 import { NextResponse } from 'next/server';
-<<<<<<< HEAD
-import dbInit, { Property, PropertyImage ,Agent} from '@/lib/dbInit'; // ✅ named imports
-
-=======
 import dbInit, { Property, PropertyImage } from '@/lib/dbInit';
 
 // GET /api/properties/:id — PUBLIC
->>>>>>> origin/main
 export async function GET(req, { params }) {
   const { id } = await params;
   await dbInit();
 
   const property = await Property.findByPk(id, {
-<<<<<<< HEAD
-    include: [{ model: PropertyImage, as: 'images', order: [['order', 'ASC']] }, {
-        model: Agent,
-        as: 'agent', 
-      },], 
-  });
-
-  if (!property) return NextResponse.json({ error: 'Didnt find property' }, { status: 404 });
-  return NextResponse.json(property);
-}
-
-export async function PUT(req, { params }) {
-  const { id } = await params;
-  await dbInit();
-  const body = await req.json();
-  await Property.update(body, { where: { id } });
-
- 
-  const property = await Property.findByPk(id, {
-    include: [{ model: PropertyImage, as: 'images', order: [['order', 'ASC']] }],
-  });
-
-  return NextResponse.json(property);
-}
-
-export async function DELETE(req, { params }) {
-  try {
-    const { id } = await params;
-    await dbInit();
-
-    const property = await Property.findByPk(id);
-    if (!property) {
-      return NextResponse.json({ error: 'Didnt find property' }, { status: 404 });
-    }
-
-    await property.destroy();
-    return NextResponse.json({ message: 'Property deleted' });
-
-  } catch (error) {
-    console.error('Delete error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
-=======
     include: [{ model: PropertyImage, as: 'images' }],
     order: [[{ model: PropertyImage, as: 'images' }, 'order', 'ASC']],
   });
@@ -66,4 +17,3 @@ export async function DELETE(req, { params }) {
 
   return NextResponse.json(property);
 }
->>>>>>> origin/main

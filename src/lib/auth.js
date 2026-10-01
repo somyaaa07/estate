@@ -53,11 +53,7 @@ export const authOptions = {
       return session;
     },
   },
-<<<<<<< HEAD
-  pages: { signIn: '/admin/login' }, // ✅ yahi fix hai
-=======
   pages: { signIn: '/admin/login' },
->>>>>>> origin/main
   session: { strategy: 'jwt' },
   secret: process.env.NEXTAUTH_SECRET,
 };
@@ -89,9 +85,6 @@ export async function requireAdmin() {
   }
 
   return { session };
-<<<<<<< HEAD
-}
-=======
 }
 
 /*
@@ -112,4 +105,3 @@ export async function getAdminEmails() {
 
   return [...new Set([...admins.map((a) => a.email), ...extra])];
 }
->>>>>>> origin/main

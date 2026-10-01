@@ -1,8 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '@/lib/db';
 
-<<<<<<< HEAD
-=======
 // Array fields ko DB mein JSON string ke roop mein rakhte hain (MySQL/MariaDB dono pe safe)
 const listField = (name) => ({
   type: DataTypes.TEXT('long'),
@@ -23,7 +21,6 @@ const listField = (name) => ({
   },
 });
 
->>>>>>> origin/main
 const Property = sequelize.define('Property', {
   id:            { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
   title:         { type: DataTypes.STRING(200), allowNull: false },
@@ -36,11 +33,6 @@ const Property = sequelize.define('Property', {
   area:          { type: DataTypes.DECIMAL(10, 2) },
   bedrooms:      { type: DataTypes.INTEGER },
   bathrooms:     { type: DataTypes.INTEGER },
-<<<<<<< HEAD
-  agent_id:      { type: DataTypes.INTEGER },
-  user_id:       { type: DataTypes.INTEGER },        // ← nayi field
-  contact_email: { type: DataTypes.STRING(100) },    // ← nayi field
-=======
   user_id:       { type: DataTypes.INTEGER },        // admin jisne list kiya
   contact_email: { type: DataTypes.STRING(100) },    // admin ka email
 
@@ -58,7 +50,6 @@ const Property = sequelize.define('Property', {
   construction_type:   { type: DataTypes.STRING(40) },
 
   // 'active' = Available
->>>>>>> origin/main
   status:        { type: DataTypes.ENUM('active', 'sold', 'rented'), defaultValue: 'active' },
 }, {
   tableName:  'properties',
@@ -67,8 +58,4 @@ const Property = sequelize.define('Property', {
   updatedAt:  false,
 });
 
-<<<<<<< HEAD
 export default Property;
-=======
-export default Property;
->>>>>>> origin/main

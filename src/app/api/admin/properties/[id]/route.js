@@ -1,35 +1,4 @@
 import { NextResponse } from 'next/server';
-<<<<<<< HEAD
-import dbInit, { Property, PropertyImage } from '@/lib/dbInit'; // ✅ named imports
-
-export async function GET(req, { params }) {
-  const { id } = await params;
-  await dbInit();
-
-  const property = await Property.findByPk(id, {
-    include: [{ model: PropertyImage, as: 'images', order: [['order', 'ASC']] }], // ✅ join images
-  });
-
-  if (!property) return NextResponse.json({ error: 'Didnt find property' }, { status: 404 });
-  return NextResponse.json(property);
-}
-
-export async function PUT(req, { params }) {
-  const { id } = await params;
-  await dbInit();
-  const body = await req.json();
-  await Property.update(body, { where: { id } });
-
-  // ✅ Return updated property with images
-  const property = await Property.findByPk(id, {
-    include: [{ model: PropertyImage, as: 'images', order: [['order', 'ASC']] }],
-  });
-
-  return NextResponse.json(property);
-}
-
-export async function DELETE(req, { params }) {
-=======
 import dbInit, { Property, PropertyImage } from '@/lib/dbInit';
 import { requireAdmin } from '@/lib/auth';
 import { sanitizePropertyInput } from '@/lib/propertyOptions';
@@ -94,26 +63,12 @@ export async function DELETE(req, { params }) {
   const { error } = await requireAdmin();
   if (error) return error;
 
->>>>>>> origin/main
   try {
     const { id } = await params;
     await dbInit();
 
     const property = await Property.findByPk(id);
     if (!property) {
-<<<<<<< HEAD
-      return NextResponse.json({ error: 'Didnt find property' }, { status: 404 });
-    }
-
-    await property.destroy();
-    return NextResponse.json({ message: 'Property deleted' });
-
-  } catch (error) {
-    console.error('Delete error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
-=======
       return NextResponse.json({ error: 'Property not found' }, { status: 404 });
     }
 
@@ -129,4 +84,3 @@ export async function DELETE(req, { params }) {
     return NextResponse.json({ error: 'Could not delete property.' }, { status: 500 });
   }
 }
->>>>>>> origin/main

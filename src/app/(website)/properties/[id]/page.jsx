@@ -15,14 +15,6 @@ import {
   ChevronRight,
   Heart,
   ImageOff,
-<<<<<<< HEAD
-  Loader2,
-  Mail,
-  MapPin,
-  MessageCircle,
-  Phone,
-  Ruler,
-=======
   Calendar,
   Car,
   Check,
@@ -37,7 +29,6 @@ import {
   Ruler,
   Sofa,
   Sparkles,
->>>>>>> origin/main
   Tag,
   SearchX,
 } from 'lucide-react';
@@ -320,11 +311,7 @@ function InquiryForm({ propertyId }) {
           <CheckCircle2 size={26} aria-hidden="true" />
         </span>
         <p className={`${marcellus.className} mt-5 text-2xl text-[#1A2A22]`}>Inquiry sent</p>
-<<<<<<< HEAD
-        <p className="mt-2 text-sm text-[#52685B]">The agent will contact you shortly.</p>
-=======
         <p className="mt-2 text-sm text-[#52685B]">We will contact you shortly.</p>
->>>>>>> origin/main
         <button
           type="button"
           onClick={() => setStatus('idle')}
@@ -341,18 +328,6 @@ function InquiryForm({ propertyId }) {
   return (
     <div className="rounded-3xl border border-[#1A2A22]/10 bg-[#FAF9F6] p-6">
       <h3 className={`${marcellus.className} text-xl text-[#1A2A22]`}>Send an inquiry</h3>
-<<<<<<< HEAD
-      {!session && (
-        <p className="mt-1.5 text-[13px] text-[#52685B]">
-          Send as a guest, or{' '}
-          <Link href="/login" className="text-[#1A2A22] underline underline-offset-4">
-            log in
-          </Link>{' '}
-          to use your account.
-        </p>
-      )}
-=======
->>>>>>> origin/main
 
       <form onSubmit={handleSubmit} noValidate className="mt-5 space-y-4">
         <div>
@@ -430,8 +405,6 @@ function Fact({ icon: Icon, label, value }) {
   );
 }
 
-<<<<<<< HEAD
-=======
 function TagSection({ title, icon: Icon, items }) {
   return (
     <div className="mt-8 rounded-3xl border border-[#1A2A22]/10 bg-[#FAF9F6] p-6 sm:p-8">
@@ -452,7 +425,6 @@ function TagSection({ title, icon: Icon, items }) {
   );
 }
 
->>>>>>> origin/main
 function LoadingSkeleton() {
   return (
     <div className="mx-auto grid max-w-7xl animate-pulse gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_380px]">
@@ -502,11 +474,6 @@ export default function PropertyDetailPage() {
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
-<<<<<<< HEAD
-
-  useEffect(() => {
-    fetch(`/api/admin/properties/${id}`)
-=======
   const [options, setOptions] = useState(null);
 
   // Dropdown labels backend se (value -> label mapping)
@@ -519,7 +486,6 @@ export default function PropertyDetailPage() {
 
   useEffect(() => {
     fetch(`/api/properties/${id}`)
->>>>>>> origin/main
       .then((r) => {
         if (r.status === 404) {
           setNotFound(true);
@@ -551,16 +517,6 @@ export default function PropertyDetailPage() {
   const images = property.images || [];
   const isActive = property.status === 'active';
 
-<<<<<<< HEAD
-  const facts = [
-    property.bedrooms && { icon: BedDouble, label: 'Bedrooms', value: property.bedrooms },
-    property.bathrooms && { icon: Bath, label: 'Bathrooms', value: property.bathrooms },
-    property.area && { icon: Ruler, label: 'Area', value: `${property.area} sq ft` },
-    property.property_type && { icon: Building2, label: 'Property type', value: property.property_type },
-    property.type && { icon: Tag, label: 'Listing', value: `For ${property.type}` },
-  ].filter(Boolean);
-
-=======
   // value -> label (backend options se), fallback raw value
   const label = (group, value) =>
     options?.[group]?.find((o) => o.value === value)?.label || value;
@@ -585,7 +541,6 @@ export default function PropertyDetailPage() {
   const amenities = property.amenities || [];
   const landmarks = property.nearby_landmarks || [];
 
->>>>>>> origin/main
   return (
     <div className={shell}>
       <div className="mx-auto max-w-7xl px-5 pb-20 pt-8 sm:px-8">
@@ -618,11 +573,7 @@ export default function PropertyDetailPage() {
                         isActive ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
                       }`}
                     >
-<<<<<<< HEAD
-                      {property.status}
-=======
                       {property.status === 'active' ? 'Available' : property.status}
->>>>>>> origin/main
                     </span>
                   )}
                 </div>
@@ -669,8 +620,6 @@ export default function PropertyDetailPage() {
                 </p>
               </div>
             )}
-<<<<<<< HEAD
-=======
 
             {/* Highlights */}
             {highlights.length > 0 && (
@@ -686,21 +635,16 @@ export default function PropertyDetailPage() {
             {landmarks.length > 0 && (
               <TagSection title="Nearby landmarks" icon={Landmark} items={landmarks} />
             )}
->>>>>>> origin/main
           </div>
 
           {/* ===== RIGHT ===== */}
           <aside className="flex flex-col gap-5 lg:sticky lg:top-24">
-<<<<<<< HEAD
-            <AgentCard agent={property.agent} />
-=======
             {!isActive && (
               <div className="rounded-3xl border border-red-200 bg-red-50 p-5 text-sm text-red-700">
                 This property is currently <strong>{property.status}</strong>. You can still send an
                 inquiry for similar properties.
               </div>
             )}
->>>>>>> origin/main
             <InquiryForm propertyId={id} />
           </aside>
         </div>

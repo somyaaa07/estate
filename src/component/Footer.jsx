@@ -4,15 +4,8 @@ import {
   FiPhone,
   FiMail,
   FiMapPin,
-<<<<<<< HEAD
   FiFacebook,
   FiInstagram,
-=======
-  FiClock,
-  FiFacebook,
-  FiInstagram,
-
->>>>>>> origin/main
   FiYoutube,
   FiArrowUp,
 } from "react-icons/fi";
@@ -39,7 +32,6 @@ const services = [
 ];
 
 const socials = [
-<<<<<<< HEAD
   {
     label: "Facebook",
     icon: FiFacebook,
@@ -55,11 +47,6 @@ const socials = [
     icon: FiYoutube,
     href: "https://www.youtube.com/@Bringo01",
   },
-=======
-  { label: "Facebook", icon: FiFacebook, href: "#" },
-  { label: "Instagram", icon: FiInstagram, href: "#" },
-  { label: "YouTube", icon: FiYoutube, href: "#" },
->>>>>>> origin/main
 ];
 
 const contact = [
@@ -69,16 +56,11 @@ const contact = [
     text: "bringo.realstates@gmail.com",
     href: "mailto:bringo.realstates@gmail.com",
   },
-<<<<<<< HEAD
 
   {
     icon: FiMapPin,
     text: "FF01,FF02 Kaveri City Center,Delta 1.Greater Noida,Gautam Buddha Nagar,UP 201306",
   },
-=======
-  
-  { icon: FiMapPin, text: "FF01,FF02 Kaveri City Center,Delta 1.Greater Noida,Gautam Buddha Nagar,UP 201306" },
->>>>>>> origin/main
 ];
 
 const linkClass =
@@ -142,7 +124,6 @@ export default function Footer() {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-4 -mt-16">
             <Link
-<<<<<<< HEAD
               href="/"
               className="inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ffcd39]"
             >
@@ -152,17 +133,6 @@ export default function Footer() {
                 className="h-40 w-auto object-contain"
               />
             </Link>
-=======
-  href="/"
-  className="inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ffcd39]"
->
-  <img
-    src="/uploads/logo.png"
-    alt="Bingo Real Estate"
-    className="h-40 w-auto object-contain"
-  />
-</Link>
->>>>>>> origin/main
             <p className="-mt-12 max-w-sm text-sm leading-relaxed text-[#f3f0E8]/70">
               Building trusted residential, commercial and investment
               opportunities across Delhi NCR with transparency and care.
@@ -246,17 +216,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[#52685B]/50 py-6 text-center sm:flex-row sm:text-left">
           <p className="text-xs text-[#f3f0E8]/60 sm:text-sm">
-<<<<<<< HEAD
             © {new Date().getFullYear()} Bringo Real Estates. All rights
             reserved.
           </p>
           <div className="flex items-center gap-5 text-xs sm:text-sm">
-=======
-            © {new Date().getFullYear()} Bringo Real Estates. All rights reserved.
-          </p>
-          <div className="flex items-center gap-5 text-xs sm:text-sm">
-            
->>>>>>> origin/main
             <button
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

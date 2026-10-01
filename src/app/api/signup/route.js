@@ -3,16 +3,6 @@ import bcrypt from 'bcryptjs';
 import dbInit from '@/lib/dbInit';
 import User from '@/models/User';
 
-<<<<<<< HEAD
-export async function POST(req) {
-  await dbInit();
-
-  const { name, email, password ,role} = await req.json();
-
-  if (!name || !email || !password) {
-    return NextResponse.json(
-      { error: 'fill all the fields ' },
-=======
 // GET — kya abhi tak koi admin bana hai? (needsSetup = true => first-time register open hai)
 export async function GET() {
   await dbInit();
@@ -40,28 +30,10 @@ export async function POST(req) {
   if (password.length < 8) {
     return NextResponse.json(
       { error: 'Password must be at least 8 characters' },
->>>>>>> origin/main
       { status: 400 }
     );
   }
 
-<<<<<<< HEAD
-  const existing = await User.findOne({ where: { email } });
-
-  if (existing) {
-    return NextResponse.json(
-      { error: 'Email already registered' },
-      { status: 409 }
-    );
-  }
-
-  const hashed = await bcrypt.hash(password, 12);
-
-  await User.create({ name, email, password: hashed , role });
-
-  return NextResponse.json({ message: 'Account Created!' });
-}
-=======
   const cleanEmail = email.trim().toLowerCase();
   const existing = await User.findOne({ where: { email: cleanEmail } });
   const hashed = await bcrypt.hash(password, 12);
@@ -81,4 +53,3 @@ export async function POST(req) {
 
   return NextResponse.json({ message: 'Admin account created!' });
 }
->>>>>>> origin/main

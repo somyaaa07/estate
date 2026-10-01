@@ -163,7 +163,10 @@ export default function Dashboard() {
   const [activeTab,    setActiveTab]    = useState('saved');
   const [saved,        setSaved]        = useState([]);
   const [inquiries,    setInquiries]    = useState([]);
+<<<<<<< HEAD
   const [myProps,      setMyProps]      = useState([]);
+=======
+>>>>>>> origin/main
   const [loading,      setLoading]      = useState(true);
   const [apiErrors,    setApiErrors]    = useState({});
 
@@ -207,6 +210,7 @@ export default function Dashboard() {
         setApiErrors(e => ({ ...e, inquiries: err.message }));
       }
 
+<<<<<<< HEAD
       // ── My Properties ──
       try {
         const r = await fetch('/api/user/properties');
@@ -221,6 +225,8 @@ export default function Dashboard() {
         setApiErrors(e => ({ ...e, myProps: err.message }));
       }
 
+=======
+>>>>>>> origin/main
       setLoading(false);
     };
 
@@ -237,6 +243,7 @@ export default function Dashboard() {
     setSaved(prev => prev.filter(s => s.property?.id !== property_id));
   };
 
+<<<<<<< HEAD
   // Delete my property
   const handleDeleteProperty = async (id) => {
     if (!confirm('Are you sure you want to delete this property?')) return;
@@ -246,6 +253,8 @@ export default function Dashboard() {
     }
   };
 
+=======
+>>>>>>> origin/main
   // ── Loading State ──
   if (status === 'loading' || loading) {
     return (
@@ -298,9 +307,12 @@ export default function Dashboard() {
                   Admin Panel
                 </Link>
               )}
+<<<<<<< HEAD
               <Link href="/dashboard/list-property" style={{ padding: '10px 18px', background: 'rgba(255,255,255,0.15)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '8px', fontSize: '13px', fontWeight: '600', textDecoration: 'none', fontFamily: "'Jost', sans-serif" }}>
                 + List Property
               </Link>
+=======
+>>>>>>> origin/main
               <button
                 onClick={() => signOut({ callbackUrl: '/login' })}
                 style={{ padding: '10px 18px', background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '8px', fontSize: '13px', fontWeight: '600', cursor: 'pointer', fontFamily: "'Jost', sans-serif" }}
@@ -326,10 +338,16 @@ export default function Dashboard() {
           )}
 
           {/* ── Stats ── */}
+<<<<<<< HEAD
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '32px' }}>
             <StatCard value={saved.length}     label="Saved Properties" color={C.primary} />
             <StatCard value={inquiries.length} label="Inquiries Sent"   color={C.accent}  />
             <StatCard value={myProps.length}   label="My Listings"      color="#3b82f6"   />
+=======
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginBottom: '32px' }}>
+            <StatCard value={saved.length}     label="Saved Properties" color={C.primary} />
+            <StatCard value={inquiries.length} label="Inquiries Sent"   color={C.accent}  />
+>>>>>>> origin/main
           </div>
 
           {/* ── Tabs ── */}
@@ -340,9 +358,12 @@ export default function Dashboard() {
             <TabBtn active={activeTab === 'inquiries'}      onClick={() => setActiveTab('inquiries')}>
               ✉ Inquiries ({inquiries.length})
             </TabBtn>
+<<<<<<< HEAD
             <TabBtn active={activeTab === 'my-properties'}  onClick={() => setActiveTab('my-properties')}>
               🏠 My Properties ({myProps.length})
             </TabBtn>
+=======
+>>>>>>> origin/main
           </div>
 
           {/* ══════════════════════════════ */}
@@ -404,7 +425,11 @@ export default function Dashboard() {
                 <Empty
                   icon="✉️"
                   msg="No inquiries sent yet"
+<<<<<<< HEAD
                   sub="Interested in a property? Contact the agent directly"
+=======
+                  sub="Interested in a property? Send us an inquiry and we will get back to you"
+>>>>>>> origin/main
                   link="/properties"
                   linkText="Browse Properties"
                 />
@@ -468,6 +493,7 @@ export default function Dashboard() {
             </Section>
           )}
 
+<<<<<<< HEAD
           {/* ══════════════════════════════ */}
           {/* TAB 3 — My Properties         */}
           {/* ══════════════════════════════ */}
@@ -515,6 +541,8 @@ export default function Dashboard() {
             </Section>
           )}
 
+=======
+>>>>>>> origin/main
         </div>
       </div>
     </>

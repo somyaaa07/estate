@@ -1,6 +1,29 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '@/lib/db';
 
+<<<<<<< HEAD
+=======
+// Array fields ko DB mein JSON string ke roop mein rakhte hain (MySQL/MariaDB dono pe safe)
+const listField = (name) => ({
+  type: DataTypes.TEXT('long'),
+  allowNull: true,
+  get() {
+    const raw = this.getDataValue(name);
+    if (!raw) return [];
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  },
+  set(value) {
+    const arr = Array.isArray(value) ? value : [];
+    this.setDataValue(name, JSON.stringify(arr));
+  },
+});
+
+>>>>>>> origin/main
 const Property = sequelize.define('Property', {
   id:            { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
   title:         { type: DataTypes.STRING(200), allowNull: false },
@@ -13,9 +36,29 @@ const Property = sequelize.define('Property', {
   area:          { type: DataTypes.DECIMAL(10, 2) },
   bedrooms:      { type: DataTypes.INTEGER },
   bathrooms:     { type: DataTypes.INTEGER },
+<<<<<<< HEAD
   agent_id:      { type: DataTypes.INTEGER },
   user_id:       { type: DataTypes.INTEGER },        // ← nayi field
   contact_email: { type: DataTypes.STRING(100) },    // ← nayi field
+=======
+  user_id:       { type: DataTypes.INTEGER },        // admin jisne list kiya
+  contact_email: { type: DataTypes.STRING(100) },    // admin ka email
+
+  // ── Naye specifications ──
+  nearby_landmarks:    listField('nearby_landmarks'),
+  amenities:           listField('amenities'),
+  property_highlights: listField('property_highlights'),
+  age_of_property:     { type: DataTypes.STRING(30) },
+  furnishing:          { type: DataTypes.STRING(30) },
+  transaction_type:    { type: DataTypes.STRING(30) },
+  balcony:             { type: DataTypes.INTEGER },
+  total_floors:        { type: DataTypes.INTEGER },
+  parking:             { type: DataTypes.STRING(30) },
+  facing:              { type: DataTypes.STRING(30) },
+  construction_type:   { type: DataTypes.STRING(40) },
+
+  // 'active' = Available
+>>>>>>> origin/main
   status:        { type: DataTypes.ENUM('active', 'sold', 'rented'), defaultValue: 'active' },
 }, {
   tableName:  'properties',
@@ -24,4 +67,8 @@ const Property = sequelize.define('Property', {
   updatedAt:  false,
 });
 
+<<<<<<< HEAD
 export default Property;
+=======
+export default Property;
+>>>>>>> origin/main

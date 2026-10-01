@@ -175,8 +175,13 @@ export default function PropertiesList({
     setError(false);
 
     const url = type
+<<<<<<< HEAD
       ? `/api/admin/properties?type=${type}`
       : `/api/admin/properties`;
+=======
+      ? `/api/properties?type=${type}&status=active`
+      : `/api/properties?status=active`;
+>>>>>>> origin/main
 
     fetch(url)
       .then((res) => res.json())
@@ -185,8 +190,13 @@ export default function PropertiesList({
         const list = Array.isArray(data) ? data : [];
         const newest = [...list]
           .sort((a, b) => {
+<<<<<<< HEAD
             if (a.createdAt && b.createdAt) {
               return new Date(b.createdAt) - new Date(a.createdAt);
+=======
+            if (a.created_at && b.created_at) {
+              return new Date(b.created_at) - new Date(a.created_at);
+>>>>>>> origin/main
             }
             return b.id - a.id;
           })

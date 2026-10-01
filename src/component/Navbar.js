@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 'use client';
 // import Link          from 'next/link';
 // import { useSession, signOut } from 'next-auth/react';
@@ -191,6 +192,8 @@
 //   );
 // }
 
+=======
+>>>>>>> origin/main
 "use client";
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
@@ -213,7 +216,11 @@ const jost = Jost({
 
 const links = [
   { label: "Home", href: "/" },
+<<<<<<< HEAD
   {label:"About",href:"/about"},
+=======
+  { label: "About", href: "/about" },
+>>>>>>> origin/main
   { label: "All Properties", href: "/properties" },
   { label: "Buy", href: "/properties?type=buy" },
   { label: "Sell", href: "/properties?type=sell" },
@@ -222,8 +229,11 @@ const links = [
 ];
 
 /* ---------- Logo ---------- */
+<<<<<<< HEAD
 // To use your own image instead, replace the <svg> with:
 // <img src="/images/logo.png" alt="" className="h-9 w-auto" />
+=======
+>>>>>>> origin/main
 function Logo() {
   return (
     <Link
@@ -248,7 +258,11 @@ function NavbarInner() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+<<<<<<< HEAD
   const isAdmin = session?.user?.role === "admin";
+=======
+  const isAdmin = session?.user?.role?.toLowerCase() === "admin";
+>>>>>>> origin/main
   const allLinks = isAdmin
     ? [...links, { label: "Admin", href: "/admin" }]
     : links;
@@ -292,17 +306,24 @@ function NavbarInner() {
     };
   }, [open]);
 
+<<<<<<< HEAD
 
           {/* ── Nav Links ── */}
 
          
+=======
+>>>>>>> origin/main
   const focusRing =
     "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#52685B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf9f6]";
 
   const logoutBtn = (extra = "") => (
     <button
       type="button"
+<<<<<<< HEAD
       onClick={() => signOut({ callbackUrl: "/login" })}
+=======
+      onClick={() => signOut({ callbackUrl: "/" })}
+>>>>>>> origin/main
       className={`inline-flex items-center justify-center gap-2 rounded-lg border border-[#1a2a22]/15 px-4 py-2 text-sm font-medium text-[#52685B] transition hover:border-red-300 hover:bg-red-50 hover:text-red-600 ${focusRing} ${extra}`}
     >
       <FiLogOut size={15} aria-hidden="true" />
@@ -312,7 +333,11 @@ function NavbarInner() {
 
   const dashboardChip = (extra = "") => (
     <Link
+<<<<<<< HEAD
       href="/dashboard"
+=======
+      href={isAdmin ? "/admin" : "/dashboard"}
+>>>>>>> origin/main
       className={`inline-flex items-center gap-2 rounded-lg bg-[#f3f0E8] px-3.5 py-2 text-sm font-medium text-[#1a2a22] transition hover:bg-[#1a2a22]/10 ${focusRing} ${extra}`}
     >
       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1a2a22] text-xs font-bold text-[#faf9f6]">
@@ -322,6 +347,7 @@ function NavbarInner() {
     </Link>
   );
 
+<<<<<<< HEAD
   const loginBtn = (extra = "") => (
     <Link
       href="/login"
@@ -340,6 +366,8 @@ function NavbarInner() {
     </Link>
   );
 
+=======
+>>>>>>> origin/main
   return (
     <header
       className={`${jost.className} sticky top-0 z-50 border-b border-[#1a2a22]/10 bg-[#faf9f6]/95 backdrop-blur transition-shadow ${
@@ -374,18 +402,27 @@ function NavbarInner() {
           })}
         </ul>
 
+<<<<<<< HEAD
         {/* Desktop auth */}
         <div className="hidden items-center gap-2.5 lg:flex">
           {session ? (
+=======
+        {/* Desktop auth (sirf logged-in user/admin ke liye) */}
+        <div className="hidden items-center gap-2.5 lg:flex">
+          {session && (
+>>>>>>> origin/main
             <>
               {dashboardChip("max-w-[160px]")}
               {logoutBtn()}
             </>
+<<<<<<< HEAD
           ) : (
             <>
               {loginBtn()}
               {signupBtn()}
             </>
+=======
+>>>>>>> origin/main
           )}
         </div>
 
@@ -454,12 +491,18 @@ function NavbarInner() {
                 })}
               </ul>
 
+<<<<<<< HEAD
               <div className="mx-auto max-w-7xl border-t border-[#1a2a22]/10 px-4 pb-6 pt-4 sm:px-6">
                 {session ? (
+=======
+              {session && (
+                <div className="mx-auto max-w-7xl border-t border-[#1a2a22]/10 px-4 pb-6 pt-4 sm:px-6">
+>>>>>>> origin/main
                   <div className="flex flex-col gap-3 sm:flex-row">
                     {dashboardChip("flex-1 justify-center py-3")}
                     {logoutBtn("flex-1 py-3")}
                   </div>
+<<<<<<< HEAD
                 ) : (
                   <div className="grid grid-cols-2 gap-3">
                     {loginBtn("py-3")}
@@ -467,6 +510,12 @@ function NavbarInner() {
                   </div>
                 )}
               </div>
+=======
+                </div>
+              )}
+
+              {!session && <div className="pb-4" />}
+>>>>>>> origin/main
             </motion.div>
           </>
         )}
@@ -475,7 +524,10 @@ function NavbarInner() {
   );
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
 /* useSearchParams needs a Suspense boundary in the App Router */
 export default function Navbar() {
   return (
@@ -487,4 +539,8 @@ export default function Navbar() {
       <NavbarInner />
     </Suspense>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/main

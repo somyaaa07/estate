@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   serverExternalPackages: ['sequelize', 'mysql2'],
+<<<<<<< HEAD
+=======
+  turbopack: {}, // Next 16: `next build` ke liye (webpack config ke saath error nahi aayega)
+>>>>>>> origin/main
     images: {
     domains: ['localhost'],
   },

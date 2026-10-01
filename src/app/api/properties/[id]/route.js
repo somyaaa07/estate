@@ -1,11 +1,18 @@
 import { NextResponse } from 'next/server';
+<<<<<<< HEAD
 import dbInit, { Property, PropertyImage ,Agent} from '@/lib/dbInit'; // ✅ named imports
 
+=======
+import dbInit, { Property, PropertyImage } from '@/lib/dbInit';
+
+// GET /api/properties/:id — PUBLIC
+>>>>>>> origin/main
 export async function GET(req, { params }) {
   const { id } = await params;
   await dbInit();
 
   const property = await Property.findByPk(id, {
+<<<<<<< HEAD
     include: [{ model: PropertyImage, as: 'images', order: [['order', 'ASC']] }, {
         model: Agent,
         as: 'agent', 
@@ -48,3 +55,15 @@ export async function DELETE(req, { params }) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+=======
+    include: [{ model: PropertyImage, as: 'images' }],
+    order: [[{ model: PropertyImage, as: 'images' }, 'order', 'ASC']],
+  });
+
+  if (!property) {
+    return NextResponse.json({ error: 'Property not found' }, { status: 404 });
+  }
+
+  return NextResponse.json(property);
+}
+>>>>>>> origin/main

@@ -274,7 +274,11 @@ export default function CTACallback({ image = null }) {
                         aria-hidden="true"
                         className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/3 -translate-x-full -skew-x-[20deg] bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-0 transition-all duration-700 ease-out group-hover:translate-x-[450%] group-hover:opacity-100"
                       />
+<<<<<<< HEAD
                       <span className="relative z-10 text-nowrap">
+=======
+                      <span className="relative z-10">
+>>>>>>> origin/main
                         {loading ? "Sending..." : "Request Callback"}
                       </span>
                       <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">

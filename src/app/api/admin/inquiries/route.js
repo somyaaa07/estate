@@ -1,8 +1,19 @@
 import { NextResponse }  from 'next/server';
+<<<<<<< HEAD
 import dbInit, { Inquiry, Property, PropertyImage, User } from '@/lib/dbInit';
 
 // GET — saari inquiries
 export async function GET() {
+=======
+import dbInit, { Inquiry, Property, PropertyImage } from '@/lib/dbInit';
+import { requireAdmin } from '@/lib/auth';
+
+// GET — saari inquiries
+export async function GET() {
+  const { error } = await requireAdmin();
+  if (error) return error;
+
+>>>>>>> origin/main
   try {
     await dbInit();
 

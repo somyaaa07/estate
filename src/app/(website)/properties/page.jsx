@@ -10,6 +10,10 @@ import {
   BedDouble,
   Camera,
   ChevronDown,
+<<<<<<< HEAD
+=======
+  Compass,
+>>>>>>> origin/main
   ChevronLeft,
   ChevronRight,
   ImageOff,
@@ -18,6 +22,10 @@ import {
   Search,
   SearchX,
   SlidersHorizontal,
+<<<<<<< HEAD
+=======
+  Sofa,
+>>>>>>> origin/main
   X,
 } from 'lucide-react';
 
@@ -60,6 +68,15 @@ const TYPE_BADGE = {
   rent: 'bg-[#FAF9F6] text-[#1A2A22]',
 };
 
+<<<<<<< HEAD
+=======
+const FURNISHING_LABEL = {
+  unfurnished: 'Unfurnished',
+  'semi-furnished': 'Semi-furnished',
+  furnished: 'Furnished',
+};
+
+>>>>>>> origin/main
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest first' },
   { value: 'oldest', label: 'Oldest first' },
@@ -105,7 +122,14 @@ function PropertyCard({ p }) {
     p.bedrooms && { icon: BedDouble, text: `${p.bedrooms} Beds` },
     p.bathrooms && { icon: Bath, text: `${p.bathrooms} Baths` },
     p.area && { icon: Ruler, text: `${p.area} sqft` },
+<<<<<<< HEAD
   ].filter(Boolean);
+=======
+    p.furnishing && { icon: Sofa, text: FURNISHING_LABEL[p.furnishing] || p.furnishing },
+    p.facing && { icon: Compass, text: `${String(p.facing).replace('-', ' ')} facing` },
+  ].filter(Boolean);
+  const unavailable = p.status && p.status !== 'active';
+>>>>>>> origin/main
 
   return (
     <Link
@@ -140,6 +164,15 @@ function PropertyCard({ p }) {
           </span>
         )}
 
+<<<<<<< HEAD
+=======
+        {unavailable && (
+          <span className="absolute right-3 top-3 rounded-full bg-red-600 px-3 py-1 text-xs uppercase tracking-wide text-white shadow-sm">
+            {p.status}
+          </span>
+        )}
+
+>>>>>>> origin/main
         {p.images?.length > 1 && (
           <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-[#1A2A22]/65 px-2.5 py-1 text-[11px] text-[#FAF9F6] backdrop-blur">
             <Camera size={12} aria-hidden="true" /> {p.images.length}

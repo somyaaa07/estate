@@ -53,7 +53,11 @@ export const authOptions = {
       return session;
     },
   },
+<<<<<<< HEAD
   pages: { signIn: '/admin/login' }, // ✅ yahi fix hai
+=======
+  pages: { signIn: '/admin/login' },
+>>>>>>> origin/main
   session: { strategy: 'jwt' },
   secret: process.env.NEXTAUTH_SECRET,
 };
@@ -85,4 +89,27 @@ export async function requireAdmin() {
   }
 
   return { session };
+<<<<<<< HEAD
 }
+=======
+}
+
+/*
+  Saare admins ke email — inquiry mail yahin jaati hai.
+  Optional: .env.local mein ADMIN_NOTIFY_EMAIL=abc@gmail.com,xyz@gmail.com daal do
+  to un par bhi mail jayegi.
+*/
+export async function getAdminEmails() {
+  const admins = await User.findAll({
+    where: { role: 'admin' },
+    attributes: ['email'],
+  });
+
+  const extra = (process.env.ADMIN_NOTIFY_EMAIL || '')
+    .split(',')
+    .map((e) => e.trim())
+    .filter(Boolean);
+
+  return [...new Set([...admins.map((a) => a.email), ...extra])];
+}
+>>>>>>> origin/main

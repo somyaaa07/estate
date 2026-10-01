@@ -9,21 +9,43 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+<<<<<<< HEAD
 // ── Send inquiry email to agent ──
 export async function sendInquiryEmail({ agentEmail, agentName, property, inquiry }) {
+=======
+// HTML mein user ka text daalne se pehle escape karo
+const esc = (v) =>
+  String(v ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+
+// ── Send inquiry email to admin(s) ──
+export async function sendInquiryEmail({ to, property, inquiry }) {
+>>>>>>> origin/main
   const subject = `New Inquiry — ${property.title}`;
 
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f9f9f9; border-radius: 12px; overflow: hidden;">
       <div style="background: #2e5d42; padding: 24px 32px;">
         <h2 style="color: #ffffff; margin: 0; font-size: 20px;">New Property Inquiry</h2>
+<<<<<<< HEAD
         <p style="color: #a8c5b5; margin: 6px 0 0; font-size: 14px;">Someone is interested in your listing</p>
+=======
+        <p style="color: #a8c5b5; margin: 6px 0 0; font-size: 14px;">A visitor is interested in one of your listings</p>
+>>>>>>> origin/main
       </div>
 
       <div style="padding: 28px 32px; background: #ffffff;">
         <h3 style="color: #2e5d42; margin: 0 0 4px; font-size: 16px;">Property</h3>
+<<<<<<< HEAD
         <p style="margin: 0 0 20px; font-size: 15px; color: #1a2e22; font-weight: 600;">${property.title}</p>
         <p style="margin: 0 0 20px; font-size: 14px; color: #6b7c72;">📍 ${property.location}, ${property.city}</p>
+=======
+        <p style="margin: 0 0 20px; font-size: 15px; color: #1a2e22; font-weight: 600;">${esc(property.title)}</p>
+        <p style="margin: 0 0 20px; font-size: 14px; color: #6b7c72;">📍 ${esc(property.location)}, ${esc(property.city)}</p>
+>>>>>>> origin/main
         <p style="margin: 0 0 28px; font-size: 15px; color: #c8a96e; font-weight: 700;">₹${Number(property.price).toLocaleString('en-IN')}</p>
 
         <hr style="border: none; border-top: 1px solid #e8e8e8; margin-bottom: 24px;" />
@@ -33,24 +55,40 @@ export async function sendInquiryEmail({ agentEmail, agentName, property, inquir
         <table style="width: 100%; border-collapse: collapse;">
           <tr>
             <td style="padding: 8px 0; color: #6b7c72; font-size: 13px; width: 100px;">Name</td>
+<<<<<<< HEAD
             <td style="padding: 8px 0; color: #1a2e22; font-size: 14px; font-weight: 600;">${inquiry.name}</td>
+=======
+            <td style="padding: 8px 0; color: #1a2e22; font-size: 14px; font-weight: 600;">${esc(inquiry.name)}</td>
+>>>>>>> origin/main
           </tr>
           <tr>
             <td style="padding: 8px 0; color: #6b7c72; font-size: 13px;">Email</td>
             <td style="padding: 8px 0; color: #1a2e22; font-size: 14px;">
+<<<<<<< HEAD
               <a href="mailto:${inquiry.email}" style="color: #2e5d42;">${inquiry.email}</a>
+=======
+              <a href="mailto:${esc(inquiry.email)}" style="color: #2e5d42;">${esc(inquiry.email)}</a>
+>>>>>>> origin/main
             </td>
           </tr>
           ${inquiry.phone ? `
           <tr>
             <td style="padding: 8px 0; color: #6b7c72; font-size: 13px;">Phone</td>
             <td style="padding: 8px 0; color: #1a2e22; font-size: 14px;">
+<<<<<<< HEAD
               <a href="tel:${inquiry.phone}" style="color: #2e5d42;">${inquiry.phone}</a>
+=======
+              <a href="tel:${esc(inquiry.phone)}" style="color: #2e5d42;">${esc(inquiry.phone)}</a>
+>>>>>>> origin/main
             </td>
           </tr>` : ''}
           <tr>
             <td style="padding: 8px 0; color: #6b7c72; font-size: 13px; vertical-align: top;">Message</td>
+<<<<<<< HEAD
             <td style="padding: 8px 0; color: #1a2e22; font-size: 14px; line-height: 1.6;">${inquiry.message}</td>
+=======
+            <td style="padding: 8px 0; color: #1a2e22; font-size: 14px; line-height: 1.6;">${esc(inquiry.message)}</td>
+>>>>>>> origin/main
           </tr>
         </table>
       </div>
@@ -65,7 +103,12 @@ export async function sendInquiryEmail({ agentEmail, agentName, property, inquir
 
   await transporter.sendMail({
     from:    `"Estate Platform" <${process.env.MAIL_USER}>`,
+<<<<<<< HEAD
     to:      agentEmail,
+=======
+    to,
+    replyTo: inquiry.email,
+>>>>>>> origin/main
     subject,
     html,
   });

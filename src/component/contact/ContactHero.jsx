@@ -56,7 +56,7 @@ const BtnDark = ({ href, children }) => (
 export default function ContactHero() {
   return (
     <section aria-labelledby="contact-hero" className="relative bg-[#FAF9F6]">
-      <div className="mx-auto grid max-w-7xl items-center gap-10  px-5 pb-24 pt-10 sm:px-8 lg:grid-cols-2 lg:pb-32 lg:pt-16">
+      <div className="mx-auto grid max-w-7xl items-center gap-10  px-5 pb-24 pt-0 sm:px-8 lg:grid-cols-2 lg:pb-32 lg:pt-5">
         {/* Left content */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}

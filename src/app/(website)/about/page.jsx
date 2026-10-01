@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 import FaqAccordion from "@/component/about/FaqAccordion";
 
-
 const marcellus = Marcellus({
   subsets: ["latin"],
   weight: "400",
@@ -37,7 +36,7 @@ const marcellus = Marcellus({
 /* ---------------------------------------------------------------
    BUSINESS DETAILS  
 ---------------------------------------------------------------- */
-const SITE_URL = "https://www.bringorealestates.com"; 
+const SITE_URL = "https://www.bringorealestates.com";
 
 const BUSINESS = {
   name: "Bringo Real Estates",
@@ -106,20 +105,49 @@ const stats = [
 ];
 
 const values = [
-  { icon: Handshake, title: "Trusted & Transparent", text: "Fair deals and clear processes" },
-  { icon: Settings, title: "Quality Construction", text: "Built with excellence" },
+  {
+    icon: Handshake,
+    title: "Trusted & Transparent",
+    text: "Fair deals and clear processes",
+  },
+  {
+    icon: Settings,
+    title: "Quality Construction",
+    text: "Built with excellence",
+  },
   { icon: Users, title: "Customer-Centric", text: "Your goals, our priority" },
 ];
 
 const reasons = [
-  { icon: MapPin, title: "Prime Locations", text: "Well-connected projects across Greater Noida" },
-  { icon: Building2, title: "Modern Design", text: "Thoughtfully designed for modern living" },
-  { icon: Leaf, title: "Sustainable Living", text: "Eco-friendly and future-ready spaces" },
-  { icon: ShieldCheck, title: "End-to-End Support", text: "From search to ownership, we're with you" },
+  {
+    icon: MapPin,
+    title: "Prime Locations",
+    text: "Well-connected projects across Greater Noida",
+  },
+  {
+    icon: Building2,
+    title: "Modern Design",
+    text: "Thoughtfully designed for modern living",
+  },
+  {
+    icon: Leaf,
+    title: "Sustainable Living",
+    text: "Eco-friendly and future-ready spaces",
+  },
+  {
+    icon: ShieldCheck,
+    title: "End-to-End Support",
+    text: "From search to ownership, we're with you",
+  },
 ];
 
 // FAke partners
-const partners = ["TATA", "Godrej", "HDFC", "DLF", "PRESTIGE", "SOBHA"];
+const partners = [
+  { name: "Gaur-Group", logo: "/gaur-group.webp" },
+  { name: "Godrej", logo: "/Godrej_Logo.webp" },
+  { name: "JaypeeGreens", logo: "/jaypeegreens.webp" },
+  { name: "Mahagun", logo: "/Mahagun_Official.webp" },
+];
 
 const faqs = [
   {
@@ -172,7 +200,12 @@ const jsonLd = {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "About", item: `${SITE_URL}/about` },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "About",
+          item: `${SITE_URL}/about`,
+        },
       ],
     },
   ],
@@ -257,16 +290,15 @@ export default function AboutPage() {
               More Than Properties, We Build Futures
             </h1>
             <p className="mt-6 max-w-md text-[15px] leading-relaxed text-[#52685B]">
-              At Bringo Real Estates, we believe real estate is not just about buildings,
-              it&apos;s about people, dreams and a better tomorrow. From our office in Greater
-              Noida, we help families, businesses and investors find modern, sustainable and
-              high-value spaces.
+              At Bringo Real Estates, we believe real estate is not just about
+              buildings, it&apos;s about people, dreams and a better tomorrow.
+              From our office in Greater Noida, we help families, businesses and
+              investors find modern, sustainable and high-value spaces.
             </p>
 
             <div className="mt-7">
               <BtnDark href="#our-story">Our Story</BtnDark>
             </div>
-
 
             <div className="mt-6 flex items-center gap-8">
               <div>
@@ -284,7 +316,6 @@ export default function AboutPage() {
 
           {/* Hero image */}
           <div className="relative">
-            
             <div className="relative aspect-[4/4.2] w-full overflow-hidden rounded-3xl lg:rounded-tl-[220px] lg:rounded-br-[80px]">
               <Image
                 src="/image/hero.png"
@@ -308,7 +339,9 @@ export default function AboutPage() {
               </div>
               <div className="flex-1">
                 <p className="text-sm">Creating</p>
-                <p className="text-sm text-[#52685B]">Sustainable Communities</p>
+                <p className="text-sm text-[#52685B]">
+                  Sustainable Communities
+                </p>
               </div>
               <Link
                 href="/projects"
@@ -323,7 +356,10 @@ export default function AboutPage() {
       </section>
 
       {/* ============ STATS BAR ============ */}
-      <section aria-label="Bringo Real Estates in numbers" className="relative z-10 mx-auto -mt-10 max-w-7xl px-5 sm:px-8 lg:-mt-16">
+      <section
+        aria-label="Bringo Real Estates in numbers"
+        className="relative z-10 mx-auto -mt-10 max-w-7xl px-5 sm:px-8 lg:-mt-16"
+      >
         <dl className="grid grid-cols-2 gap-y-8 rounded-3xl bg-[#F3F0E8] px-4 py-8 shadow-[0_10px_40px_rgba(26,42,34,0.08)] lg:grid-cols-4 lg:py-7">
           {stats.map(({ icon: Icon, value, label }, i) => (
             <div
@@ -341,7 +377,11 @@ export default function AboutPage() {
       </section>
 
       {/* ============ OUR STORY ============ */}
-      <section id="our-story" aria-labelledby="story-title" className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
+      <section
+        id="our-story"
+        aria-labelledby="story-title"
+        className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28"
+      >
         <div className="grid items-center gap-14 lg:grid-cols-2">
           {/* Image collage */}
           <div className="relative mx-auto h-[420px] w-full max-w-[560px] sm:h-[480px]">
@@ -375,12 +415,21 @@ export default function AboutPage() {
 
             {/* Circular text badge */}
             <div className="absolute right-0 top-2 flex h-28 w-28 items-center justify-center rounded-full bg-[#F3F0E8] sm:right-4">
-              <svg viewBox="0 0 120 120" className="absolute inset-0 h-full w-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 120 120"
+                className="absolute inset-0 h-full w-full"
+                aria-hidden="true"
+              >
                 <defs>
-                  <path id="circlePath" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" />
+                  <path
+                    id="circlePath"
+                    d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"
+                  />
                 </defs>
                 <text className="fill-[#D4A62A] text-[9px] uppercase tracking-[0.28em]">
-                  <textPath href="#circlePath">Sustainable • Modern Living •</textPath>
+                  <textPath href="#circlePath">
+                    Sustainable • Modern Living •
+                  </textPath>
                 </text>
               </svg>
               <Leaf className="text-[#D4A62A]" size={28} strokeWidth={1.5} />
@@ -390,18 +439,23 @@ export default function AboutPage() {
           {/* Text */}
           <div>
             <Eyebrow>Our Story</Eyebrow>
-            <h2 id="story-title" className="mt-4 text-4xl font-normal sm:text-5xl">
+            <h2
+              id="story-title"
+              className="mt-4 text-4xl font-normal sm:text-5xl"
+            >
               About Our Company
             </h2>
             <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-[#52685B]">
-              Bringo Real Estates was founded with a simple vision — to transform the way people
-              experience real estate in Greater Noida. From residential homes to commercial
-              spaces, we help you choose value-driven properties that blend modern design,
-              strategic locations and long-term growth potential.
+              Bringo Real Estates was founded with a simple vision — to
+              transform the way people experience real estate in Greater Noida.
+              From residential homes to commercial spaces, we help you choose
+              value-driven properties that blend modern design, strategic
+              locations and long-term growth potential.
             </p>
             <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#52685B]">
-              Our focus is on verified projects, transparent processes and a customer-first
-              approach, ensuring every client finds a space that truly feels like home.
+              Our focus is on verified projects, transparent processes and a
+              customer-first approach, ensuring every client finds a space that
+              truly feels like home.
             </p>
             <div className="mt-7">
               <BtnDark href="/contact">Know More</BtnDark>
@@ -433,12 +487,15 @@ export default function AboutPage() {
             <div className="flex justify-center">
               <Eyebrow>Why Choose Bringo</Eyebrow>
             </div>
-            <h2 id="why-title" className="mt-4 text-3xl font-normal sm:text-4xl">
+            <h2
+              id="why-title"
+              className="mt-4 text-3xl font-normal sm:text-4xl"
+            >
               A Better Way to Find Your Perfect Space
             </h2>
             <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-[#52685B]">
-              We combine experience, local market knowledge and customer focus to deliver real
-              estate solutions that truly make a difference.
+              We combine experience, local market knowledge and customer focus
+              to deliver real estate solutions that truly make a difference.
             </p>
           </div>
 
@@ -450,7 +507,9 @@ export default function AboutPage() {
               >
                 <Icon className="text-[#D4A62A]" size={32} strokeWidth={1.4} />
                 <h3 className="mt-4 text-sm text-[#1A2A22]">{title}</h3>
-                <p className="mt-2 max-w-[180px] text-xs leading-relaxed text-[#52685B]">{text}</p>
+                <p className="mt-2 max-w-[180px] text-xs leading-relaxed text-[#52685B]">
+                  {text}
+                </p>
               </li>
             ))}
           </ul>
@@ -458,41 +517,62 @@ export default function AboutPage() {
       </section>
 
       {/* ============ PARTNERS ============ */}
-      <section aria-labelledby="partners-title" className="mx-auto max-w-7xl px-5 py-14 text-center sm:px-8">
+      <section
+        aria-labelledby="partners-title"
+        className="mx-auto max-w-7xl px-5 py-14 text-center sm:px-8"
+      >
         <div className="flex justify-center">
           <Eyebrow>Our Partners</Eyebrow>
         </div>
-        <h2 id="partners-title" className="mt-3 text-3xl font-normal sm:text-4xl">
+
+        <h2
+          id="partners-title"
+          className="mt-3 text-3xl font-normal sm:text-4xl"
+          style={{ fontFamily: "Marcellus, serif" }}
+        >
           Trusted by Leading Brands
         </h2>
-        <ul className="mt-8 grid grid-cols-2 items-center gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
-          {partners.map((p, i) => (
+
+        <ul className="mt-10 grid grid-cols-2 items-center gap-y-8 sm:grid-cols-3 lg:grid-cols-4">
+          {partners.map((partner, i) => (
             <li
-              key={p}
-              className={`px-4 text-xl tracking-wide text-[#52685B] ${
+              key={partner.name}
+              className={`flex min-h-20 items-center justify-center px-4 ${
                 i !== 0 ? "lg:border-l lg:border-[#52685B]/25" : ""
               }`}
             >
-              {/* Real logo: <Image src={`/images/partners/${p}.svg`} alt={`${p} logo`} width={110} height={40} /> */}
-              {p}
+              <Image
+                src={partner.logo}
+                alt={`${partner.name} logo`}
+                width={140}
+                height={90}
+                className="h-14 w-auto max-w-[160px] object-contain transition duration-300 hover:opacity-100"
+              />
             </li>
           ))}
         </ul>
       </section>
 
       {/* ============ OUR PEOPLE + VISION/MISSION ============ */}
-      <section aria-labelledby="people-title" className="mx-auto max-w-7xl px-5 py-14 sm:px-8">
+      <section
+        aria-labelledby="people-title"
+        className="mx-auto max-w-7xl px-5 py-14 sm:px-8"
+      >
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.4fr]">
           <div>
             <Eyebrow line>Our People</Eyebrow>
-            <h2 id="people-title" className="mt-4 text-4xl font-normal leading-tight">
+            <h2
+              id="people-title"
+              className="mt-4 text-4xl font-normal leading-tight"
+            >
               Driven by People.
               <br />
               Inspired by Possibilities.
             </h2>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#52685B]">
-              Our team of real estate experts, designers and strategists work together to create
-              exceptional spaces that enrich lives and communities.
+              Our team of real estate experts, designers and strategists work
+              together to create exceptional spaces that enrich lives and
+              communities.
             </p>
             <div className="mt-6">
               <BtnDark href="/team">Meet Our Team</BtnDark>
@@ -524,7 +604,8 @@ export default function AboutPage() {
                   <Target size={22} strokeWidth={1.5} /> Mission
                 </p>
                 <p className="mt-2 text-xs leading-relaxed text-[#FAF9F6]/80">
-                  To deliver high-quality spaces with trust, innovation and care.
+                  To deliver high-quality spaces with trust, innovation and
+                  care.
                 </p>
               </div>
             </div>
@@ -533,7 +614,10 @@ export default function AboutPage() {
       </section>
 
       {/* ============ FAQ ============ */}
-      <section aria-labelledby="faq-title" className="mx-auto max-w-7xl px-5 py-14 sm:px-8">
+      <section
+        aria-labelledby="faq-title"
+        className="mx-auto max-w-7xl px-5 py-14 sm:px-8"
+      >
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-[4/3.4]">
             <Image
@@ -558,7 +642,10 @@ export default function AboutPage() {
       </section>
 
       {/* ============ CTA + CONTACT ============ */}
-      <section aria-labelledby="cta-title" className="mx-auto max-w-7xl px-5 pb-16 pt-6 sm:px-8">
+      <section
+        aria-labelledby="cta-title"
+        className="mx-auto max-w-7xl px-5 pb-16 pt-6 sm:px-8"
+      >
         <div className="relative overflow-hidden rounded-3xl bg-[#1A2A22] px-6 py-12 text-[#FAF9F6] sm:px-12 lg:py-16">
           <Image
             src="/image/ctaa.png"
@@ -582,7 +669,8 @@ export default function AboutPage() {
                 Ready to Find Your Dream Property?
               </h2>
               <p className="mt-4 text-sm text-[#FAF9F6]/85">
-                Get expert guidance and exclusive property options tailored to your needs.
+                Get expert guidance and exclusive property options tailored to
+                your needs.
               </p>
 
               <address className="mt-6 space-y-3 text-sm not-italic text-[#FAF9F6]/90">
@@ -621,7 +709,6 @@ export default function AboutPage() {
             </div>
 
             <div className="flex items-center gap-4 rounded-full bg-[#FAF9F6]/10 px-4 py-3 backdrop-blur">
-           
               <span className="h-8 w-px bg-[#FAF9F6]/30" />
               <div>
                 <p className="text-lg  text-[#D4A62A] leading-none">4.8/5</p>

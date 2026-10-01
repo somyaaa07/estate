@@ -104,14 +104,25 @@ export default function HomeHero() {
       {/* ================= HERO ================= */}
       <div className="relative min-h-[640px] overflow-hidden bg-[#1a2a22] lg:min-h-[760px]">
         {/* Background image */}
-        <motion.img
-          src={HERO_IMAGE.src}
-          alt={HERO_IMAGE.alt}
-          initial={{ scale: 1.08 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 2.5, ease: "easeOut" }}
-          className="absolute inset-0 h-full w-full object-cover object-right"
-        />
+        {/* Desktop Image */}
+<motion.img
+  src={HERO_IMAGE.src}
+  alt={HERO_IMAGE.alt}
+  initial={{ scale: 1.08 }}
+  animate={{ scale: 1 }}
+  transition={{ duration: 2.5, ease: "easeOut" }}
+  className="absolute inset-0 hidden h-full w-full object-cover object-right md:block"
+/>
+
+{/* Mobile Image */}
+<motion.img
+  src="/banner/home-mobile.png"
+  alt={HERO_IMAGE.alt}
+  initial={{ scale: 1.08 }}
+  animate={{ scale: 1 }}
+  transition={{ duration: 2.5, ease: "easeOut" }}
+  className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
+/>
 
         {/* Mobile/tablet: even overlay for readability */}
         <div className="absolute inset-0 bg-[#1a2a22]/75 lg:hidden" />
@@ -131,7 +142,7 @@ export default function HomeHero() {
             >
               <span className={`h-px w-10 ${goldBg}`} aria-hidden="true" />
               <span
-                className={`text-xs font-semibold uppercase tracking-[0.28em] ${goldText}`}
+                className={`text-[8px] md:text-[14px] lg:text-[16px] font-semibold uppercase tracking-[0.20em] ${goldText}`}
               >
                 Trusted Bringo Real Estate · Greater Noida
               </span>
@@ -154,7 +165,7 @@ export default function HomeHero() {
               initial="hidden"
               animate="show"
               custom={2}
-              className="mt-6 max-w-xl text-base leading-relaxed text-[#faf9f6]/80 sm:text-lg"
+              className="mt-6 max-w-[240px] lg:max-w-xl text-base leading-relaxed text-[#faf9f6]/80 sm:text-lg"
             >
               Premium residential, commercial and plotting opportunities backed
               by transparent guidance and long-term value.

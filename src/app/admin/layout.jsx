@@ -27,7 +27,6 @@ const goldBg = 'bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D]';
 const navLinks = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/properties', label: 'Properties', icon: Building2 },
-  { href: '/admin/agents', label: 'Agents', icon: UserCog },
   { href: '/admin/inquiries', label: 'Inquiries', icon: Inbox },
 ];
 

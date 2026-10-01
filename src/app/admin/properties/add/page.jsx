@@ -5,17 +5,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ImageUpload from '@/component/ImageUploads';
 
 const COLORS = {
-  primary: '#2e5d42',
-  primaryLight: '#3d7a58',
-  primaryPale: '#e8f0eb',
-  bg: '#fafaef',
+  primary: '#1a2a22',
+  primaryLight: '#52685B',
+  primaryPale: '#f3f0E8',
+  bg: '#faf9f6',
   white: '#ffffff',
-  border: '#d6ddd8',
-  text: '#1a2e22',
-  muted: '#6b7c72',
-  accent: '#c8a96e',
+  border: '#e8e3d3',
+  text: '#1a2a22',
+  muted: '#52685B',
+  accent: '#e2a10d',
+  gold: '#ffcd39',
   error: '#c0392b',
 };
+
+const GOLD_LINE =
+  'linear-gradient(90deg, rgba(226,161,13,0) 0%, #e2a10d 25%, #ffcd39 50%, #e2a10d 75%, rgba(226,161,13,0) 100%)';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -40,7 +44,7 @@ function FloatingField({ label, children, span = false, index = 0 }) {
         fontWeight: '600',
         letterSpacing: '0.1em',
         textTransform: 'uppercase',
-        color: COLORS.primary,
+        color: COLORS.muted,
         marginBottom: '8px',
       }}>
         {label}
@@ -56,7 +60,7 @@ const fieldStyle = {
   fontFamily: "'Jost', sans-serif",
   fontSize: '15px',
   color: COLORS.text,
-  background: COLORS.white,
+  background: COLORS.bg,
   border: `1.5px solid ${COLORS.border}`,
   borderRadius: '10px',
   outline: 'none',
@@ -76,12 +80,13 @@ function Field({ as: Tag = 'input', style: extra, ...props }) {
         ...(Tag === 'textarea' ? { resize: 'vertical', minHeight: '90px' } : {}),
         ...(Tag === 'select' ? {
           cursor: 'pointer', appearance: 'none',
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232e5d42' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23e2a10d' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")`,
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'right 14px center',
         } : {}),
-        borderColor: focused ? COLORS.primary : COLORS.border,
-        boxShadow: focused ? `0 0 0 3px ${COLORS.primaryPale}` : 'none',
+        borderColor: focused ? COLORS.accent : COLORS.border,
+        background: focused ? COLORS.white : COLORS.bg,
+        boxShadow: focused ? '0 0 0 3px rgba(255,205,57,0.2)' : 'none',
         ...extra,
       }}
     />
@@ -148,10 +153,9 @@ export default function AddPropertyPage() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Jost:wght@300;400;500;600&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: ${COLORS.bg}; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        input::placeholder, textarea::placeholder { color: #a0b0a8; }
+        input::placeholder, textarea::placeholder { color: rgba(82,104,91,0.55); }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; }
       `}</style>
 
@@ -166,10 +170,10 @@ export default function AddPropertyPage() {
           {/* Header */}
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} style={{ marginBottom: '36px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '8px' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: COLORS.primary, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: COLORS.primary, border: '1px solid rgba(226,161,13,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-                  <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="#fff" strokeWidth="1.5" strokeLinejoin="round"/>
-                  <path d="M9 21V12h6v9" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+                  <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="#ffcd39" strokeWidth="1.5" strokeLinejoin="round"/>
+                  <path d="M9 21V12h6v9" stroke="#ffcd39" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
               </div>
               <div>
@@ -177,7 +181,6 @@ export default function AddPropertyPage() {
                 <h1 style={{ fontFamily: "'Marcellus', serif", fontSize: '28px', color: COLORS.text, lineHeight: 1.1 }}>Add New Property</h1>
               </div>
             </div>
-            <div style={{ height: '2px', background: `linear-gradient(90deg, ${COLORS.primary}, ${COLORS.accent}, transparent)`, borderRadius: '2px', marginTop: '16px' }} />
           </motion.div>
 
           {/* Error */}
@@ -249,19 +252,14 @@ export default function AddPropertyPage() {
 
           {/* Specs */}
           <Section title="Property Specifications" icon="◇" delay={0.2}>
-            <motion.div variants={stagger} initial="hidden" animate="show" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px' }}>
+            <motion.div variants={stagger} initial="hidden" animate="show" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr ', gap: '20px' }}>
               <FloatingField label="Bedrooms" index={0}>
                 <Field type="number" placeholder="3" value={form.bedrooms} onChange={set('bedrooms')} />
               </FloatingField>
               <FloatingField label="Bathrooms" index={1}>
                 <Field type="number" placeholder="2" value={form.bathrooms} onChange={set('bathrooms')} />
               </FloatingField>
-              <FloatingField label="Assigned Agent" index={2}>
-                <Field as="select" value={form.agent_id} onChange={set('agent_id')}>
-                  <option value="">Select Agent</option>
-                  {agents.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
-                </Field>
-              </FloatingField>
+              
             </motion.div>
           </Section>
 
@@ -283,7 +281,7 @@ export default function AddPropertyPage() {
               style={{
                 padding: '13px 32px',
                 background: loading ? COLORS.muted : COLORS.primary,
-                color: '#fff', border: 'none', borderRadius: '10px',
+                color: COLORS.bg, border: '1px solid rgba(226,161,13,0.5)', borderRadius: '10px',
                 fontFamily: "'Jost', sans-serif", fontSize: '15px', fontWeight: '600',
                 letterSpacing: '0.04em',
                 cursor: loading ? 'not-allowed' : 'pointer',
@@ -293,7 +291,7 @@ export default function AddPropertyPage() {
             >
               {loading ? (
                 <>
-                  <span style={{ display: 'inline-block', width: '14px', height: '14px', border: '2px solid rgba(255,255,255,0.4)', borderTopColor: '#fff', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+                  <span style={{ display: 'inline-block', width: '14px', height: '14px', border: '2px solid rgba(255,205,57,0.4)', borderTopColor: COLORS.gold, borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
                   Saving…
                 </>
               ) : 'Save Property'}
@@ -320,10 +318,12 @@ function Section({ title, icon, delay = 0, children }) {
       initial={{ opacity: 0, y: 28 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
-      style={{ background: COLORS.white, borderRadius: '16px', border: `1px solid ${COLORS.border}`, overflow: 'hidden', marginBottom: '20px' }}
+      style={{ position: 'relative', background: COLORS.white, borderRadius: '16px', border: `1px solid ${COLORS.border}`, overflow: 'hidden', marginBottom: '20px' }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '16px 24px', borderBottom: `1px solid ${COLORS.primaryPale}`, background: COLORS.primaryPale }}>
-        <span style={{ color: COLORS.primary, fontSize: '14px' }}>{icon}</span>
+      {/* Top gold hairline */}
+      <span aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '2px', background: GOLD_LINE }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '16px 24px', borderBottom: `1px solid ${COLORS.border}`, background: COLORS.primaryPale }}>
+        <span style={{ color: COLORS.accent, fontSize: '14px' }}>{icon}</span>
         <h2 style={{ fontFamily: "'Marcellus', serif", fontSize: '17px', color: COLORS.primary, fontWeight: '400' }}>{title}</h2>
       </div>
       <div style={{ padding: '24px' }}>{children}</div>

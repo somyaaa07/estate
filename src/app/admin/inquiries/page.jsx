@@ -3,22 +3,26 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 const C = {
-  primary:     '#2e5d42',
-  primaryPale: '#e8f0eb',
-  bg:          '#f8fafc',
+  primary:     '#1a2a22',
+  primaryPale: '#f3f0E8',
+  bg:          '#faf9f6',
   white:       '#ffffff',
-  border:      '#d6ddd8',
-  text:        '#1a2e22',
-  muted:       '#6b7c72',
-  accent:      '#c8a96e',
+  border:      '#e8e3d3',
+  text:        '#1a2a22',
+  muted:       '#52685B',
+  accent:      '#e2a10d',
+  gold:        '#ffcd39',
   error:       '#c0392b',
   success:     '#16a34a',
 };
 
+const GOLD_LINE =
+  'linear-gradient(90deg, rgba(226,161,13,0) 0%, #e2a10d 25%, #ffcd39 50%, #e2a10d 75%, rgba(226,161,13,0) 100%)';
+
 const STATUS_CONFIG = {
-  new:     { bg: '#fef9c3', color: '#a16207', label: 'New'     },
-  read:    { bg: '#f1f5f9', color: '#475569', label: 'Read'    },
-  replied: { bg: '#f0fdf4', color: '#16a34a', label: 'Replied' },
+  new:     { bg: 'rgba(255,205,57,0.2)', color: '#a06a00', label: 'New'     },
+  read:    { bg: '#e6ebe8',              color: '#52685B', label: 'Read'    },
+  replied: { bg: '#f0fdf4',              color: '#16a34a', label: 'Replied' },
 };
 
 export default function AdminInquiriesPage() {
@@ -92,7 +96,7 @@ export default function AdminInquiriesPage() {
     fontWeight:'600',
     letterSpacing: '0.05em',
     textTransform: 'uppercase',
-    background: '#f8fafc',
+    background: C.primaryPale,
     borderBottom: `1px solid ${C.border}`,
   };
 
@@ -100,7 +104,7 @@ export default function AdminInquiriesPage() {
     padding:     '14px 16px',
     fontSize:    '14px',
     color:       C.text,
-    borderBottom:`1px solid #f1f5f9`,
+    borderBottom:`1px solid ${C.primaryPale}`,
     verticalAlign: 'middle',
   };
 
@@ -109,7 +113,7 @@ export default function AdminInquiriesPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Jost:wght@300;400;500;600&display=swap');
         * { box-sizing: border-box; }
-        .inq-row:hover { background: #f8fafc !important; }
+        .inq-row:hover { background: ${C.bg} !important; }
         .inq-row.selected { background: ${C.primaryPale} !important; }
       `}</style>
 
@@ -130,8 +134,8 @@ export default function AdminInquiriesPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '24px' }}>
           {[
             { key: 'all',     label: 'Total',   value: stats.all,     color: C.primary },
-            { key: 'new',     label: 'New',     value: stats.new,     color: '#a16207' },
-            { key: 'read',    label: 'Read',    value: stats.read,    color: '#475569' },
+            { key: 'new',     label: 'New',     value: stats.new,     color: '#a06a00' },
+            { key: 'read',    label: 'Read',    value: stats.read,    color: '#52685B' },
             { key: 'replied', label: 'Replied', value: stats.replied, color: C.success },
           ].map(s => (
             <div
@@ -161,7 +165,9 @@ export default function AdminInquiriesPage() {
         <div style={{ display: 'grid', gridTemplateColumns: selected ? '1fr 380px' : '1fr', gap: '20px', alignItems: 'start' }}>
 
           {/* ── Table ── */}
-          <div style={{ background: C.white, borderRadius: '16px', border: `1px solid ${C.border}`, overflow: 'hidden' }}>
+          <div style={{ position: 'relative', background: C.white, borderRadius: '16px', border: `1px solid ${C.border}`, overflow: 'hidden' }}>
+            {/* Top gold hairline */}
+            <span aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '2px', background: GOLD_LINE }} />
             {loading ? (
               <div style={{ padding: '60px', textAlign: 'center', color: C.muted }}>
                 Loading...
@@ -249,7 +255,9 @@ export default function AdminInquiriesPage() {
 
           {/* ── Detail Panel ── */}
           {selected && (
-            <div style={{ background: C.white, borderRadius: '16px', border: `1px solid ${C.border}`, padding: '24px', position: 'sticky', top: '20px' }}>
+            <div style={{ position: 'sticky', top: '20px', background: C.white, borderRadius: '16px', border: `1px solid ${C.border}`, padding: '24px', overflow: 'hidden' }}>
+              {/* Top gold hairline */}
+              <span aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '2px', background: GOLD_LINE }} />
 
               {/* Header */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
@@ -265,8 +273,8 @@ export default function AdminInquiriesPage() {
               </div>
 
               {/* Sender Info */}
-              <div style={{ background: C.bg, borderRadius: '10px', padding: '16px', marginBottom: '16px' }}>
-                <p style={{ fontSize: '11px', fontWeight: '600', color: C.primary, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 10px' }}>
+              <div style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: '10px', padding: '16px', marginBottom: '16px' }}>
+                <p style={{ fontSize: '11px', fontWeight: '600', color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 10px' }}>
                   Sender
                 </p>
                 {[
@@ -283,8 +291,8 @@ export default function AdminInquiriesPage() {
 
               {/* Property Info */}
               {selected.property && (
-                <div style={{ background: C.bg, borderRadius: '10px', padding: '16px', marginBottom: '16px' }}>
-                  <p style={{ fontSize: '11px', fontWeight: '600', color: C.primary, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 10px' }}>
+                <div style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: '10px', padding: '16px', marginBottom: '16px' }}>
+                  <p style={{ fontSize: '11px', fontWeight: '600', color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 10px' }}>
                     Property
                   </p>
                   {selected.property.images?.[0]?.url && (
@@ -300,7 +308,7 @@ export default function AdminInquiriesPage() {
                   <p style={{ fontSize: '13px', color: C.muted, margin: '0 0 8px' }}>
                     📍 {selected.property.location}, {selected.property.city}
                   </p>
-                  <p style={{ fontFamily: "'Marcellus', serif", fontSize: '16px', color: C.primary, margin: '0 0 10px' }}>
+                  <p style={{ fontFamily: "'Marcellus', serif", fontSize: '16px', color: '#a06a00', margin: '0 0 10px' }}>
                     ₹{Number(selected.property.price).toLocaleString('en-IN')}
                   </p>
                   <Link
@@ -314,8 +322,8 @@ export default function AdminInquiriesPage() {
               )}
 
               {/* Message */}
-              <div style={{ background: C.bg, borderRadius: '10px', padding: '16px', marginBottom: '16px', borderLeft: `3px solid ${C.primary}` }}>
-                <p style={{ fontSize: '11px', fontWeight: '600', color: C.primary, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 8px' }}>
+              <div style={{ background: C.bg, borderRadius: '10px', padding: '16px', marginBottom: '16px', borderLeft: `3px solid ${C.accent}` }}>
+                <p style={{ fontSize: '11px', fontWeight: '600', color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 8px' }}>
                   Message
                 </p>
                 <p style={{ fontSize: '14px', color: C.text, lineHeight: 1.7, margin: 0, fontStyle: 'italic' }}>
@@ -330,7 +338,7 @@ export default function AdminInquiriesPage() {
 
               {/* Status Update */}
               <div style={{ marginBottom: '16px' }}>
-                <p style={{ fontSize: '11px', fontWeight: '600', color: C.primary, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 8px' }}>
+                <p style={{ fontSize: '11px', fontWeight: '600', color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 8px' }}>
                   Update Status
                 </p>
                 <div style={{ display: 'flex', gap: '8px' }}>
@@ -365,14 +373,14 @@ export default function AdminInquiriesPage() {
               {/* Action Buttons */}
               <div style={{ display: 'flex', gap: '8px' }}>
                 <a href={`mailto:${selected.email}?subject=Re: ${selected.property?.title || 'Your Inquiry'}`}
-                  style={{ flex: 1, padding: '10px', background: C.primary, color: '#fff', borderRadius: '8px', textAlign: 'center', textDecoration: 'none', fontSize: '13px', fontWeight: '600', fontFamily: "'Jost', sans-serif" }}
+                  style={{ flex: 1, padding: '10px', background: C.primary, color: C.bg, border: '1px solid rgba(226,161,13,0.5)', borderRadius: '8px', textAlign: 'center', textDecoration: 'none', fontSize: '13px', fontWeight: '600', fontFamily: "'Jost', sans-serif" }}
                 >
                   ✉ Send Email
                 </a>
                 {selected.phone && (
                   <a
                     href={`tel:${selected.phone}`}
-                    style={{ flex: 1, padding: '10px', background: C.primaryPale, color: C.primary, borderRadius: '8px', textAlign: 'center', textDecoration: 'none', fontSize: '13px', fontWeight: '600', fontFamily: "'Jost', sans-serif" }}
+                    style={{ flex: 1, padding: '10px', background: C.primaryPale, color: C.primary, border: `1px solid ${C.border}`, borderRadius: '8px', textAlign: 'center', textDecoration: 'none', fontSize: '13px', fontWeight: '600', fontFamily: "'Jost', sans-serif" }}
                   >
                     📞 Call
                   </a>

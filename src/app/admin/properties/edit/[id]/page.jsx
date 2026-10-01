@@ -4,18 +4,22 @@ import { useRouter, useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const COLORS = {
-  primary: '#2e5d42',
-  primaryLight: '#3d7a58',
-  primaryPale: '#e8f0eb',
-  bg: '#fafaef',
+  primary: '#1a2a22',
+  primaryLight: '#52685B',
+  primaryPale: '#f3f0E8',
+  bg: '#faf9f6',
   white: '#ffffff',
-  border: '#d6ddd8',
-  text: '#1a2e22',
-  muted: '#6b7c72',
-  accent: '#c8a96e',
+  border: '#e8e3d3',
+  text: '#1a2a22',
+  muted: '#52685B',
+  accent: '#e2a10d',
+  gold: '#ffcd39',
   error: '#c0392b',
   success: '#1a6b3c',
 };
+
+const GOLD_LINE =
+  'linear-gradient(90deg, rgba(226,161,13,0) 0%, #e2a10d 25%, #ffcd39 50%, #e2a10d 75%, rgba(226,161,13,0) 100%)';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -41,7 +45,7 @@ function FloatingField({ label, children, span = false, index = 0 }) {
         fontWeight: '600',
         letterSpacing: '0.1em',
         textTransform: 'uppercase',
-        color: COLORS.primary,
+        color: COLORS.muted,
         marginBottom: '8px',
       }}>
         {label}
@@ -57,7 +61,7 @@ const fieldStyle = {
   fontFamily: "'Jost', sans-serif",
   fontSize: '15px',
   color: COLORS.text,
-  background: COLORS.white,
+  background: COLORS.bg,
   border: `1.5px solid ${COLORS.border}`,
   borderRadius: '10px',
   outline: 'none',
@@ -77,12 +81,13 @@ function Field({ as: Tag = 'input', style: extra, ...props }) {
         ...(Tag === 'select' ? {
           cursor: 'pointer',
           appearance: 'none',
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232e5d42' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23e2a10d' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")`,
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'right 14px center',
         } : {}),
-        borderColor: focused ? COLORS.primary : COLORS.border,
-        boxShadow: focused ? `0 0 0 3px ${COLORS.primaryPale}` : 'none',
+        borderColor: focused ? COLORS.accent : COLORS.border,
+        background: focused ? COLORS.white : COLORS.bg,
+        boxShadow: focused ? '0 0 0 3px rgba(255,205,57,0.2)' : 'none',
         ...extra,
       }}
     />
@@ -96,6 +101,7 @@ function Section({ title, icon, delay = 0, children }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
       style={{
+        position: 'relative',
         background: COLORS.white,
         borderRadius: '16px',
         border: `1px solid ${COLORS.border}`,
@@ -103,13 +109,15 @@ function Section({ title, icon, delay = 0, children }) {
         marginBottom: '20px',
       }}
     >
+      {/* Top gold hairline */}
+      <span aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, top: 0, height: '2px', background: GOLD_LINE }} />
       <div style={{
         display: 'flex', alignItems: 'center', gap: '10px',
         padding: '16px 24px',
-        borderBottom: `1px solid ${COLORS.primaryPale}`,
+        borderBottom: `1px solid ${COLORS.border}`,
         background: COLORS.primaryPale,
       }}>
-        <span style={{ color: COLORS.primary, fontSize: '14px' }}>{icon}</span>
+        <span style={{ color: COLORS.accent, fontSize: '14px' }}>{icon}</span>
         <h2 style={{
           fontFamily: "'Marcellus', serif",
           fontSize: '17px',
@@ -165,7 +173,7 @@ export default function EditPropertyPage() {
           transition={{ duration: 1.6, repeat: Infinity }}
           style={{ textAlign: 'center' }}
         >
-          <div style={{ width: '48px', height: '48px', border: `3px solid ${COLORS.primaryPale}`, borderTopColor: COLORS.primary, borderRadius: '50%', animation: 'spin 0.9s linear infinite', margin: '0 auto 16px' }} />
+          <div style={{ width: '48px', height: '48px', border: `3px solid ${COLORS.border}`, borderTopColor: COLORS.accent, borderRadius: '50%', animation: 'spin 0.9s linear infinite', margin: '0 auto 16px' }} />
           <p style={{ fontFamily: "'Jost', sans-serif", color: COLORS.muted, fontSize: '14px' }}>Fetching property data…</p>
         </motion.div>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
@@ -177,9 +185,8 @@ export default function EditPropertyPage() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Jost:wght@300;400;500;600&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: ${COLORS.bg}; }
-        input::placeholder { color: #a0b0a8; }
+        input::placeholder { color: rgba(82,104,91,0.55); }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; }
         @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
@@ -227,11 +234,12 @@ export default function EditPropertyPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '8px' }}>
               <div style={{
                 width: '44px', height: '44px', borderRadius: '12px',
-                background: COLORS.primary, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: COLORS.primary, border: '1px solid rgba(226,161,13,0.55)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
                 <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-                  <path d="M11 4H4a1 1 0 00-1 1v14a1 1 0 001 1h14a1 1 0 001-1v-7" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M11 4H4a1 1 0 00-1 1v14a1 1 0 001 1h14a1 1 0 001-1v-7" stroke="#ffcd39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#ffcd39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
               <div>
@@ -243,7 +251,6 @@ export default function EditPropertyPage() {
                 </h1>
               </div>
             </div>
-            <div style={{ height: '2px', background: `linear-gradient(90deg, ${COLORS.primary}, ${COLORS.accent}, transparent)`, borderRadius: '2px', marginTop: '16px' }} />
           </motion.div>
 
           {/* ── Alerts ── */}
@@ -356,8 +363,8 @@ export default function EditPropertyPage() {
               style={{
                 padding: '13px 32px',
                 background: saved ? COLORS.success : loading ? COLORS.muted : COLORS.primary,
-                color: '#fff',
-                border: 'none',
+                color: COLORS.bg,
+                border: '1px solid rgba(226,161,13,0.5)',
                 borderRadius: '10px',
                 fontFamily: "'Jost', sans-serif",
                 fontSize: '15px',
@@ -370,7 +377,7 @@ export default function EditPropertyPage() {
             >
               {loading ? (
                 <>
-                  <span style={{ display: 'inline-block', width: '14px', height: '14px', border: '2px solid rgba(255,255,255,0.4)', borderTopColor: '#fff', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+                  <span style={{ display: 'inline-block', width: '14px', height: '14px', border: '2px solid rgba(255,205,57,0.4)', borderTopColor: COLORS.gold, borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
                   Updating…
                 </>
               ) : saved ? '✓ Updated!' : 'Update Property'}

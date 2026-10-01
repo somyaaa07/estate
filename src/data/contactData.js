@@ -4,7 +4,7 @@ export const EMAIL = "bringo.realstates@gmail.com";
 export const WHATSAPP_URL = "https://wa.me/919999300301";
 
 export const heroImage = {
-  src: "/building1.png",
+  src: "/building1.webp",
   alt: "Modern residential towers at dusk",
 };
 

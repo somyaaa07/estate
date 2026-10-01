@@ -6,6 +6,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Marcellus, Jost } from "next/font/google";
 import { FiMenu, FiX, FiLogOut } from "react-icons/fi";
+import EnquiryModal from "@/component/EnquiryModal";
 
 const marcellus = Marcellus({
   subsets: ["latin"],
@@ -52,6 +53,17 @@ function NavbarInner() {
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
+  // Automatically open enquiry modal after 2 minutes
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setIsEnquiryOpen(true);
+  },  2000);
+
+  return () => clearTimeout(timer);
+}, []);
+
+
 
   const isAdmin = session?.user?.role?.toLowerCase() === "admin";
   const allLinks = isAdmin
@@ -157,8 +169,15 @@ function NavbarInner() {
           })}
         </ul>
 
-        {/* Desktop auth (sirf logged-in user/admin ke liye) */}
+        {/* Desktop auth */}
         <div className="hidden items-center gap-2.5 lg:flex">
+          <button
+            type="button"
+            onClick={() => setIsEnquiryOpen(true)}
+            className={`rounded-lg bg-[#1a2a22] px-5 py-2.5 text-sm font-medium text-[#faf9f6] transition hover:bg-[#52685b] ${focusRing}`}
+          >
+            Enquiry Now
+          </button>
           {session && (
             <>
               {dashboardChip("max-w-[160px]")}
@@ -231,6 +250,18 @@ function NavbarInner() {
                   );
                 })}
               </ul>
+              <div className="px-4 py-4 sm:px-6">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpen(false);
+                    setIsEnquiryOpen(true);
+                  }}
+                  className="w-full rounded-lg bg-[#1a2a22] px-5 py-3 text-sm font-medium text-[#faf9f6] transition hover:bg-[#52685b]"
+                >
+                  Enquiry Now
+                </button>
+              </div>
 
               {session && (
                 <div className="mx-auto max-w-7xl border-t border-[#1a2a22]/10 px-4 pb-6 pt-4 sm:px-6">
@@ -246,6 +277,11 @@ function NavbarInner() {
           </>
         )}
       </AnimatePresence>
+      {/* Enquiry Modal */}
+      <EnquiryModal
+        open={isEnquiryOpen}
+        onClose={() => setIsEnquiryOpen(false)}
+      />
     </header>
   );
 }

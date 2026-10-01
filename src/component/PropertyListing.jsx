@@ -8,13 +8,8 @@ export default function PropertiesList({ type, heading }) {
 
 useEffect(() => {
   const url = type
-<<<<<<< HEAD
-    ? `/api/admin/properties?type=${type}`
-    : `/api/admin/properties`;
-=======
     ? `/api/properties?type=${type}`
     : `/api/properties`;
->>>>>>> origin/main
 
   console.log('🔍 Fetching:', url);
 

@@ -25,10 +25,9 @@ const quickLinks = [
 ];
 
 const services = [
-  { label: "Residential Properties", href: "/properties" },
-  { label: "Commercial Properties", href: "/properties" },
-  { label: "Land / Plotting", href: "/properties" },
-  // { label: "Investment Advisory", href: "/properties" },
+  { label: "Buy", href: "/properties?type=buy" },
+  { label: "Rent", href: "/properties?type=rent" },
+  { label: "Sell", href: "/properties?type=sell" },
 ];
 
 const socials = [

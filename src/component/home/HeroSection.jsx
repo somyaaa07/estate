@@ -17,7 +17,7 @@ const marcellus = Marcellus({
 });
 
 const HERO_IMAGE = {
-  src: "/banner/home-banner.png",
+  src: "/banner/home-banner.webp",
   alt: "Premium residential towers in Greater Noida",
 };
 
@@ -116,7 +116,7 @@ export default function HomeHero() {
 
 {/* Mobile Image */}
 <motion.img
-  src="/banner/home-mobile.png"
+  src="/banner/home-mobile.webp"
   alt={HERO_IMAGE.alt}
   initial={{ scale: 1.08 }}
   animate={{ scale: 1 }}

@@ -20,7 +20,7 @@ const serif = `${marcellus.className} font-normal`;
 
 /* ---------------- DATA ---------------- */
 const ABOUT_IMAGE = {
-  src: "/banner/about.png",
+  src: "/banner/about.webp",
   alt: "Luxury living room with floor-to-ceiling windows",
 };
 

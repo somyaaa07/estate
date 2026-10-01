@@ -41,11 +41,7 @@ const navLinks = [
     label: 'Properties',
     icon: Building2,
   },
-  {
-    href: '/admin/agents',
-    label: 'Agents',
-    icon: UserCog,
-  },
+  
   {
     href: '/admin/inquiries',
     label: 'Inquiries',

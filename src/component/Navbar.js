@@ -35,7 +35,7 @@ function Logo() {
     <Link
       href="/"
       aria-label="Estate – Home"
-      className="flex items-center gap-2.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#52685B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf9f6]"
+      className="flex items-center gap-2.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#faf9f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a2a22]"
     >
       <img
         src="/uploads/logo.png"
@@ -54,16 +54,15 @@ function NavbarInner() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
-  // Automatically open enquiry modal after 2 minutes
-useEffect(() => {
-  const timer = setTimeout(() => {
-    setIsEnquiryOpen(true);
-  },  2000);
 
-  return () => clearTimeout(timer);
-}, []);
+  // Automatically open enquiry modal after a delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsEnquiryOpen(true);
+    }, 2000);
 
-
+    return () => clearTimeout(timer);
+  }, []);
 
   const isAdmin = session?.user?.role?.toLowerCase() === "admin";
   const allLinks = isAdmin
@@ -110,13 +109,13 @@ useEffect(() => {
   }, [open]);
 
   const focusRing =
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#52685B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf9f6]";
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#faf9f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a2a22]";
 
   const logoutBtn = (extra = "") => (
     <button
       type="button"
       onClick={() => signOut({ callbackUrl: "/" })}
-      className={`inline-flex items-center justify-center gap-2 rounded-lg border border-[#1a2a22]/15 px-4 py-2 text-sm font-medium text-[#52685B] transition hover:border-red-300 hover:bg-red-50 hover:text-red-600 ${focusRing} ${extra}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 px-4 py-2 text-sm font-medium text-[#faf9f6]/80 transition hover:border-red-400 hover:bg-red-500/10 hover:text-red-300 ${focusRing} ${extra}`}
     >
       <FiLogOut size={15} aria-hidden="true" />
       Logout
@@ -126,9 +125,9 @@ useEffect(() => {
   const dashboardChip = (extra = "") => (
     <Link
       href={isAdmin ? "/admin" : "/dashboard"}
-      className={`inline-flex items-center gap-2 rounded-lg bg-[#f3f0E8] px-3.5 py-2 text-sm font-medium text-[#1a2a22] transition hover:bg-[#1a2a22]/10 ${focusRing} ${extra}`}
+      className={`inline-flex items-center gap-2 rounded-lg bg-white/10 px-3.5 py-2 text-sm font-medium text-[#faf9f6] transition hover:bg-white/20 ${focusRing} ${extra}`}
     >
-      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1a2a22] text-xs font-bold text-[#faf9f6]">
+      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#faf9f6] text-xs font-bold text-[#1a2a22]">
         {initial}
       </span>
       <span className="truncate">{firstName}</span>
@@ -137,8 +136,8 @@ useEffect(() => {
 
   return (
     <header
-      className={`${jost.className} sticky top-0 z-50 border-b border-[#1a2a22]/10 bg-[#faf9f6]/95 backdrop-blur transition-shadow ${
-        scrolled ? "shadow-[0_4px_20px_-10px_rgba(26,42,34,0.25)]" : ""
+      className={`${jost.className} sticky top-0 z-50 border-b border-white/10 bg-[#1a2a22]/95 backdrop-blur transition-shadow ${
+        scrolled ? "shadow-[0_4px_20px_-10px_rgba(0,0,0,0.5)]" : ""
       }`}
     >
       <nav
@@ -158,8 +157,8 @@ useEffect(() => {
                   aria-current={active ? "page" : undefined}
                   className={`border-b-2 py-1 text-sm transition-colors ${focusRing} ${
                     active
-                      ? "border-[#1a2a22] font-semibold text-[#1a2a22]"
-                      : "border-transparent font-normal text-[#52685B] hover:text-[#1a2a22]"
+                      ? "border-[#faf9f6] font-semibold text-[#faf9f6]"
+                      : "border-transparent font-normal text-[#faf9f6]/70 hover:text-[#faf9f6]"
                   }`}
                 >
                   {label}
@@ -174,14 +173,14 @@ useEffect(() => {
           <button
             type="button"
             onClick={() => setIsEnquiryOpen(true)}
-            className={`rounded-lg bg-[#1a2a22] px-5 py-2.5 text-sm font-medium text-[#faf9f6] transition hover:bg-[#52685b] ${focusRing}`}
+            className={`rounded-lg bg-[#faf9f6] px-5 py-2.5 text-sm font-medium text-[#1a2a22] transition hover:bg-[#f3f0E8] ${focusRing}`}
           >
             Enquiry Now
           </button>
           {session && (
             <>
- {!isAdmin && dashboardChip("max-w-[160px]")}
-               {logoutBtn()}
+              {!isAdmin && dashboardChip("max-w-[160px]")}
+              {logoutBtn()}
             </>
           )}
         </div>
@@ -193,7 +192,7 @@ useEffect(() => {
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
-          className={`flex h-11 w-11 items-center justify-center rounded-lg border border-[#1a2a22]/15 text-[#1a2a22] transition hover:bg-[#f3f0E8] lg:hidden ${focusRing}`}
+          className={`flex h-11 w-11 items-center justify-center rounded-lg border border-white/20 text-[#faf9f6] transition hover:bg-white/10 lg:hidden ${focusRing}`}
         >
           {open ? (
             <FiX size={22} aria-hidden="true" />
@@ -213,7 +212,7 @@ useEffect(() => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={() => setOpen(false)}
-              className="fixed inset-x-0 bottom-0 top-16 bg-[#1a2a22]/40 lg:hidden"
+              className="fixed inset-x-0 bottom-0 top-16 bg-black/50 lg:hidden"
               aria-hidden="true"
             />
             <motion.div
@@ -222,7 +221,7 @@ useEffect(() => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.22 }}
-              className="absolute inset-x-0 top-full max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-[#1a2a22]/10 bg-[#faf9f6] shadow-xl lg:hidden"
+              className="absolute inset-x-0 top-full max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-white/10 bg-[#1a2a22] shadow-xl lg:hidden"
             >
               <ul className="mx-auto max-w-7xl space-y-1 px-4 pb-2 pt-4 sm:px-6">
                 {allLinks.map(({ label, href }) => {
@@ -234,14 +233,14 @@ useEffect(() => {
                         aria-current={active ? "page" : undefined}
                         className={`flex items-center justify-between rounded-xl px-4 py-3 text-base transition ${focusRing} ${
                           active
-                            ? "bg-[#f3f0E8] font-semibold text-[#1a2a22]"
-                            : "font-normal text-[#52685B] hover:bg-[#f3f0E8]/70 hover:text-[#1a2a22]"
+                            ? "bg-white/10 font-semibold text-[#faf9f6]"
+                            : "font-normal text-[#faf9f6]/70 hover:bg-white/5 hover:text-[#faf9f6]"
                         }`}
                       >
                         {label}
                         {active && (
                           <span
-                            className="h-1.5 w-1.5 rounded-full bg-[#1a2a22]"
+                            className="h-1.5 w-1.5 rounded-full bg-[#faf9f6]"
                             aria-hidden="true"
                           />
                         )}
@@ -257,16 +256,16 @@ useEffect(() => {
                     setOpen(false);
                     setIsEnquiryOpen(true);
                   }}
-                  className="w-full rounded-lg bg-[#1a2a22] px-5 py-3 text-sm font-medium text-[#faf9f6] transition hover:bg-[#52685b]"
+                  className="w-full rounded-lg bg-[#faf9f6] px-5 py-3 text-sm font-medium text-[#1a2a22] transition hover:bg-[#f3f0E8]"
                 >
                   Enquiry Now
                 </button>
               </div>
 
               {session && (
-                <div className="mx-auto max-w-7xl border-t border-[#1a2a22]/10 px-4 pb-6 pt-4 sm:px-6">
+                <div className="mx-auto max-w-7xl border-t border-white/10 px-4 pb-6 pt-4 sm:px-6">
                   <div className="flex flex-col gap-3 sm:flex-row">
-      {!isAdmin && dashboardChip("flex-1 justify-center py-3")}
+                    {!isAdmin && dashboardChip("flex-1 justify-center py-3")}
                     {logoutBtn("flex-1 py-3")}
                   </div>
                 </div>
@@ -277,6 +276,7 @@ useEffect(() => {
           </>
         )}
       </AnimatePresence>
+
       {/* Enquiry Modal */}
       <EnquiryModal
         open={isEnquiryOpen}
@@ -291,7 +291,7 @@ export default function Navbar() {
   return (
     <Suspense
       fallback={
-        <div className="sticky top-0 z-50 h-16 border-b border-[#1a2a22]/10 bg-[#faf9f6] lg:h-[72px]" />
+        <div className="sticky top-0 z-50 h-16 border-b border-white/10 bg-[#1a2a22] lg:h-[72px]" />
       }
     >
       <NavbarInner />

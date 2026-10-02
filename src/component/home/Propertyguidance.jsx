@@ -66,11 +66,11 @@ export default function PropertyGuidance() {
                     className="text-[#D4A62A]"
                   />
                   <div>
-                    <p className="text-[30px] font-semibold leading-none text-[#1a2a22]">
+                    <p className={`${marcellus.className} font-bold leading-none text-[#1a2a22]`}>
                       {s.value}
                     </p>
                     <p
-                      className={`mt-2 text-[15px] ${
+                      className={`${marcellus.className} mt-2  ${
                         s.highlight ? "text-[#1a2a22]" : "text-[#52685B]"
                       }`}
                     >

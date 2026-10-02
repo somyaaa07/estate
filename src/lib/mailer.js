@@ -1,23 +1,22 @@
 import nodemailer from 'nodemailer';
 
-// ── Transporter (Gmail example — .env mein creds daalo) ──
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.MAIL_USER,   // aapka Gmail: abc@gmail.com
-    pass: process.env.MAIL_PASS,   // Gmail App Password (not your login password)
+    user: process.env.MAIL_USER,   
+    pass: process.env.MAIL_PASS,   
   },
 });
 
-// HTML mein user ka text daalne se pehle escape karo
+
 const esc = (v) =>
   String(v ?? '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, "&#39;");
 
-// ── Send inquiry email to admin(s) ──
 export async function sendInquiryEmail({ to, property, inquiry }) {
   const subject = `New Inquiry — ${property.title}`;
 
@@ -79,3 +78,197 @@ export async function sendInquiryEmail({ to, property, inquiry }) {
     html,
   });
 }
+
+
+export async function sendContactEnquiryEmail({ enquiry }) {
+  const {
+    name,
+    phone,
+    email,
+    enquiryType,
+    message,
+  } = enquiry;
+
+  const subject = `New Website Enquiry — ${name}`;
+
+  const html = `
+    <div style="
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      background: #f9f9f9;
+      border-radius: 12px;
+      overflow: hidden;
+    ">
+
+      <div style="
+        background: #1a2a22;
+        padding: 24px 32px;
+      ">
+        <h2 style="
+          color: #ffffff;
+          margin: 0;
+          font-size: 20px;
+        ">
+          New Website Enquiry
+        </h2>
+
+        <p style="
+          color: #d8dfda;
+          margin: 6px 0 0;
+          font-size: 14px;
+        ">
+          Someone has submitted an enquiry through your website.
+        </p>
+      </div>
+
+      <div style="
+        padding: 28px 32px;
+        background: #ffffff;
+      ">
+
+        <h3 style="
+          color: #1a2a22;
+          margin: 0 0 16px;
+          font-size: 16px;
+        ">
+          Enquiry Details
+        </h3>
+
+        <table style="width: 100%; border-collapse: collapse;">
+
+          <tr>
+            <td style="
+              padding: 8px 0;
+              color: #6b7c72;
+              font-size: 13px;
+              width: 130px;
+            ">
+              Name
+            </td>
+
+            <td style="
+              padding: 8px 0;
+              color: #1a2a22;
+              font-size: 14px;
+              font-weight: 600;
+            ">
+              ${name}
+            </td>
+          </tr>
+
+          <tr>
+            <td style="
+              padding: 8px 0;
+              color: #6b7c72;
+              font-size: 13px;
+            ">
+              Phone
+            </td>
+
+            <td style="
+              padding: 8px 0;
+              color: #1a2a22;
+              font-size: 14px;
+            ">
+              ${phone}
+            </td>
+          </tr>
+
+          ${
+            email
+              ? `
+          <tr>
+            <td style="
+              padding: 8px 0;
+              color: #6b7c72;
+              font-size: 13px;
+            ">
+              Email
+            </td>
+
+            <td style="
+              padding: 8px 0;
+              color: #1a2a22;
+              font-size: 14px;
+            ">
+              ${email}
+            </td>
+          </tr>
+          `
+              : ""
+          }
+
+          ${
+            enquiryType
+              ? `
+          <tr>
+            <td style="
+              padding: 8px 0;
+              color: #6b7c72;
+              font-size: 13px;
+            ">
+              Enquiry Type
+            </td>
+
+            <td style="
+              padding: 8px 0;
+              color: #1a2a22;
+              font-size: 14px;
+            ">
+              ${enquiryType}
+            </td>
+          </tr>
+          `
+              : ""
+          }
+
+          <tr>
+            <td style="
+              padding: 8px 0;
+              color: #6b7c72;
+              font-size: 13px;
+              vertical-align: top;
+            ">
+              Message
+            </td>
+
+            <td style="
+              padding: 8px 0;
+              color: #1a2a22;
+              font-size: 14px;
+              line-height: 1.6;
+            ">
+              ${message}
+            </td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div style="
+        padding: 16px 32px;
+        background: #f0f4f1;
+        text-align: center;
+      ">
+        <p style="
+          color: #6b7c72;
+          font-size: 12px;
+          margin: 0;
+        ">
+          This email was sent from your company website.
+        </p>
+      </div>
+
+    </div>
+  `;
+
+  await transporter.sendMail({
+    from: `"Website Enquiry" <${process.env.MAIL_USER}>`,
+    to: process.env.CONTACT_TO || process.env.MAIL_USER,
+    replyTo: email || undefined,
+    subject,
+    html,
+  });
+}
+

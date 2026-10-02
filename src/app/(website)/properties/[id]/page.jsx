@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Marcellus } from 'next/font/google';
 import {
   AlertCircle,
@@ -43,8 +44,9 @@ const marcellus = Marcellus({
 const goldBg = 'bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D]';
 
 const fieldBase =
-  'w-full rounded-xl border border-[#1A2A22]/15 bg-[#F3F0E8]/60 px-4 py-3 text-sm text-[#1A2A22] outline-none transition placeholder:text-[#52685B]/60 focus:border-[#D4AF37] focus:bg-[#FAF9F6] focus:ring-4 focus:ring-[#FFCD39]/30 disabled:opacity-60';
+  'w-full rounded-xl border border-[#1A2A22]/15 bg-[#F3F0E8]/60 px-4 py-3 font-sans text-sm text-[#1A2A22] outline-none transition placeholder:text-[#52685B]/60 hover:border-[#1A2A22]/30 focus:border-[#D4AF37] focus:bg-white focus:ring-4 focus:ring-[#FFCD39]/30 disabled:opacity-60';
 const labelBase = 'mb-1.5 block text-sm text-[#1A2A22]';
+const card = 'rounded-3xl border border-[#1A2A22]/10 bg-white';
 
 /* ---------------------------------------------------------------
    IMAGE GALLERY
@@ -53,16 +55,13 @@ function ImageGallery({ images = [], title }) {
   const [current, setCurrent] = useState(0);
   const total = images.length;
 
-  const go = useCallback(
-    (dir) => setCurrent((p) => (p + dir + total) % total),
-    [total]
-  );
+  const go = useCallback((dir) => setCurrent((p) => (p + dir + total) % total), [total]);
 
   if (!total) {
     return (
-      <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 rounded-3xl bg-[#F3F0E8] text-[#52685B]">
-        <ImageOff size={32} strokeWidth={1.4} />
-        <span className="text-sm">No images available</span>
+      <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 rounded-3xl border border-[#1A2A22]/10 bg-white text-[#52685B]">
+        <ImageOff size={32} strokeWidth={1.4} aria-hidden="true" />
+        <span className="font-sans text-sm">No images available</span>
       </div>
     );
   }
@@ -72,29 +71,35 @@ function ImageGallery({ images = [], title }) {
 
   return (
     <div
+      role="group"
+      aria-roledescription="carousel"
+      aria-label="Property images"
       onKeyDown={(e) => {
+        if (total < 2) return;
         if (e.key === 'ArrowLeft') go(-1);
         if (e.key === 'ArrowRight') go(1);
       }}
     >
-      <div className="relative aspect-[16/10] overflow-hidden rounded-3xl bg-[#1A2A22] shadow-[0_20px_50px_-25px_rgba(26,42,34,0.5)]">
+      <div className="group relative aspect-[16/10] overflow-hidden rounded-3xl bg-[#1A2A22] shadow-[0_24px_60px_-28px_rgba(26,42,34,0.55)] ring-1 ring-[#1A2A22]/10">
         <img
           key={current}
           src={images[current].url}
           alt={`${title || 'Property'} – image ${current + 1}`}
-          className="h-full w-full object-cover"
+          className="h-full w-full animate-[fadeIn_0.4s_ease-out] object-cover"
         />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-[#1A2A22]/40 to-transparent" />
+        <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#1A2A22]/55 to-transparent" />
+        <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
 
         {total > 1 && (
           <>
             <button type="button" onClick={() => go(-1)} aria-label="Previous image" className={`${arrow} left-4`}>
-              <ChevronLeft size={20} />
+              <ChevronLeft size={20} aria-hidden="true" />
             </button>
             <button type="button" onClick={() => go(1)} aria-label="Next image" className={`${arrow} right-4`}>
-              <ChevronRight size={20} />
+              <ChevronRight size={20} aria-hidden="true" />
             </button>
-            <span className="absolute bottom-4 right-4 rounded-full bg-[#1A2A22]/65 px-3 py-1 text-xs text-[#FAF9F6] backdrop-blur">
+            <span className="absolute bottom-4 right-4 rounded-full bg-[#1A2A22]/70 px-3 py-1 font-sans text-xs text-[#FAF9F6] backdrop-blur">
               {current + 1} / {total}
             </span>
           </>
@@ -111,9 +116,7 @@ function ImageGallery({ images = [], title }) {
               aria-label={`Show image ${i + 1}`}
               aria-current={i === current}
               className={`h-16 w-24 shrink-0 overflow-hidden rounded-xl border-2 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] ${
-                i === current
-                  ? 'border-[#D4AF37] opacity-100'
-                  : 'border-transparent opacity-60 hover:opacity-100'
+                i === current ? 'border-[#D4AF37] opacity-100' : 'border-transparent opacity-60 hover:opacity-100'
               }`}
             >
               <img src={img.url} alt="" className="h-full w-full object-cover" />
@@ -128,7 +131,7 @@ function ImageGallery({ images = [], title }) {
 /* ---------------------------------------------------------------
    SAVE BUTTON
 ---------------------------------------------------------------- */
-function SaveButton({ propertyId }) {
+function SaveButton({ propertyId, dark = false }) {
   const { data: session } = useSession();
   const router = useRouter();
   const [saved, setSaved] = useState(false);
@@ -162,16 +165,18 @@ function SaveButton({ propertyId }) {
     setLoading(false);
   };
 
+  const idle = dark
+    ? 'border-[#FAF9F6]/25 text-[#FAF9F6] hover:border-[#D4AF37] hover:text-[#F5D77A]'
+    : 'border-[#1A2A22]/20 bg-white text-[#52685B] hover:border-[#D4AF37] hover:text-[#1A2A22]';
+
   return (
     <button
       type="button"
       onClick={toggle}
       disabled={loading}
       aria-pressed={saved}
-      className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-60 ${
-        saved
-          ? 'border-red-300 bg-red-50 text-red-500'
-          : 'border-[#1A2A22]/20 bg-[#FAF9F6] text-[#52685B] hover:border-[#D4AF37] hover:text-[#1A2A22]'
+      className={`inline-flex items-center justify-center gap-2 rounded-full border px-5 py-2.5 font-sans text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-60 ${
+        saved ? 'border-red-300 bg-red-50 text-red-500' : idle
       }`}
     >
       <Heart size={16} className={saved ? 'fill-red-500' : ''} aria-hidden="true" />
@@ -240,16 +245,17 @@ function InquiryForm({ propertyId }) {
 
   if (status === 'success') {
     return (
-      <div aria-live="polite" className="rounded-3xl border border-[#1A2A22]/10 bg-[#FAF9F6] p-8 text-center">
+      <div aria-live="polite" className={`${card} relative overflow-hidden p-8 text-center`}>
+        <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
         <span className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full text-[#1A2A22] ${goldBg}`}>
           <CheckCircle2 size={26} aria-hidden="true" />
         </span>
-        <p className={`${marcellus.className} mt-5 text-2xl text-[#1A2A22]`}>Inquiry sent</p>
-        <p className="mt-2 text-sm text-[#52685B]">We will contact you shortly.</p>
+        <p className="mt-5 text-2xl text-[#1A2A22]">Inquiry sent</p>
+        <p className="mt-2 font-sans text-sm text-[#52685B]">We will contact you shortly.</p>
         <button
           type="button"
           onClick={() => setStatus('idle')}
-          className="mt-5 text-sm text-[#52685B] underline underline-offset-4 transition hover:text-[#1A2A22]"
+          className="mt-5 font-sans text-sm text-[#52685B] underline underline-offset-4 transition hover:text-[#1A2A22] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
         >
           Send another inquiry
         </button>
@@ -260,8 +266,10 @@ function InquiryForm({ propertyId }) {
   const loading = status === 'loading';
 
   return (
-    <div className="rounded-3xl border border-[#1A2A22]/10 bg-[#FAF9F6] p-6">
-      <h3 className={`${marcellus.className} text-xl text-[#1A2A22]`}>Send an inquiry</h3>
+    <div className={`${card} relative overflow-hidden p-6 sm:p-7`}>
+      <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
+      <h2 className="text-2xl text-[#1A2A22]">Send an inquiry</h2>
+      <p className="mt-1 font-sans text-sm text-[#52685B]">We usually reply within a day.</p>
 
       <form onSubmit={handleSubmit} noValidate className="mt-5 space-y-4">
         <div>
@@ -290,7 +298,7 @@ function InquiryForm({ propertyId }) {
         </div>
 
         {status === 'error' && (
-          <p role="alert" className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <p role="alert" className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 font-sans text-sm text-red-700">
             <AlertCircle size={17} className="mt-0.5 shrink-0" aria-hidden="true" />
             {errorMsg}
           </p>
@@ -299,7 +307,7 @@ function InquiryForm({ propertyId }) {
         <button
           type="submit"
           disabled={loading}
-          className="group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-6 pr-2.5 text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
+          className="group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-6 pr-2.5 text-[15px] text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
         >
           <span aria-hidden="true" className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100" />
           <span className="relative z-10">{loading ? 'Sending…' : 'Send inquiry'}</span>
@@ -322,40 +330,60 @@ function InquiryForm({ propertyId }) {
 const TYPE_BADGE = {
   buy: 'bg-[#1A2A22] text-[#F5D77A]',
   sell: `${goldBg} text-[#1A2A22]`,
-  rent: 'bg-[#F3F0E8] text-[#1A2A22] ring-1 ring-[#1A2A22]/15',
+  rent: 'bg-white text-[#1A2A22] ring-1 ring-[#1A2A22]/15',
 };
 
-function Fact({ icon: Icon, label, value }) {
+function PriceCard({ property, price, perSqft, propertyId, className = '' }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-[#1A2A22]/10 bg-[#FAF9F6] p-4">
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#1A2A22] text-[#F5D77A]">
-        <Icon size={20} strokeWidth={1.6} aria-hidden="true" />
-      </span>
-      <div className="min-w-0">
-        <p className="text-xs text-[#52685B]">{label}</p>
-        <p className="truncate text-[15px] capitalize text-[#1A2A22]">{value}</p>
+    <div className={`relative overflow-hidden rounded-3xl bg-[#1A2A22] p-6 text-[#FAF9F6] sm:p-7 ${className}`}>
+      <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
+      <div aria-hidden="true" className="pointer-events-none absolute -bottom-20 -right-16 h-52 w-52 rounded-full bg-[#D4AF37]/10 blur-3xl" />
+      <p className="relative font-sans text-sm text-[#FAF9F6]/60">
+        {property.type === 'rent' ? 'Monthly rent' : 'Price'}
+      </p>
+      <p className="relative mt-1 text-4xl leading-tight text-[#F5D77A]">
+        ₹{price}
+        {property.type === 'rent' && <span className="font-sans text-base text-[#FAF9F6]/60"> /mo</span>}
+      </p>
+      {perSqft && <p className="relative mt-1 font-sans text-sm text-[#FAF9F6]/60">₹{perSqft} / sq ft</p>}
+      <div className="relative mt-5 flex flex-wrap items-center gap-3">
+        <a
+          href="#inquiry"
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] px-5 py-2.5 font-sans text-sm text-[#1A2A22] transition hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
+        >
+          Inquire now <ArrowRight size={15} aria-hidden="true" />
+        </a>
+        {/* <SaveButton propertyId={propertyId} dark /> */}
       </div>
     </div>
   );
 }
 
-function TagSection({ title, icon: Icon, items }) {
+function Section({ title, children, className = '' }) {
   return (
-    <div className="mt-8 rounded-3xl border border-[#1A2A22]/10 bg-[#FAF9F6] p-6 sm:p-8">
+    <section className={`${card} p-6 sm:p-8 ${className}`}>
       <h2 className="text-2xl">{title}</h2>
       <span aria-hidden="true" className={`mt-3 block h-[3px] w-14 rounded-full ${goldBg}`} />
-      <ul className="mt-5 flex flex-wrap gap-2.5">
+      <div className="mt-5">{children}</div>
+    </section>
+  );
+}
+
+function TagSection({ title, icon: Icon, items }) {
+  return (
+    <Section title={title} className="mt-6">
+      <ul className="flex flex-wrap gap-2.5">
         {items.map((item) => (
           <li
             key={item}
-            className="inline-flex items-center gap-2 rounded-full border border-[#1A2A22]/10 bg-white px-4 py-2 font-sans text-sm text-[#1A2A22]"
+            className="inline-flex items-center gap-2 rounded-full border border-[#1A2A22]/10 bg-[#F3F0E8]/60 px-4 py-2 font-sans text-sm text-[#1A2A22]"
           >
             <Icon size={14} className="text-[#B8902F]" aria-hidden="true" />
             {item}
           </li>
         ))}
       </ul>
-    </div>
+    </Section>
   );
 }
 
@@ -383,16 +411,17 @@ function LoadingSkeleton() {
 function NotFound() {
   return (
     <div className="flex flex-col items-center px-6 py-28 text-center">
-      <span className="flex h-20 w-20 items-center justify-center rounded-full bg-[#F3F0E8] text-[#B8902F]">
+      <span className="flex h-20 w-20 items-center justify-center rounded-full bg-white text-[#B8902F] ring-1 ring-[#D4AF37]/40">
         <SearchX size={34} strokeWidth={1.3} aria-hidden="true" />
       </span>
-      <h1 className={`${marcellus.className} mt-6 text-3xl text-[#1A2A22]`}>Property not found</h1>
-      <p className="mt-2 max-w-sm text-sm text-[#52685B]">
+      <h1 className="mt-6 text-3xl text-[#1A2A22]">Property not found</h1>
+      <span aria-hidden="true" className={`mt-4 block h-[3px] w-14 rounded-full ${goldBg}`} />
+      <p className="mt-4 max-w-sm font-sans text-sm text-[#52685B]">
         This property does not exist or has been removed.
       </p>
       <Link
         href="/properties"
-        className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#1A2A22] px-6 py-3 text-sm text-[#FAF9F6] transition hover:bg-[#52685B]"
+        className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#1A2A22] px-6 py-3 font-sans text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
       >
         <ChevronLeft size={16} aria-hidden="true" /> Back to properties
       </Link>
@@ -405,12 +434,13 @@ function NotFound() {
 ---------------------------------------------------------------- */
 export default function PropertyDetailPage() {
   const { id } = useParams();
+  const reduce = useReducedMotion();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [options, setOptions] = useState(null);
 
-  // Dropdown labels backend se (value -> label mapping)
+  // Dropdown labels from backend (value -> label mapping)
   useEffect(() => {
     fetch('/api/properties/options')
       .then((r) => r.json())
@@ -451,15 +481,19 @@ export default function PropertyDetailPage() {
   const images = property.images || [];
   const isActive = property.status === 'active';
 
-  // value -> label (backend options se), fallback raw value
-  const label = (group, value) =>
-    options?.[group]?.find((o) => o.value === value)?.label || value;
+  // value -> label (from backend options), fallback to raw value
+  const label = (group, value) => options?.[group]?.find((o) => o.value === value)?.label || value;
 
-  const facts = [
+  // Headline numbers shown right under the title
+  const keyStats = [
     property.bedrooms && { icon: BedDouble, label: 'Bedrooms', value: property.bedrooms },
     property.bathrooms && { icon: Bath, label: 'Bathrooms', value: property.bathrooms },
-    property.balcony != null && { icon: DoorOpen, label: 'Balconies', value: property.balcony },
     property.area && { icon: Ruler, label: 'Area', value: `${property.area} sq ft` },
+  ].filter(Boolean);
+
+  // Everything else goes in the overview list
+  const facts = [
+    property.balcony != null && { icon: DoorOpen, label: 'Balconies', value: property.balcony },
     property.total_floors != null && { icon: Layers, label: 'Total floors', value: property.total_floors },
     property.property_type && { icon: Building2, label: 'Property type', value: property.property_type },
     property.type && { icon: Tag, label: 'Listing', value: `For ${property.type}` },
@@ -477,14 +511,19 @@ export default function PropertyDetailPage() {
 
   return (
     <div className={shell}>
-      <div className="mx-auto max-w-7xl px-5 pb-20 pt-8 sm:px-8">
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className="mx-auto max-w-7xl px-5 pb-32 pt-8 sm:px-8 lg:pb-20"
+      >
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1.5 text-[13px] text-[#52685B]">
+        <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1.5 font-sans text-[13px] text-[#52685B]">
           <Link href="/" className="transition hover:text-[#1A2A22]">Home</Link>
           <ChevronRight size={13} aria-hidden="true" />
           <Link href="/properties" className="transition hover:text-[#1A2A22]">Properties</Link>
           <ChevronRight size={13} aria-hidden="true" />
-          <span className="line-clamp-1 text-[#1A2A22]">{property.title}</span>
+          <span aria-current="page" className="line-clamp-1 text-[#1A2A22]">{property.title}</span>
         </nav>
 
         <div className="grid items-start gap-8 lg:grid-cols-[1fr_380px]">
@@ -492,95 +531,127 @@ export default function PropertyDetailPage() {
           <div className="min-w-0">
             <ImageGallery images={images} title={property.title} />
 
-            {/* Title + price */}
-            <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  {property.type && (
-                    <span className={`rounded-full px-3.5 py-1 text-xs capitalize ${TYPE_BADGE[property.type] || TYPE_BADGE.rent}`}>
-                      For {property.type}
-                    </span>
-                  )}
-                  {property.status && (
-                    <span
-                      className={`rounded-full px-3.5 py-1 text-xs capitalize ${
-                        isActive ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
-                      }`}
-                    >
-                      {property.status === 'active' ? 'Available' : property.status}
-                    </span>
-                  )}
-                </div>
-                <h1 className="mt-3 text-3xl leading-tight sm:text-4xl">{property.title}</h1>
-                <p className="mt-2 flex items-start gap-1.5 text-[15px] text-[#52685B]">
-                  <MapPin size={16} className="mt-0.5 shrink-0 text-[#B8902F]" aria-hidden="true" />
-                  {property.location}
-                  {property.city ? `, ${property.city}` : ''}
-                </p>
+            {/* Title block */}
+            <div className="mt-8">
+              <div className="flex flex-wrap items-center gap-2">
+                {property.type && (
+                  <span className={`rounded-full px-3.5 py-1 text-xs capitalize ${TYPE_BADGE[property.type] || TYPE_BADGE.rent}`}>
+                    For {property.type}
+                  </span>
+                )}
+                {property.status && (
+                  <span
+                    className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs capitalize ${
+                      isActive ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
+                    }`}
+                  >
+                    <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-green-600' : 'bg-red-500'}`} />
+                    {isActive ? 'Available' : property.status}
+                  </span>
+                )}
               </div>
-
-              <div className="shrink-0 sm:text-right">
-                <p className="text-3xl text-[#1A2A22] sm:text-4xl">
-                  ₹{price}
-                  {property.type === 'rent' && <span className="font-sans text-base text-[#52685B]"> /mo</span>}
-                </p>
-                {perSqft && <p className="mt-1 text-[13px] text-[#52685B]">₹{perSqft} / sq ft</p>}
-                <div className="mt-3 sm:flex sm:justify-end">
-                  <SaveButton propertyId={id} />
-                </div>
-              </div>
+              <h1 className="mt-4 text-3xl leading-tight sm:text-4xl lg:text-5xl">{property.title}</h1>
+              <span aria-hidden="true" className={`mt-4 block h-[3px] w-14 rounded-full ${goldBg}`} />
+              <p className="mt-4 flex items-start gap-1.5 font-sans text-[15px] text-[#52685B]">
+                <MapPin size={16} className="mt-0.5 shrink-0 text-[#B8902F]" aria-hidden="true" />
+                {property.location}
+                {property.city ? `, ${property.city}` : ''}
+              </p>
             </div>
 
-            {/* Key facts */}
+            {/* Price (mobile / tablet) */}
+            <PriceCard
+              property={property}
+              price={price}
+              perSqft={perSqft}
+              propertyId={id}
+              className="mt-6 lg:hidden"
+            />
+
+            {/* Key stats */}
+            {keyStats.length > 0 && (
+              <ul className={`${card} mt-6 grid divide-x divide-[#1A2A22]/10 overflow-hidden`} style={{ gridTemplateColumns: `repeat(${keyStats.length}, minmax(0, 1fr))` }}>
+                {keyStats.map(({ icon: Icon, label: l, value }) => (
+                  <li key={l} className="flex flex-col items-center gap-1 px-2 py-5 text-center sm:flex-row sm:justify-center sm:gap-3 sm:text-left">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#1A2A22] text-[#F5D77A]">
+                      <Icon size={20} strokeWidth={1.6} aria-hidden="true" />
+                    </span>
+                    <span>
+                      <span className="block text-xl leading-tight">{value}</span>
+                      <span className="block font-sans text-xs text-[#52685B]">{l}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* Overview */}
             {facts.length > 0 && (
-              <div className="mt-8">
-                <h2 className="text-2xl">Overview</h2>
-                <span aria-hidden="true" className={`mt-3 block h-[3px] w-14 rounded-full ${goldBg}`} />
-                <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                  {facts.map((f) => (
-                    <Fact key={f.label} {...f} />
+              <Section title="Overview" className="mt-6">
+                <dl className="grid gap-x-10 sm:grid-cols-2">
+                  {facts.map(({ icon: Icon, label: l, value }) => (
+                    <div key={l} className="flex items-center gap-3 border-b border-[#1A2A22]/10 py-3.5">
+                      <Icon size={18} strokeWidth={1.6} className="shrink-0 text-[#B8902F]" aria-hidden="true" />
+                      <dt className="flex-1 font-sans text-sm text-[#52685B]">{l}</dt>
+                      <dd className="text-right text-[15px] capitalize">{value}</dd>
+                    </div>
                   ))}
-                </div>
-              </div>
+                </dl>
+              </Section>
             )}
 
             {/* Description */}
             {property.description && (
-              <div className="mt-8 rounded-3xl border border-[#1A2A22]/10 bg-[#FAF9F6] p-6 sm:p-8">
-                <h2 className="text-2xl">About this property</h2>
-                <span aria-hidden="true" className={`mt-3 block h-[3px] w-14 rounded-full ${goldBg}`} />
-                <p className="mt-5 whitespace-pre-line font-sans text-[15px] leading-[1.8] text-[#1A2A22]/85">
+              <Section title="About this property" className="mt-6">
+                <p className="whitespace-pre-line font-sans text-[15px] leading-[1.8] text-[#1A2A22]/85">
                   {property.description}
                 </p>
-              </div>
+              </Section>
             )}
 
-            {/* Highlights */}
-            {highlights.length > 0 && (
-              <TagSection title="Property highlights" icon={Sparkles} items={highlights} />
-            )}
-
-            {/* Amenities */}
-            {amenities.length > 0 && (
-              <TagSection title="Amenities" icon={Check} items={amenities} />
-            )}
-
-            {/* Nearby landmarks */}
-            {landmarks.length > 0 && (
-              <TagSection title="Nearby landmarks" icon={Landmark} items={landmarks} />
-            )}
+            {highlights.length > 0 && <TagSection title="Property highlights" icon={Sparkles} items={highlights} />}
+            {amenities.length > 0 && <TagSection title="Amenities" icon={Check} items={amenities} />}
+            {landmarks.length > 0 && <TagSection title="Nearby landmarks" icon={Landmark} items={landmarks} />}
           </div>
 
           {/* ===== RIGHT ===== */}
           <aside className="flex flex-col gap-5 lg:sticky lg:top-24">
+            <PriceCard
+              property={property}
+              price={price}
+              perSqft={perSqft}
+              propertyId={id}
+              className="hidden lg:block"
+            />
             {!isActive && (
-              <div className="rounded-3xl border border-red-200 bg-red-50 p-5 text-sm text-red-700">
-                This property is currently <strong>{property.status}</strong>. You can still send an
-                inquiry for similar properties.
+              <div role="status" className="flex items-start gap-2.5 rounded-3xl border border-red-200 bg-red-50 p-5 font-sans text-sm text-red-700">
+                <AlertCircle size={17} className="mt-0.5 shrink-0" aria-hidden="true" />
+                <p>
+                  This property is currently <strong className="capitalize">{property.status}</strong>. You can still
+                  send an inquiry for similar properties.
+                </p>
               </div>
             )}
-            <InquiryForm propertyId={id} />
+            <div id="inquiry" className="scroll-mt-24">
+              <InquiryForm propertyId={id} />
+            </div>
           </aside>
+        </div>
+      </motion.div>
+
+      {/* Mobile sticky bar */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#D4AF37]/30 bg-[#1A2A22]/95 px-5 py-3 backdrop-blur lg:hidden">
+        <div className="mx-auto flex max-w-xl items-center justify-between gap-4">
+          <p className="text-2xl leading-tight text-[#F5D77A]">
+            ₹{price}
+            {property.type === 'rent' && <span className="font-sans text-xs text-[#FAF9F6]/60"> /mo</span>}
+          </p>
+          <a
+            href="#inquiry"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] px-5 py-2.5 font-sans text-sm text-[#1A2A22] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
+          >
+            Send inquiry <ArrowRight size={15} aria-hidden="true" />
+          </a>
         </div>
       </div>
     </div>

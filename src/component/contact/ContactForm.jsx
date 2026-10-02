@@ -23,6 +23,8 @@ export default function ContactForm() {
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [errorMsg, setErrorMsg] = useState("");
 
+  
+
   const handleChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
@@ -192,3 +194,5 @@ export default function ContactForm() {
     </motion.div>
   );
 }
+
+

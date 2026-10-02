@@ -180,8 +180,8 @@ useEffect(() => {
           </button>
           {session && (
             <>
-              {dashboardChip("max-w-[160px]")}
-              {logoutBtn()}
+ {!isAdmin && dashboardChip("max-w-[160px]")}
+               {logoutBtn()}
             </>
           )}
         </div>
@@ -266,7 +266,7 @@ useEffect(() => {
               {session && (
                 <div className="mx-auto max-w-7xl border-t border-[#1a2a22]/10 px-4 pb-6 pt-4 sm:px-6">
                   <div className="flex flex-col gap-3 sm:flex-row">
-                    {dashboardChip("flex-1 justify-center py-3")}
+      {!isAdmin && dashboardChip("flex-1 justify-center py-3")}
                     {logoutBtn("flex-1 py-3")}
                   </div>
                 </div>

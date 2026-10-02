@@ -90,7 +90,7 @@ export default function ContactInfo() {
               }}
             >
               <span
-                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-[#ffcd39] transition-all duration-300 group-hover:text-[#1a2a22]"
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-[#ffcd39] transition-all duration-300 "
                 style={{
                   border: "1px solid rgba(226,161,13,0.55)",
                   background: "rgba(255,205,57,0.06)",

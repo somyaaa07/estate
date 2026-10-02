@@ -17,7 +17,7 @@ export default function ContactMap() {
 
   return (
     <section className="relative overflow-hidden bg-[#faf9f6] pb-16 sm:pb-20 lg:pb-24">
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

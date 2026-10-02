@@ -84,13 +84,24 @@ export default function AboutSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
           {/* ===== Image side ===== */}
-          <motion.div {...reveal()} className="relative order-2 min-w-0 lg:order-1">
+          <motion.div
+            {...reveal()}
+            className="relative order-2 min-w-0 lg:order-1"
+          >
             {/* offset gold frame */}
             <span
               aria-hidden="true"
               className="absolute -left-3 -top-3 hidden h-full w-full rounded-t-[220px] rounded-b-3xl border border-[#D4AF37]/50 lg:block"
             />
-            <div className="relative aspect-[4/4.4] overflow-hidden rounded-3xl bg-[#f3f0E8] shadow-[0_25px_60px_-30px_rgba(26,42,34,0.5)] lg:rounded-b-3xl lg:rounded-t-[220px]">
+            <div
+              className="relative 
+              w-[90%] sm:w-[70%] md:w-[80%] lg:w-full
+              aspect-[4/3.5] md:aspect-[4/3.8] lg:aspect-[4/4.4]
+              mx-auto lg:mx-0
+              overflow-hidden rounded-3xl bg-[#f3f0E8]
+              shadow-[0_25px_60px_-30px_rgba(26,42,34,0.5)]
+              lg:rounded-b-3xl lg:rounded-t-[220px]"
+            >
               <img
                 src="https://i.pinimg.com/736x/df/4f/3c/df4f3cff511a1ba9edb0de5023b8f683.jpg"
                 alt={ABOUT_IMAGE.alt}
@@ -99,13 +110,21 @@ export default function AboutSection() {
               />
               <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#1a2a22]/40 to-transparent" />
             </div>
-
+          
             {/* Experience badge */}
             <div className="absolute -bottom-6 right-4 flex items-center gap-4 rounded-2xl bg-[#1a2a22] px-6 py-4 text-[#faf9f6] shadow-xl ring-1 ring-[#D4AF37]/40 sm:right-8 lg:-right-6">
-              <FiAward size={26} className="text-[#F5D77A]" aria-hidden="true" />
+              <FiAward
+                size={26}
+                className="text-[#F5D77A]"
+                aria-hidden="true"
+              />
               <div>
-                <p className={`${serif} text-3xl leading-none text-[#F5D77A]`}>5+</p>
-                <p className="mt-1 text-xs text-[#faf9f6]/75">Years of Experience</p>
+                <p className={`${serif} text-3xl leading-none text-[#F5D77A]`}>
+                  5+
+                </p>
+                <p className="mt-1 text-xs text-[#faf9f6]/75">
+                  Years of Experience
+                </p>
               </div>
             </div>
           </motion.div>
@@ -160,7 +179,9 @@ export default function AboutSection() {
             <div
               key={label}
               className={`flex items-center justify-center gap-4 py-4 sm:py-2 ${
-                i !== 0 ? "border-t border-[#faf9f6]/15 sm:border-l sm:border-t-0" : ""
+                i !== 0
+                  ? "border-t border-[#faf9f6]/15 sm:border-l sm:border-t-0"
+                  : ""
               }`}
             >
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#faf9f6]/10 text-[#F5D77A]">

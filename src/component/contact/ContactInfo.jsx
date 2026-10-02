@@ -14,7 +14,7 @@ const items = [
   { icon: Phone, label: "Phone", value: PHONE, href: PHONE_HREF },
   { icon: Mail, label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
   { icon: Clock, label: "Working Hours", value: workingHours },
-  { icon: MapPin, label: "Location", value: "Noida, Uttar Pradesh" },
+  { icon: MapPin, label: "Location", value: "FF01,FF02 Kaveri City Center,Delta 1.Greater Noida,Gautam Buddha Nagar,UP 201306" },
 ];
 
 export default function ContactInfo() {
@@ -90,7 +90,7 @@ export default function ContactInfo() {
               }}
             >
               <span
-                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-[#ffcd39] transition-all duration-300 group-hover:text-[#1a2a22]"
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-[#ffcd39] transition-all duration-300 group-hover:text-[#ffcd39]"
                 style={{
                   border: "1px solid rgba(226,161,13,0.55)",
                   background: "rgba(255,205,57,0.06)",

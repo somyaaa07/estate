@@ -81,7 +81,7 @@ export const metadata = {
       "Trusted real estate consultants in Greater Noida for homes, plots and commercial spaces.",
     url: `${SITE_URL}/about`,
     siteName: BUSINESS.name,
-    images: [{ url: "/image/about.png", width: 1200, height: 630 }],
+    images: [{ url: "/image/about.webp", width: 1200, height: 630 }],
     type: "website",
     locale: "en_IN",
   },
@@ -89,7 +89,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "About Bringo Real Estates",
     description: "More than properties, we build futures.",
-    images: ["/image/about.png"],
+    images: ["/image/about.webp"],
   },
 };
 
@@ -182,7 +182,7 @@ const jsonLd = {
       url: SITE_URL,
       telephone: BUSINESS.phoneTel,
       email: BUSINESS.email,
-      image: `${SITE_URL}/image/about.png`,
+      image: `${SITE_URL}/image/about.webp`,
       address: BUSINESS.schemaAddress,
       areaServed: ["Greater Noida", "Noida", "Gautam Buddha Nagar"],
       description:
@@ -318,7 +318,7 @@ export default function AboutPage() {
           <div className="relative">
             <div className="relative aspect-[4/4.2] w-full overflow-hidden rounded-3xl lg:rounded-tl-[220px] lg:rounded-br-[80px]">
               <Image
-                src="/image/hero.png"
+                src="/image/hero.webp"
                 alt="Modern sustainable villa with glass balconies surrounded by greenery"
                 fill
                 priority
@@ -387,7 +387,7 @@ export default function AboutPage() {
           <div className="relative mx-auto h-[420px] w-full max-w-[560px] sm:h-[480px]">
             <div className="absolute left-0 top-0 h-[80%] w-[68%] overflow-hidden rounded-t-[200px] rounded-b-2xl">
               <Image
-                src="/image/about.png"
+                src="/image/about.webp"
                 alt="Contemporary home exterior with large windows"
                 fill
                 sizes="(min-width: 1024px) 380px, 60vw"
@@ -648,7 +648,7 @@ export default function AboutPage() {
       >
         <div className="relative overflow-hidden rounded-3xl bg-[#1A2A22] px-6 py-12 text-[#FAF9F6] sm:px-12 lg:py-16">
           <Image
-            src="/image/ctaa.png"
+            src="/image/ctaa.webp"
             alt=""
             fill
             sizes="100vw"

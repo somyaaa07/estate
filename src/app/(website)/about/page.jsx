@@ -330,7 +330,7 @@ export default function AboutPage() {
             <div className="absolute -bottom-8 left-4 right-4 flex items-center gap-4 rounded-2xl bg-[#FAF9F6] p-3 shadow-[0_20px_50px_rgba(26,42,34,0.15)] sm:left-0 sm:right-auto sm:w-[340px] lg:-left-10">
               <div className="relative h-25 w-24 shrink-0 overflow-hidden rounded-xl">
                 <Image
-                  src="/image/heroo.jpeg"
+                  src="/image/heroo.webp"
                   alt="Sustainable community project"
                   fill
                   sizes="96px"
@@ -396,7 +396,7 @@ export default function AboutPage() {
             </div>
             <div className="absolute bottom-0 right-0 h-[46%] w-[58%] overflow-hidden rounded-2xl border-4 border-[#FAF9F6] shadow-xl">
               <Image
-                src="/image/about1.jpeg"
+                src="/image/about1.webp"
                 alt="Bright living room with sofa and indoor plants"
                 fill
                 sizes="(min-width: 1024px) 320px, 50vw"
@@ -582,7 +582,7 @@ export default function AboutPage() {
           <div className="grid overflow-hidden rounded-2xl sm:grid-cols-[1.1fr_1fr]">
             <div className="relative min-h-[390px]">
               <Image
-                src="/image/cta.jpeg"
+                src="/image/cta.webp"
                 alt="Dining area with large windows and indoor plants"
                 fill
                 sizes="(min-width: 1024px) 300px, 100vw"

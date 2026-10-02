@@ -94,7 +94,7 @@ export default function PropertyGuidance() {
           {/* Building */}
           <div className="absolute left-0 top-0 h-[82%] w-[64%] overflow-hidden rounded-2xl">
             <Image
-              src="/building.png"
+              src="/building.webp"
               alt="Modern residential building"
               fill
               sizes="(max-width: 1024px) 64vw, 400px"
@@ -105,7 +105,7 @@ export default function PropertyGuidance() {
           {/* Family */}
           <div className="absolute bottom-0 right-0 h-[62%] w-[60%] overflow-hidden rounded-2xl border-4 border-[#faf9f6] bg-[#f3f0E8]">
             <Image
-              src="/building1.png"
+              src="/building1.webp"
               alt="Modern residential building"
               fill
               sizes="(max-width: 1024px) 60vw, 375px"

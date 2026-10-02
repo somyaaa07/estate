@@ -63,7 +63,7 @@ export default function ContactHero() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative z-10 sm:-mt-2 lg:-mt-2"
+          className="relative z-10 mt-4 lg:-mt-2"
         >
           <Eyebrow>Get in Touch</Eyebrow>
 

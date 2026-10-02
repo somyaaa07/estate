@@ -14,7 +14,7 @@ const items = [
   { icon: Phone, label: "Phone", value: PHONE, href: PHONE_HREF },
   { icon: Mail, label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
   { icon: Clock, label: "Working Hours", value: workingHours },
-  { icon: MapPin, label: "Location", value: "Noida, Uttar Pradesh" },
+  { icon: MapPin, label: "Location", value: "FF01,FF02 Kaveri City Center,Delta 1.Greater Noida,Gautam Buddha Nagar,UP 201306" },
 ];
 
 export default function ContactInfo() {

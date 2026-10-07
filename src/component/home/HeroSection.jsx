@@ -140,7 +140,7 @@ export default function HomeHero() {
               initial="hidden"
               animate="show"
               custom={0}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 -mt-14"
             >
               <span className={`h-px w-10 ${goldBg}`} aria-hidden="true" />
               <span

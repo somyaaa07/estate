@@ -159,7 +159,7 @@ const SkeletonCard = () => (
 ---------------------------------------------------------------- */
 export default function PropertiesList({
   type,
-  heading = 'Featured Properties',
+  heading = 'Ongoing Projects',
   subheading = 'Recently added homes, plots and commercial spaces, picked for location and value.',
   limit = 4,
   viewAllHref,

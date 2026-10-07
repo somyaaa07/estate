@@ -61,8 +61,7 @@ export default function Testimonials() {
             className={`mt-5 block h-[3px] w-16 rounded-full ${goldBg}`}
           />
           <p className="mt-5 max-w-sm text-base leading-relaxed text-[#52685B]">
-            Real experiences from people who found the right property with us.
-          </p>
+Real experiences from families, homebuyers, and investors who trusted us to find the right property. From finding a dream home to making a confident investment, we’re proud to be part of every successful property journey.          </p>
 
           <div className="mt-8 flex items-center gap-5">
             <div className="flex gap-3">
@@ -89,7 +88,21 @@ export default function Testimonials() {
             >
               <span className="text-[#1a2a22]">{pad(index + 1)}</span> / {pad(total)}
             </p>
+
+            
           </div>
+             <p className="mt-5 text-center text-sm text-[#52685B] lg:text-left">
+  For exploring more reviews, visit our{" "}
+  <a
+    href="https://www.google.com/search?gs_ssp=eJzj4tVP1zc0zDHLtTRJT8ozYLRSNagwtjRITk1KMTA0Mk6xsEhKszKosACyjSwtzE2NzFPMzEzMvYSSijLz0vMVilITcxRSi0sSS1IB9PgVYA&q=bringo+real+estate&oq=bringo+re&gs_lcrp=EgZjaHJvbWUqDQgCEC4YrwEYxwEYgAQyBggAEEUYOTIGCAEQIxgnMg0IAhAuGK8BGMcBGIAEMgcIAxAAGIAEMgcIBBAAGIAEMggIBRAAGBYYHjIICAYQABgWGB4yBggHEEUYPdIBCDY1NjRqMGo3qAIAsAIA&sourceid=chrome&source=chrome.ob&ie=UTF-8#lrd=0x390cebd0123d88bf:0x81232987527d6647,1,,,,"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="font-medium text-[#1a2a22] underline decoration-[#e2a10d] decoration-2 underline-offset-4 transition-colors duration-300 hover:text-[#e2a10d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f3f0E8]"
+  >
+    Google Review
+  </a>
+  .
+</p>
         </div>
 
         {/* ===== Right: quote card ===== */}
@@ -146,7 +159,7 @@ export default function Testimonials() {
                   </div>
 
                   <blockquote
-                    className={`${marcellus.className} mt-6 text-[clamp(1.2rem,2.3vw,1.7rem)] font-normal leading-[1.55] text-[#faf9f6]`}
+                    className={`${marcellus.className} mt-6 line-clamp-4 text-[clamp(1.2rem,2.3vw,1.7rem)] font-normal leading-[1.55] text-[#faf9f6]`}
                   >
                     {current.quote}
                   </blockquote>
@@ -192,6 +205,8 @@ export default function Testimonials() {
               />
             ))}
           </div>
+
+       
         </div>
       </div>
     </section>

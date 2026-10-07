@@ -25,7 +25,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Hide scrollbar but keep scrolling */
 html,
 body {
   scrollbar-width: none;
@@ -42,6 +41,30 @@ body::-webkit-scrollbar {
   scrollbar-width: none;
 }
 
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* =========================================================
+   PARTNER LOGO MARQUEE
+========================================================= */
+
+@keyframes partner-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.partner-marquee {
+  animation: partner-marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.partner-marquee:hover {
+  animation-play-state: paused;
 }

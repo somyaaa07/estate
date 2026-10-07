@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Marcellus } from "next/font/google";
+import AnimatedStat from "@/component/AnimatedStat";
 import {
   FiArrowRight,
   FiMapPin,
@@ -22,9 +23,10 @@ const HERO_IMAGE = {
 };
 
 const stats = [
-  { value: "10+", label: "Years of Experience" },
-  { value: "50+", label: "Projects Delivered" },
-  { value: "1000+", label: "Happy Families" },
+  { value: "20+", label: "Team Members & Growing" },
+  { value: "300+", label: "Properties Sold Every Year" },
+  { value: "150+", label: "Google Reviews" },
+  { value: "400K+", label: "Social Media Views" },
 ];
 
 const locations = ["Noida", "Greater Noida", "Ghaziabad", "Delhi"];
@@ -105,24 +107,24 @@ export default function HomeHero() {
       <div className="relative min-h-[640px] overflow-hidden bg-[#1a2a22] lg:min-h-[760px]">
         {/* Background image */}
         {/* Desktop Image */}
-<motion.img
-  src={HERO_IMAGE.src}
-  alt={HERO_IMAGE.alt}
-  initial={{ scale: 1.08 }}
-  animate={{ scale: 1 }}
-  transition={{ duration: 2.5, ease: "easeOut" }}
-  className="absolute inset-0 hidden h-full w-full object-cover object-right md:block"
-/>
+        <motion.img
+          src={HERO_IMAGE.src}
+          alt={HERO_IMAGE.alt}
+          initial={{ scale: 1.08 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 2.5, ease: "easeOut" }}
+          className="absolute inset-0 hidden h-full w-full object-cover object-right md:block"
+        />
 
-{/* Mobile Image */}
-<motion.img
-  src="/banner/home-mobile.webp"
-  alt={HERO_IMAGE.alt}
-  initial={{ scale: 1.08 }}
-  animate={{ scale: 1 }}
-  transition={{ duration: 2.5, ease: "easeOut" }}
-  className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
-/>
+        {/* Mobile Image */}
+        <motion.img
+          src="/banner/home-mobile.webp"
+          alt={HERO_IMAGE.alt}
+          initial={{ scale: 1.08 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 2.5, ease: "easeOut" }}
+          className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
+        />
 
         {/* Mobile/tablet: even overlay for readability */}
         <div className="absolute inset-0 bg-[#1a2a22]/75 lg:hidden" />
@@ -156,8 +158,7 @@ export default function HomeHero() {
               className={`${marcellus.className} mt-6 text-[clamp(2.4rem,5.5vw,4.5rem)] font-normal leading-[1.06] tracking-tight text-[#faf9f6]`}
             >
               Find a Place You’ll Be{" "}
-              <span className={` pr-1 ${goldText}`}>Proud</span> to Call
-              Home
+              <span className={` pr-1 ${goldText}`}>Proud</span> to Call Home
             </motion.h1>
 
             <motion.p
@@ -167,8 +168,8 @@ export default function HomeHero() {
               custom={2}
               className="mt-6 max-w-[240px] lg:max-w-xl text-base leading-relaxed text-[#faf9f6]/80 sm:text-lg"
             >
-              Premium residential, commercial and plotting opportunities backed
-              by transparent guidance and long-term value.
+              Bringo is not just about finding property. It is about finding the
+              right opportunity.
             </motion.p>
 
             {/* Buttons — About page jaisa BtnDark */}
@@ -199,7 +200,7 @@ export default function HomeHero() {
               initial="hidden"
               animate="show"
               custom={4}
-              className="mt-12 grid max-w-lg grid-cols-3 divide-x divide-[#faf9f6]/20"
+              className="mt-12 grid max-w-lg grid-cols-4 divide-x divide-[#faf9f6]/20"
             >
               {stats.map((s, i) => (
                 <div
@@ -209,9 +210,9 @@ export default function HomeHero() {
                   <dd
                     className={`${marcellus.className} inline-block text-2xl font-normal sm:text-3xl ${goldText}`}
                   >
-                    {s.value}
+                    <AnimatedStat value={s.value} />
                   </dd>
-                  <dt className="mt-1 text-[11px] leading-snug text-[#faf9f6]/65 sm:text-sm">
+                  <dt className="mt-1 text-[11px]  leading-snug text-[#faf9f6]/65 sm:text-sm">
                     {s.label}
                   </dt>
                 </div>

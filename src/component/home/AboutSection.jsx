@@ -120,7 +120,7 @@ export default function AboutSection() {
               />
               <div>
                 <p className={`${serif} text-3xl leading-none text-[#F5D77A]`}>
-                  5+
+                  10+
                 </p>
                 <p className="mt-1 text-xs text-[#faf9f6]/75">
                   Years of Experience

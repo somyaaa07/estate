@@ -16,7 +16,14 @@ import {
   Star,
   Target,
   Users,
+  MapPinned,
+  FileCheck2,
+  HandCoins,
+  Smartphone,
+  Landmark,
+  BriefcaseBusiness,
 } from "lucide-react";
+
 import FaqAccordion from "@/component/about/FaqAccordion";
 
 const marcellus = Marcellus({
@@ -98,12 +105,11 @@ export const metadata = {
    NOTE: stats 
 ---------------------------------------------------------------- */
 const stats = [
-  { icon: Home, value: "500+", label: "Properties Sold" },
-  { icon: Users, value: "10,000+", label: "Happy Customers" },
-  { icon: Building2, value: "50+", label: "Ongoing Projects" },
-  { icon: Star, value: "4.8/5", label: "Customer Rating" },
+  { icon: Home, value: "300+", label: "Properties Sold Every Year" },
+  { icon: Users, value: "20+", label: "Team Members & Growing" },
+  { icon: Star, value: "150+", label: "Google Reviews" },
+  { icon: Eye, value: "400K+", label: "Social Media Views" },
 ];
-
 const values = [
   {
     icon: Handshake,
@@ -120,33 +126,61 @@ const values = [
 
 const reasons = [
   {
-    icon: MapPin,
-    title: "Prime Locations",
-    text: "Well-connected projects across Greater Noida",
-  },
-  {
-    icon: Building2,
-    title: "Modern Design",
-    text: "Thoughtfully designed for modern living",
-  },
-  {
-    icon: Leaf,
-    title: "Sustainable Living",
-    text: "Eco-friendly and future-ready spaces",
+    icon: MapPinned,
+    number: "01",
+    title: "Local Expertise",
+    text: "Focused on Noida, Greater Noida, Gurugram and the Yamuna Expressway.",
   },
   {
     icon: ShieldCheck,
-    title: "End-to-End Support",
-    text: "From search to ownership, we're with you",
+    number: "02",
+    title: "Transparent Process",
+    text: "You know every step, from your first enquiry to property handover.",
+  },
+  {
+    icon: HandCoins,
+    number: "03",
+    title: "Upfront Charges",
+    text: "Clear pricing with no unexpected surprises after you commit.",
+  },
+  {
+    icon: FileCheck2,
+    number: "04",
+    title: "Expert Paperwork",
+    text: "Certified professionals help keep your property documentation legally sound.",
+  },
+  {
+    icon: Handshake,
+    number: "05",
+    title: "Home Loans & Sales",
+    text: "We help with your finance along with your purchase.",
+  },
+  {
+    icon: Smartphone,
+    number: "06",
+    title: "Prop-Tech Experience",
+    text: "We are building it around every step of the process, so you can follow your deal with ease.",
   },
 ];
 
-// FAke partners
+// partners
 const partners = [
-  { name: "Gaur-Group", logo: "/gaur-group.webp" },
-  { name: "Godrej", logo: "/Godrej_Logo.webp" },
-  { name: "JaypeeGreens", logo: "/jaypeegreens.webp" },
-  { name: "Mahagun", logo: "/Mahagun_Official.webp" },
+  { name: "Jaypee Greens", logo: "/partners/jaypee-greens.webp" },
+  { name: "Godrej Properties", logo: "/partners/godrej-properties.webp" },
+  { name: "Gaurs", logo: "/partners/gaurs.webp" },
+  { name: "M3M India", logo: "/partners/m3m.jpg" },
+  { name: "Migsun", logo: "/partners/migsun.jpg" },
+  { name: "Hero Homes", logo: "/partners/hero-homes.jpg" },
+  { name: "Max Estates", logo: "/partners/max-estates.webp" },
+  { name: "L&T Realty", logo: "/partners/l-and-t-realty.jpg" },
+  { name: "ACE Group", logo: "/partners/ace-group.jpg" },
+  { name: "ATS", logo: "/partners/ats.jpg" },
+  { name: "Jacob & Co.", logo: "/partners/jacob-and-co.jpg" },
+  { name: "Trump Towers", logo: "/partners/trump-towers.webp" },
+  { name: "Purvanchal Projects", logo: "/partners/purvanchal.jpg" },
+  { name: "Kalpataru", logo: "/partners/kalpataru.jpg" },
+  { name: "Prateek Group", logo: "/partners/prateek-group.webp" },
+  { name: "County Group", logo: "/partners/county-group.webp" },
 ];
 
 const faqs = [
@@ -376,6 +410,19 @@ export default function AboutPage() {
         </dl>
       </section>
 
+      {/* Behind the Numbers */}
+      <div className="mx-auto mt-8 max-w-3xl text-center">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D4AF37]">
+          Behind the Numbers
+        </p>
+
+        <p className="mt-3 text-sm leading-7 text-[#52685B] sm:text-base">
+          Behind every number is a family finding its home or an investor
+          securing their future. Clients come first at Bringo, with honest
+          advice, transparent processes and a team that cares.
+        </p>
+      </div>
+
       {/* ============ OUR STORY ============ */}
       <section
         id="our-story"
@@ -437,26 +484,23 @@ export default function AboutPage() {
           </div>
 
           {/* Text */}
+         
           <div>
-            <Eyebrow>Our Story</Eyebrow>
+            <Eyebrow>Experience</Eyebrow>
+
             <h2
               id="story-title"
               className="mt-4 text-4xl font-normal sm:text-5xl"
             >
-              About Our Company
+              Growing the Bringo Way
             </h2>
+
             <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-[#52685B]">
-              Bringo Real Estates was founded with a simple vision — to
-              transform the way people experience real estate in Greater Noida.
-              From residential homes to commercial spaces, we help you choose
-              value-driven properties that blend modern design, strategic
-              locations and long-term growth potential.
+              We're a team of 20+ people with one goal: doing real estate
+              differently. Every year we sell 300+ properties, and we grow the
+              Bringo way, one client, one sale, one relationship at a time.
             </p>
-            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#52685B]">
-              Our focus is on verified projects, transparent processes and a
-              customer-first approach, ensuring every client finds a space that
-              truly feels like home.
-            </p>
+
             <div className="mt-7">
               <BtnDark href="/contact">Know More</BtnDark>
             </div>
@@ -481,38 +525,121 @@ export default function AboutPage() {
       </section>
 
       {/* ============ WHY CHOOSE ============ */}
-      <section aria-labelledby="why-title" className="bg-[#F3F0E8]">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-20">
-          <div className="text-center">
+
+      <section
+        aria-labelledby="why-title"
+        className="relative overflow-hidden bg-[#F3F0E8]"
+      >
+        {/* Decorative background */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-32 top-20 h-80 w-80 rounded-full bg-[#D4AF37]/10 blur-3xl"
+        />
+
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-40 bottom-0 h-96 w-96 rounded-full bg-[#1A2A22]/5 blur-3xl"
+        />
+
+        <div className="relative mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
+          {/* Section heading */}
+          <div className="mx-auto max-w-2xl text-center">
             <div className="flex justify-center">
-              <Eyebrow>Why Choose Bringo</Eyebrow>
+              <Eyebrow line>Why Choose Bringo</Eyebrow>
             </div>
+
             <h2
               id="why-title"
-              className="mt-4 text-3xl font-normal sm:text-4xl"
+              className="mt-5 text-4xl font-normal leading-tight text-[#1A2A22] sm:text-5xl"
             >
-              A Better Way to Find Your Perfect Space
+              More Than a Property Dealer.
+              <br />
+              <span className="text-[#52685B]">
+                Your Complete Real Estate Partner.
+              </span>
             </h2>
-            <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-[#52685B]">
-              We combine experience, local market knowledge and customer focus
-              to deliver real estate solutions that truly make a difference.
+
+            <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#52685B] sm:text-[15px]">
+              From finding the right property to paperwork, financing and
+              approvals, Bringo supports you throughout the entire journey.
             </p>
           </div>
 
-          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {reasons.map(({ icon: Icon, title, text }) => (
+          {/* Reasons grid */}
+          <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {reasons.map(({ icon: Icon, number, title, text }, i) => (
               <li
                 key={title}
-                className="flex flex-col items-center rounded-2xl bg-[#FAF9F6] px-6 py-8 text-center shadow-[0_8px_30px_rgba(26,42,34,0.06)]"
+                className="group relative overflow-hidden rounded-3xl border border-[#1A2A22]/8 bg-[#FAF9F6] p-7 shadow-[0_10px_35px_rgba(26,42,34,0.06)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(26,42,34,0.12)]"
               >
-                <Icon className="text-[#D4A62A]" size={32} strokeWidth={1.4} />
-                <h3 className="mt-4 text-sm text-[#1A2A22]">{title}</h3>
-                <p className="mt-2 max-w-[180px] text-xs leading-relaxed text-[#52685B]">
-                  {text}
-                </p>
+                {/* Golden hover background */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-[#B8902F] via-[#F5D77A] to-[#B8902F] transition-transform duration-500 group-hover:scale-x-100"
+                />
+
+                {/* Number */}
+                <div className="flex items-start justify-between">
+                  <span className="text-xs tracking-[0.2em] text-[#B8902F]">
+                    {number}
+                  </span>
+
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F3F0E8] text-[#D4A62A] transition-all duration-500 group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+                    <Icon size={22} strokeWidth={1.5} />
+                  </div>
+                </div>
+
+                {/* Content */}
+                <h3 className="mt-7 text-base font-medium text-[#1A2A22]">
+                  {title}
+                </h3>
+
+                <p className="mt-3 text-sm leading-6 text-[#52685B]">{text}</p>
               </li>
             ))}
           </ul>
+
+          {/* Bottom trust strip */}
+          <div className="mt-8 grid gap-4 rounded-3xl bg-[#1A2A22] p-6 text-[#FAF9F6] sm:grid-cols-3 sm:p-8">
+            <div className="flex items-center gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#D4AF37]/15 text-[#F5D77A]">
+                <ShieldCheck size={22} strokeWidth={1.4} />
+              </div>
+
+              <div>
+                <p className="text-sm">Verified & Transparent</p>
+                <p className="mt-1 text-xs text-[#FAF9F6]/60">
+                  Clear property processes
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 border-[#FAF9F6]/15 sm:border-l sm:pl-6">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#D4AF37]/15 text-[#F5D77A]">
+                <Users size={22} strokeWidth={1.4} />
+              </div>
+
+              <div>
+                <p className="text-sm">Customer First</p>
+                <p className="mt-1 text-xs text-[#FAF9F6]/60">
+                  Support from enquiry to handover
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 border-[#FAF9F6]/15 sm:border-l sm:pl-6">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#D4AF37]/15 text-[#F5D77A]">
+                <Building2 size={22} strokeWidth={1.4} />
+              </div>
+
+              <div>
+                <p className="text-sm">Local Market Knowledge</p>
+                <p className="mt-1 text-xs text-[#FAF9F6]/60">
+                  Noida & Greater Noida focused
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -533,24 +660,55 @@ export default function AboutPage() {
           Trusted by Leading Brands
         </h2>
 
-        <ul className="mt-10 grid grid-cols-2 items-center gap-y-8 sm:grid-cols-3 lg:grid-cols-4">
-          {partners.map((partner, i) => (
-            <li
-              key={partner.name}
-              className={`flex min-h-20 items-center justify-center px-4 ${
-                i !== 0 ? "lg:border-l lg:border-[#52685B]/25" : ""
-              }`}
+        {/* Partner Logo Marquee */}
+        <div className="relative mt-10 w-full overflow-hidden">
+          {/* Left fade */}
+          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-[#FAF9F6] to-transparent" />
+
+          {/* Right fade */}
+          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-[#FAF9F6] to-transparent" />
+
+          <div className="partner-marquee flex w-max">
+            {/* FIRST SET */}
+            <div className="flex shrink-0 items-center gap-10 pr-10">
+              {partners.map((partner) => (
+                <div
+                  key={`first-${partner.name}`}
+                  className="flex h-24 w-44 shrink-0 items-center justify-center"
+                >
+                  <Image
+                    src={partner.logo}
+                    alt={`${partner.name} logo`}
+                    width={160}
+                    height={90}
+                    className="h-16 w-auto max-w-[160px] object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* DUPLICATE SET */}
+            <div
+              className="flex shrink-0 items-center gap-10 pr-10"
+              aria-hidden="true"
             >
-              <Image
-                src={partner.logo}
-                alt={`${partner.name} logo`}
-                width={140}
-                height={90}
-                className="h-14 w-auto max-w-[160px] object-contain transition duration-300 hover:opacity-100"
-              />
-            </li>
-          ))}
-        </ul>
+              {partners.map((partner) => (
+                <div
+                  key={`second-${partner.name}`}
+                  className="flex h-24 w-44 shrink-0 items-center justify-center"
+                >
+                  <Image
+                    src={partner.logo}
+                    alt=""
+                    width={160}
+                    height={90}
+                    className="h-16 w-auto max-w-[160px] object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ============ OUR PEOPLE + VISION/MISSION ============ */}
@@ -604,8 +762,9 @@ export default function AboutPage() {
                   <Target size={22} strokeWidth={1.5} /> Mission
                 </p>
                 <p className="mt-2 text-xs leading-relaxed text-[#FAF9F6]/80">
-                  To deliver high-quality spaces with trust, innovation and
-                  care.
+                  Property deals mean heavy paperwork and unclear charges.
+                  Bringo changes that with transparent steps, upfront costs, and
+                  certified experts who keep every document legally sound
                 </p>
               </div>
             </div>

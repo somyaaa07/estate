@@ -6,6 +6,7 @@ import {
   FiMapPin,
   FiFacebook,
   FiInstagram,
+  FiLinkedin,
   FiYoutube,
   FiArrowUp,
 } from "react-icons/fi";
@@ -34,17 +35,22 @@ const socials = [
   {
     label: "Facebook",
     icon: FiFacebook,
-    href: "https://www.facebook.com/profile.php?id=61553932348975",
+    href: "https://www.facebook.com/profile.php?id=61584115940950",
   },
   {
     label: "Instagram",
     icon: FiInstagram,
-    href: "https://www.instagram.com/bringo.realestates/",
+    href: "https://www.instagram.com/bringo.realestates/reels/?hl=en",
+  },
+  {
+    label: "LinkedIn",
+    icon: FiLinkedin,
+    href: "https://www.linkedin.com/company/bringo-co-in/",
   },
   {
     label: "YouTube",
     icon: FiYoutube,
-    href: "https://www.youtube.com/@Bringo01",
+    href: "https://youtube.com/@bringo01?si=DsvO8SoJRsye_H_r",
   },
 ];
 

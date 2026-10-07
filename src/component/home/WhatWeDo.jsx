@@ -152,7 +152,7 @@ export default function WhatWeDo() {
                     duration: 0.5,
                     delay: index * 0.08,
                   }}
-                  className="group relative overflow-hidden border border-[#1A2A22]/10 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/50 hover:shadow-xl"
+                  className="group relative overflow-hidden rounded-3xl border border-[#1A2A22]/10 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/50 hover:shadow-xl"
                 >
                   {/* Number */}
                   <span className="absolute right-5 top-5 text-xs font-medium text-[#1A2A22]/20">
@@ -215,7 +215,7 @@ export default function WhatWeDo() {
                     duration: 0.5,
                     delay: index * 0.08,
                   }}
-                  className="group flex gap-5 border border-[#1A2A22]/10 bg-[#F3F0E8] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/50 hover:shadow-lg"
+                  className="group flex gap-5 border border-[#1A2A22]/10 rounded-3xl bg-[#F3F0E8] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/50 hover:shadow-lg"
                 >
                   {/* Icon */}
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#1A2A22] text-[#D4AF37] transition-colors duration-300 group-hover:bg-[#D4AF37] group-hover:text-[#1A2A22]">
@@ -250,7 +250,7 @@ export default function WhatWeDo() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
-          className="mt-16 overflow-hidden border border-[#1A2A22]/15 bg-[#1A2A22]"
+          className="mt-16 overflow-hidden  rounded-3xl border border-[#1A2A22]/15 bg-[#1A2A22]"
         >
           <div className="flex flex-col gap-6 p-7 sm:flex-row sm:items-center sm:justify-between sm:p-9">
 

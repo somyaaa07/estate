@@ -4,6 +4,7 @@ import { Marcellus } from "next/font/google";
 import {
   ArrowRight,
   Building2,
+    Briefcase,
   Eye,
   Handshake,
   Home,
@@ -26,6 +27,29 @@ const marcellus = Marcellus({
   display: "swap",
 });
 
+const founder = {
+  name: "Ritesh Bhasin",
+  role: "Founder & Head of Sales",
+  photo: null, // e.g. "/image/team/ritesh.webp"
+  bio: "Ritesh leads Bringo with 18 years of corporate experience behind him, before he took up business full time. His current focus is strengthening every segment of our real estate business and bringing the team together around our Annual Operating Plan.",
+  experience: [
+    "Genpact",
+    "Accenture",
+    "Airtel",
+    "CEVA Logistics",
+    "Cars24",
+    "Investors Clinic",
+    "ABL Workspaces",
+  ],
+};
+
+const teamMembers = [
+  { name: "Mehak Bhasin", role: "Head of New Channel Engagement", photo: null },
+  { name: "Chetna Bhasin", role: "Partner", photo: null },
+  { name: "Rohit Bhasin", role: "Partner", photo: null },
+  { name: "Uday Prakash", role: "Partner", photo: null },
+  { name: "Geetanjali Dayal Prakash", role: "Partner", photo: null },
+];
 /* ---------------------------------------------------------------
    COLORS
    Primary  : #1A2A22
@@ -264,7 +288,39 @@ const Avatars = () => (
     ))}
   </div>
 );
+const getInitials = (name) =>
+  name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
 
+const TeamPhoto = ({ name, photo, sizes, className = "" }) => (
+  <div
+    className={`relative overflow-hidden bg-[#F3F0E8] ${className}`}
+  >
+    {photo ? (
+      <Image
+        src={photo}
+        alt={`${name}, Bringo Real Estates`}
+        fill
+        sizes={sizes}
+        className="object-cover"
+      />
+    ) : (
+      <div
+        aria-hidden="true"
+        className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#52685B] to-[#1A2A22]"
+      >
+        <span className="text-5xl tracking-widest text-[#D4A62A]">
+          {getInitials(name)}
+        </span>
+      </div>
+    )}
+  </div>
+);
 /* ---------------------------------------------------------------
    PAGE
 ---------------------------------------------------------------- */
@@ -515,6 +571,89 @@ export default function AboutPage() {
           </ul>
         </div>
       </section>
+
+      {/* ============ FOUNDER + TEAM ============ */}
+<section
+  id="team"
+  aria-labelledby="team-title"
+  className="bg-[#F3F0E8]"
+>
+  <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-20">
+    <div className="text-center">
+      <div className="flex justify-center">
+        <Eyebrow>Leadership</Eyebrow>
+      </div>
+      <h2 id="team-title" className="mt-4 text-3xl font-normal sm:text-4xl">
+        The People Behind Bringo
+      </h2>
+      <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-[#52685B]">
+        Experienced leaders and trusted partners working together to make
+        every property journey simple and transparent.
+      </p>
+    </div>
+
+    {/* Founder */}
+    <article className="mt-12 grid overflow-hidden rounded-3xl bg-[#1A2A22] text-[#FAF9F6] shadow-[0_20px_50px_rgba(26,42,34,0.15)] lg:grid-cols-[0.8fr_1.2fr]">
+      <TeamPhoto
+        name={founder.name}
+        photo={founder.photo}
+        sizes="(min-width: 1024px) 40vw, 100vw"
+        className="min-h-[320px] lg:min-h-[460px] lg:rounded-br-[120px]"
+      />
+
+      <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-12">
+        <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-[#D4A62A]">
+          Founder
+          <span className="h-px w-12 bg-[#D4A62A]/50" />
+        </p>
+        <h3 className="mt-4 text-3xl sm:text-4xl">{founder.name}</h3>
+        <p className="mt-1 text-sm text-[#FAF9F6]/70">{founder.role}</p>
+
+        <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-[#FAF9F6]/85">
+          {founder.bio}
+        </p>
+
+        <div className="mt-7">
+          <p className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#FAF9F6]/60">
+            <Briefcase size={14} strokeWidth={1.5} className="text-[#D4A62A]" />
+            Previously with
+          </p>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {founder.experience.map((company) => (
+              <li
+                key={company}
+                className="rounded-full border border-[#D4AF37]/40 bg-[#FAF9F6]/5 px-4 py-1.5 text-xs text-[#FAF9F6]/90"
+              >
+                {company}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    {/* Team members */}
+    <ul className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+      {teamMembers.map((member) => (
+        <li
+          key={member.name}
+          className="group overflow-hidden rounded-2xl bg-[#FAF9F6] p-3 text-center shadow-[0_8px_30px_rgba(26,42,34,0.06)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_14px_40px_rgba(26,42,34,0.12)]"
+        >
+          <TeamPhoto
+            name={member.name}
+            photo={member.photo}
+            sizes="(min-width: 1024px) 20vw, 50vw"
+            className="aspect-[4/4.4] rounded-xl rounded-t-[80px]"
+          />
+          <h3 className="mt-4 text-sm text-[#1A2A22]">{member.name}</h3>
+          <p className="mx-auto mt-1 mb-2 max-w-[170px] text-xs leading-relaxed text-[#52685B]">
+            {member.role}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
 
       {/* ============ PARTNERS ============ */}
       <section

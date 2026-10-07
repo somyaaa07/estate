@@ -104,7 +104,7 @@ export default function WhatWeDo() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="mx-auto max-w-4xl text-center"
+          className="mx-auto max-w-4xl text-center "
         >
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D4AF37]">
             What We Do
@@ -112,7 +112,7 @@ export default function WhatWeDo() {
 
           <h2
             id="what-we-do-title"
-            className={`${marcellus.className} mt-4 text-3xl font-normal leading-tight text-[#1A2A22] sm:text-5xl lg:text-6xl`}
+            className={`${marcellus.className} mt-4 text-2xl font-normal leading-tight text-[#1A2A22] sm:text-5xl lg:text-6xl`}
           >
             More Than Property.
             <span className="mt-1 block whitespace-nowrap">

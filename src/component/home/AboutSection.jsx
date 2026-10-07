@@ -32,11 +32,11 @@ const points = [
 ];
 
 // "Years of Experience" image badge me hai, isliye yahan 3 stats
-const stats = [
-  { icon: FiHome, value: "500+", label: "Properties Listed" },
-  { icon: FiUsers, value: "300+", label: "Happy Clients" },
-  { icon: FiMapPin, value: "10+", label: "Cities Covered" },
-];
+// const stats = [
+//   { icon: FiHome, value: "500+", label: "Properties Listed" },
+//   { icon: FiUsers, value: "300+", label: "Happy Clients" },
+//   { icon: FiMapPin, value: "10+", label: "Cities Covered" },
+// ];
 
 const goldBg = "bg-gradient-to-r from-[#e2a10d] via-[#ffcd39] to-[#e2a10d]";
 
@@ -167,7 +167,7 @@ export default function AboutSection() {
         </div>
 
         {/* ===== Stats band ===== */}
-        <motion.dl
+        {/* <motion.dl
           {...reveal()}
           className="relative mt-20 grid grid-cols-1 overflow-hidden rounded-3xl bg-[#1a2a22] px-6 py-8 text-[#faf9f6] sm:grid-cols-3 sm:px-4 lg:mt-24"
         >
@@ -195,7 +195,7 @@ export default function AboutSection() {
               </div>
             </div>
           ))}
-        </motion.dl>
+        </motion.dl> */}
       </div>
     </section>
   );

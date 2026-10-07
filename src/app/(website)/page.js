@@ -5,6 +5,7 @@ import CTASection from "@/component/home/CTASection";
 import Propertyguidance from "@/component/home/Propertyguidance";
 import HowWeHelp from "@/component/home/HowWeHelp";
 import AboutSection from "@/component/home/AboutSection";
+import WhatWeDo from "@/component/home/WhatWeDo";
 
 export const metadata = {
   title: "Bringo Real Estates | Premium Properties in Greater Noida",
@@ -46,6 +47,7 @@ export default function HomePage() {
       <AboutSection />
       <FeaturedProperties />
       <Propertyguidance />
+      <WhatWeDo/>
       <HowWeHelp />
       <Testimonial />
       <CTASection />

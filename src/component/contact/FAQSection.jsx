@@ -57,7 +57,7 @@ export default function FAQSection() {
           </div> */}
 
           <h2
-            className={`${marcellus.className} text-[clamp(1.9rem,4vw,2.9rem)] leading-[1.15] tracking-tight text-[#1a2a22]`}
+            className={`${marcellus.className} text-[clamp(1.9rem,4vw,2.9rem)] leading-[1.15] tracking-tight text-[#000000]`}
           >
             Frequently Asked Questions
           </h2>

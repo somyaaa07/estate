@@ -84,9 +84,9 @@ const initialForm = {
 
 /* ---------- Shared classes ---------- */
 const fieldClass =
-  "w-full rounded-xl border border-[#1a2a22]/15 bg-[#f3f0E8]/60 py-3.5 pl-11 pr-4 text-base text-[#1a2a22] placeholder:text-[#52685B]/70 transition focus:border-[#D4AF37] focus:bg-[#faf9f6] focus:outline-none focus:ring-4 focus:ring-[#ffcd39]/30 disabled:opacity-60";
+  "w-full rounded-xl border border-[#000000]/15 bg-[#f3f0E8]/60 py-3.5 pl-11 pr-4 text-base text-[#000000] placeholder:text-[#52685B]/70 transition focus:border-[#D4AF37] focus:bg-[#faf9f6] focus:outline-none focus:ring-4 focus:ring-[#ffcd39]/30 disabled:opacity-60";
 const selectClass = `${fieldClass} appearance-none pr-10`;
-const labelClass = "mb-1.5 block text-sm text-[#1a2a22]";
+const labelClass = "mb-1.5 block text-sm text-[#000000]";
 const fieldIcon =
   "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#52685B]";
 
@@ -111,8 +111,8 @@ function ChipGroup({ legend, name, options, value, onChange, disabled }) {
               <span
                 className={`inline-block rounded-full border px-4 py-2 text-sm transition peer-focus-visible:ring-2 peer-focus-visible:ring-[#D4AF37] peer-focus-visible:ring-offset-2 ${
                   checked
-                    ? `border-transparent text-[#1a2a22] ${goldBg}`
-                    : "border-[#1a2a22]/15 bg-[#f3f0E8]/60 text-[#1a2a22] hover:border-[#D4AF37]"
+                    ? `border-transparent text-[#000000] ${goldBg}`
+                    : "border-[#000000]/15 bg-[#f3f0E8]/60 text-[#000000] hover:border-[#D4AF37]"
                 }`}
               >
                 {opt}
@@ -227,7 +227,7 @@ export default function CTACallback({ image = null }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55, ease: "easeOut" }}
-          className="relative overflow-hidden rounded-[28px] bg-[#1a2a22] shadow-[0_30px_70px_-30px_rgba(26,42,34,0.55)]"
+          className="relative overflow-hidden rounded-[28px] bg-[#000000] shadow-[0_30px_70px_-30px_rgba(26,42,34,0.55)]"
         >
           {/* top gold line */}
           <span
@@ -242,7 +242,7 @@ export default function CTACallback({ image = null }) {
                 aria-hidden="true"
                 className="absolute inset-0 h-full w-full object-cover opacity-25"
               />
-              <div className="absolute inset-0 bg-[#1a2a22]/80" />
+              <div className="absolute inset-0 bg-[#000000]/80" />
             </>
           )}
           <div
@@ -273,7 +273,7 @@ export default function CTACallback({ image = null }) {
                 {contactLinks.map(({ icon: Icon, label, value, href, external }) => {
                   const content = (
                     <>
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#faf9f6]/10 text-[#F5D77A] transition group-hover:bg-gradient-to-br group-hover:from-[#F5D77A] group-hover:to-[#B8902F] group-hover:text-[#1a2a22]">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#faf9f6]/10 text-[#F5D77A] transition group-hover:bg-gradient-to-br group-hover:from-[#F5D77A] group-hover:to-[#B8902F] group-hover:text-[#000000]">
                         <Icon size={20} aria-hidden="true" />
                       </span>
                       <span className="min-w-0 flex-1">
@@ -319,11 +319,11 @@ export default function CTACallback({ image = null }) {
               {status === "success" ? (
                 <div aria-live="polite" className="py-6 text-center">
                   <span
-                    className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full text-[#1a2a22] ${goldBg}`}
+                    className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full text-[#000000] ${goldBg}`}
                   >
                     <FiCheck size={28} strokeWidth={2.5} aria-hidden="true" />
                   </span>
-                  <h3 className={`${serif} mt-6 text-2xl text-[#1a2a22] sm:text-3xl`}>
+                  <h3 className={`${serif} mt-6 text-2xl text-[#000000] sm:text-3xl`}>
                     Request received
                   </h3>
                   <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-[#52685B]">
@@ -333,14 +333,14 @@ export default function CTACallback({ image = null }) {
                   <button
                     type="button"
                     onClick={() => setStatus("idle")}
-                    className="mt-7 text-sm text-[#52685B] underline underline-offset-4 transition hover:text-[#1a2a22]"
+                    className="mt-7 text-sm text-[#52685B] underline underline-offset-4 transition hover:text-[#000000]"
                   >
                     Send another request
                   </button>
                 </div>
               ) : (
                 <>
-                  <h3 className={`${serif} text-2xl text-[#1a2a22] sm:text-3xl`}>
+                  <h3 className={`${serif} text-2xl text-[#000000] sm:text-3xl`}>
                     Request a Callback
                   </h3>
                   <p className="mt-2 text-sm text-[#52685B]">
@@ -509,14 +509,14 @@ export default function CTACallback({ image = null }) {
                         onChange={handleChange}
                         disabled={loading}
                         placeholder="Possession timeline, parking, near a metro, loan needed..."
-                        className="w-full resize-none rounded-xl border border-[#1a2a22]/15 bg-[#f3f0E8]/60 px-4 py-3.5 text-base text-[#1a2a22] placeholder:text-[#52685B]/70 transition focus:border-[#D4AF37] focus:bg-[#faf9f6] focus:outline-none focus:ring-4 focus:ring-[#ffcd39]/30 disabled:opacity-60"
+                        className="w-full resize-none rounded-xl border border-[#000000]/15 bg-[#f3f0E8]/60 px-4 py-3.5 text-base text-[#000000] placeholder:text-[#52685B]/70 transition focus:border-[#D4AF37] focus:bg-[#faf9f6] focus:outline-none focus:ring-4 focus:ring-[#ffcd39]/30 disabled:opacity-60"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={loading}
-                      className="group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-7 pr-2.5 text-base text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
+                      className="group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#000000] py-2.5 pl-7 pr-2.5 text-base text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
                     >
                       <span
                         aria-hidden="true"
@@ -529,7 +529,7 @@ export default function CTACallback({ image = null }) {
                       <span className="relative z-10 text-nowrap">
                         {loading ? "Sending..." : "Request Callback"}
                       </span>
-                      <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+                      <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
                         {loading ? (
                           <CgSpinner size={20} className="animate-spin" aria-hidden="true" />
                         ) : (

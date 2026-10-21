@@ -53,7 +53,7 @@ export default function HowWeHelp() {
         >
           <h2
             id="how-we-help-title"
-            className={`${marcellus.className} text-[34px] leading-tight text-[#1a2a22] sm:text-[42px] lg:text-[48px]`}
+            className={`${marcellus.className} text-[34px] leading-tight text-[#000000] sm:text-[42px] lg:text-[48px]`}
           >
             How We Help
           </h2>
@@ -67,7 +67,7 @@ export default function HowWeHelp() {
 
           <Link
             href="/contact"
-            className="group relative mt-8 inline-flex items-center gap-3 overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-6 pr-2.5 text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+            className="group relative mt-8 inline-flex items-center gap-3 overflow-hidden rounded-full bg-[#000000] py-2.5 pl-6 pr-2.5 text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
           >
             <span
               aria-hidden="true"
@@ -78,7 +78,7 @@ export default function HowWeHelp() {
               className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/3 -translate-x-full -skew-x-[20deg] bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-0 transition-all duration-700 ease-out group-hover:translate-x-[450%] group-hover:opacity-100"
             />
             <span className="relative z-10">Talk to an Expert</span>
-            <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+            <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
               <ArrowRight
                 size={14}
                 className="transition-transform duration-500 group-hover:-rotate-45"
@@ -97,7 +97,7 @@ export default function HowWeHelp() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
-              className="group relative list-none overflow-hidden rounded-[22px] border border-[#1a2a22]/10 bg-[#faf9f6] p-7 transition duration-300 hover:border-[#D4AF37]/60 hover:shadow-[0_18px_40px_-18px_rgba(26,42,34,0.35)] sm:p-8"
+              className="group relative list-none overflow-hidden rounded-[22px] border border-[#000000]/10 bg-[#faf9f6] p-7 transition duration-300 hover:border-[#D4AF37]/60 hover:shadow-[0_18px_40px_-18px_rgba(26,42,34,0.35)] sm:p-8"
             >
               {/* gold top accent, appears on hover */}
               <span
@@ -105,12 +105,12 @@ export default function HowWeHelp() {
                 className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] transition-transform duration-500 group-hover:scale-x-100"
               />
 
-              <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#1a2a22] text-[#F5D77A] transition duration-300 group-hover:bg-gradient-to-br group-hover:from-[#F5D77A] group-hover:to-[#B8902F] group-hover:text-[#1a2a22]">
+              <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#000000] text-[#F5D77A] transition duration-300 group-hover:bg-gradient-to-br group-hover:from-[#F5D77A] group-hover:to-[#B8902F] group-hover:text-[#000000]">
                 <Icon size={26} strokeWidth={1.4} aria-hidden="true" />
               </span>
 
               <h3
-                className={`${marcellus.className} mt-6 text-[22px] leading-snug text-[#1a2a22]`}
+                className={`${marcellus.className} mt-6 text-[22px] leading-snug text-[#000000]`}
               >
                 {title}
               </h3>

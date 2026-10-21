@@ -14,7 +14,7 @@ const marcellus = Marcellus({
 
 export default function WhatsAppCTA() {
   return (
-    <section className="relative overflow-hidden bg-[#1A2A22] py-16 sm:py-20">
+    <section className="relative overflow-hidden bg-[#000000] py-16 sm:py-20">
       {/* Top gold hairline: #e2a10d sides, #ffcd39 center */}
       <span
         aria-hidden="true"
@@ -87,7 +87,7 @@ export default function WhatsAppCTA() {
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative inline-flex shrink-0 items-center gap-3 overflow-hidden rounded-full bg-[#FAF9F6] py-2.5 pl-6 pr-2.5 text-sm font-medium text-[#1A2A22] ring-1 ring-[#D4AF37]/60 transition-all duration-500 hover:shadow-[0_10px_30px_rgba(212,175,55,0.35)] hover:ring-[#D4AF37] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+          className="group relative inline-flex shrink-0 items-center gap-3 overflow-hidden rounded-full bg-[#FAF9F6] py-2.5 pl-6 pr-2.5 text-sm font-medium text-[#000000] ring-1 ring-[#D4AF37]/60 transition-all duration-500 hover:shadow-[0_10px_30px_rgba(212,175,55,0.35)] hover:ring-[#D4AF37] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
         >
           {/* Golden fill */}
           <span
@@ -103,7 +103,7 @@ export default function WhatsAppCTA() {
 
           <span className="relative z-10">Chat on WhatsApp</span>
 
-          <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-[#1A2A22] text-[#ffcd39] transition-all duration-500 group-hover:bg-[#1A2A22] group-hover:text-[#ffcd39]">
+          <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-[#000000] text-[#ffcd39] transition-all duration-500 group-hover:bg-[#000000] group-hover:text-[#ffcd39]">
             <ArrowRight
               size={14}
               className="transition-transform duration-500 group-hover:-rotate-45"

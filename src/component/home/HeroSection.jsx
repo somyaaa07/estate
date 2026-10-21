@@ -61,7 +61,7 @@ const goldBg = "bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D]";
 const goldText = `${goldBg} bg-clip-text text-transparent`;
 
 const fieldClass =
-  "w-full appearance-none rounded-xl border border-[#1a2a22]/15 bg-[#faf9f6] py-3 pl-10 pr-4 text-sm text-[#1a2a22] transition focus:border-[#E2A10D] focus:outline-none focus:ring-2 focus:ring-[#FFCD39]/40";
+  "w-full appearance-none rounded-xl border border-[#000000]/15 bg-[#faf9f6] py-3 pl-10 pr-4 text-sm text-[#000000] transition focus:border-[#E2A10D] focus:outline-none focus:ring-2 focus:ring-[#FFCD39]/40";
 const labelClass =
   "mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#52685B]";
 const iconClass =
@@ -73,7 +73,7 @@ const iconClass =
 const BtnDark = ({ href, children }) => (
   <Link
     href={href}
-    className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-6 pr-2.5 text-sm font-normal text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+    className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-[#000000] py-2.5 pl-6 pr-2.5 text-sm font-normal text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
   >
     {/* Golden fill slides in from left */}
     <span
@@ -90,7 +90,7 @@ const BtnDark = ({ href, children }) => (
     <span className="relative z-10">{children}</span>
 
     {/* Arrow circle */}
-    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
       <FiArrowRight
         size={14}
         className="transition-transform duration-500 group-hover:-rotate-45"
@@ -104,7 +104,7 @@ export default function HomeHero() {
   return (
     <section className="relative bg-[#faf9f6] pb-12 sm:pb-16">
       {/* ================= HERO ================= */}
-      <div className="relative min-h-[640px] overflow-hidden bg-[#1a2a22] lg:min-h-[760px]">
+      <div className="relative min-h-[640px] overflow-hidden bg-[#000000] lg:min-h-[760px]">
         {/* Background image */}
         {/* Desktop Image */}
         <motion.img
@@ -127,10 +127,10 @@ export default function HomeHero() {
         />
 
         {/* Mobile/tablet: even overlay for readability */}
-        <div className="absolute inset-0 bg-[#1a2a22]/75 lg:hidden" />
+        <div className="absolute inset-0 bg-[#000000]/75 lg:hidden" />
         {/* Desktop: dark on the LEFT (text side), image clear on the RIGHT */}
-        <div className="absolute inset-0 hidden bg-gradient-to-r from-[#1a2a22] via-[#1a2a22]/75 to-transparent lg:block" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a2a22]/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-[#000000] via-[#000000]/75 to-transparent lg:block" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/60 via-transparent to-transparent" />
 
         {/* TEXT — left side, right side stays empty */}
         <div className="relative mx-auto -mt-12 flex w-full max-w-7xl items-center px-4 pb-44 pt-32 sm:px-6 lg:min-h-[760px] lg:px-8 lg:pb-48 lg:pt-36">
@@ -232,7 +232,7 @@ export default function HomeHero() {
         method="GET"
         role="search"
         aria-label="Search properties"
-        className="relative z-20 mx-4 -mt-24 grid max-w-6xl gap-4 overflow-hidden rounded-2xl border border-[#1a2a22]/10 bg-[#f3f0E8] p-5 shadow-[0_25px_60px_-25px_rgba(26,42,34,0.5)] sm:mx-6 sm:grid-cols-2 sm:p-6 lg:mx-auto lg:-mt-20 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end"
+        className="relative z-20 mx-4 -mt-24 grid max-w-6xl gap-4 overflow-hidden rounded-2xl border border-[#000000]/10 bg-[#f3f0E8] p-5 shadow-[0_25px_60px_-25px_rgba(26,42,34,0.5)] sm:mx-6 sm:grid-cols-2 sm:p-6 lg:mx-auto lg:-mt-20 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end"
       >
         {/* Gold gradient top accent */}
         <span
@@ -302,7 +302,7 @@ export default function HomeHero() {
 
         <button
           type="submit"
-          className="inline-flex h-[46px] w-full items-center justify-center gap-2 rounded-xl bg-[#1a2a22] px-8 text-sm font-semibold text-[#faf9f6] transition hover:bg-gradient-to-r hover:from-[#E2A10D] hover:via-[#FFCD39] hover:to-[#E2A10D] hover:text-[#1a2a22] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFCD39] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f3f0E8] sm:col-span-2 lg:col-span-1 lg:w-auto"
+          className="inline-flex h-[46px] w-full items-center justify-center gap-2 rounded-xl bg-[#000000] px-8 text-sm font-semibold text-[#faf9f6] transition hover:bg-gradient-to-r hover:from-[#E2A10D] hover:via-[#FFCD39] hover:to-[#E2A10D] hover:text-[#000000] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFCD39] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f3f0E8] sm:col-span-2 lg:col-span-1 lg:w-auto"
         >
           <FiSearch aria-hidden="true" />
           Search

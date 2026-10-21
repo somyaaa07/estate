@@ -41,7 +41,7 @@ function Logo() {
     <Link
       href="/"
       aria-label="Estate – Home"
-      className="flex items-center gap-2.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#faf9f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a2a22]"
+      className="flex items-center gap-2.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#faf9f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#000000]"
     >
       <img
         src="/uploads/logo.png"
@@ -87,10 +87,10 @@ function NavbarInner() {
   const isParentActive = (href) => pathname.startsWith(href);
 
   // Close menu on route change
-  useEffect(() => {
-    setOpen(false);
-    setMobileSubOpen(false);
-  }, [pathname, searchParams]);
+  // useEffect(() => {
+  //   setOpen(false);
+  //   setMobileSubOpen(false);
+  // }, [pathname, searchParams]);
 
   // Shadow on scroll
   useEffect(() => {
@@ -114,7 +114,7 @@ function NavbarInner() {
   }, [open]);
 
   const focusRing =
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#faf9f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a2a22]";
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#faf9f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#000000]";
 
   const logoutBtn = (extra = "") => (
     <button
@@ -132,7 +132,7 @@ function NavbarInner() {
       href={isAdmin ? "/admin" : "/dashboard"}
       className={`inline-flex items-center gap-2 rounded-lg bg-white/10 px-3.5 py-2 text-sm font-medium text-[#faf9f6] transition hover:bg-white/20 ${focusRing} ${extra}`}
     >
-      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#faf9f6] text-xs font-bold text-[#1a2a22]">
+      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#faf9f6] text-xs font-bold text-[#000000]">
         {initial}
       </span>
       <span className="truncate">{firstName}</span>
@@ -141,7 +141,7 @@ function NavbarInner() {
 
   return (
     <header
-      className={`${jost.className} sticky top-0 z-50 border-b border-white/10 bg-[#1a2a22]/95 backdrop-blur transition-shadow ${
+      className={`${jost.className} sticky top-0 z-50 border-b border-white/10 bg-[#000000]/95 backdrop-blur transition-shadow ${
         scrolled ? "shadow-[0_4px_20px_-10px_rgba(0,0,0,0.5)]" : ""
       }`}
     >
@@ -178,7 +178,7 @@ function NavbarInner() {
 
                   {/* Dropdown */}
                   <div className="invisible absolute left-0 top-full z-50 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                    <ul className="min-w-[170px] overflow-hidden rounded-lg border border-white/10 bg-[#1a2a22] py-1.5 shadow-xl">
+                    <ul className="min-w-[170px] overflow-hidden rounded-lg border border-white/10 bg-[#000000] py-1.5 shadow-xl">
                       {children.map((child) => {
                         const childActive = isActive(child.href);
                         return (
@@ -227,7 +227,7 @@ function NavbarInner() {
           <button
             type="button"
             onClick={() => setIsEnquiryOpen(true)}
-            className={`rounded-lg bg-[#faf9f6] px-5 py-2.5 text-sm font-medium text-[#1a2a22] transition hover:bg-[#f3f0E8] ${focusRing}`}
+            className={`rounded-lg bg-[#faf9f6] px-5 py-2.5 text-sm font-medium text-[#000000] transition hover:bg-[#f3f0E8] ${focusRing}`}
           >
             Enquiry Now
           </button>
@@ -275,7 +275,7 @@ function NavbarInner() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.22 }}
-              className="absolute inset-x-0 top-full max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-white/10 bg-[#1a2a22] shadow-xl lg:hidden"
+              className="absolute inset-x-0 top-full max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-white/10 bg-[#000000] shadow-xl lg:hidden"
             >
               <ul className="mx-auto max-w-7xl space-y-1 px-4 pb-2 pt-4 sm:px-6">
                 {allLinks.map(({ label, href, children }) => {
@@ -385,7 +385,7 @@ function NavbarInner() {
                     setOpen(false);
                     setIsEnquiryOpen(true);
                   }}
-                  className="w-full rounded-lg bg-[#faf9f6] px-5 py-3 text-sm font-medium text-[#1a2a22] transition hover:bg-[#f3f0E8]"
+                  className="w-full rounded-lg bg-[#faf9f6] px-5 py-3 text-sm font-medium text-[#000000] transition hover:bg-[#f3f0E8]"
                 >
                   Enquiry Now
                 </button>
@@ -420,7 +420,7 @@ export default function Navbar() {
   return (
     <Suspense
       fallback={
-        <div className="sticky top-0 z-50 h-16 border-b border-white/10 bg-[#1a2a22] lg:h-[72px]" />
+        <div className="sticky top-0 z-50 h-16 border-b border-white/10 bg-[#000000] lg:h-[72px]" />
       }
     >
       <NavbarInner />

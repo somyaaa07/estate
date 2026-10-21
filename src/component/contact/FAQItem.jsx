@@ -54,7 +54,7 @@ export default function FAQItem({ id, number, question, answer, isOpen, onToggle
               {number}
             </span>
             <span
-              className={`${marcellus.className} text-lg leading-snug text-[#1a2a22] sm:text-[19px]`}
+              className={`${marcellus.className} text-lg leading-snug text-[#000000] sm:text-[19px]`}
             >
               {question}
             </span>
@@ -68,7 +68,7 @@ export default function FAQItem({ id, number, question, answer, isOpen, onToggle
               isOpen
                 ? {
                     background: "linear-gradient(135deg, #ffcd39 0%, #e2a10d 100%)",
-                    color: "#1a2a22",
+                    color: "#000000",
                     border: "1px solid transparent",
                   }
                 : {
@@ -94,7 +94,7 @@ export default function FAQItem({ id, number, question, answer, isOpen, onToggle
             transition={{ duration: 0.35, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="mx-5 border-t border-[#1a2a22]/10 pb-6 pt-4 sm:mx-6">
+            <div className="mx-5 border-t border-[#000000]/10 pb-6 pt-4 sm:mx-6">
               <p className="pl-0 text-[15px] leading-relaxed text-[#52685B] sm:pl-9">
                 {answer}
               </p>

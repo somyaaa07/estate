@@ -36,9 +36,9 @@ const PROPERTY_TYPES = [
 ];
 
 const inputClass =
-  "w-full rounded-xl border bg-[#F3F0E8]/60 py-3 pl-11 pr-4 text-[15px] text-[#1A2A22] outline-none transition placeholder:text-[#52685B]/60 hover:border-[#1A2A22]/30 focus:bg-white focus:ring-4 disabled:opacity-60";
+  "w-full rounded-xl border bg-[#F3F0E8]/60 py-3 pl-11 pr-4 text-[15px] text-[#000000] outline-none transition placeholder:text-[#52685B]/60 hover:border-[#000000]/30 focus:bg-white focus:ring-4 disabled:opacity-60";
 const okBorder =
-  "border-[#1A2A22]/15 focus:border-[#D4AF37] focus:ring-[#FFCD39]/30";
+  "border-[#000000]/15 focus:border-[#D4AF37] focus:ring-[#FFCD39]/30";
 const badBorder = "border-red-300 focus:border-red-400 focus:ring-red-200/60";
 const iconClass =
   "pointer-events-none absolute left-4 top-3.5 text-[#52685B]";
@@ -200,7 +200,7 @@ export default function EnquiryModal({ open, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[99999] flex items-end justify-center bg-[#1A2A22]/70 backdrop-blur-sm sm:items-center sm:p-4"
+          className="fixed inset-0 z-[99999] flex items-end justify-center bg-[#000000]/70 backdrop-blur-sm sm:items-center sm:p-4"
           onClick={onClose}
         >
           <motion.div
@@ -225,7 +225,7 @@ export default function EnquiryModal({ open, onClose }) {
               type="button"
               onClick={onClose}
               aria-label="Close enquiry form"
-              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full text-[#1A2A22] transition hover:bg-[#F3F0E8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
+              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full text-[#000000] transition hover:bg-[#F3F0E8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
             >
               <X size={20} aria-hidden="true" />
             </button>
@@ -241,13 +241,13 @@ export default function EnquiryModal({ open, onClose }) {
                   initial={reduce ? false : { scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", stiffness: 220, damping: 16 }}
-                  className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full text-[#1A2A22] ${goldBg}`}
+                  className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full text-[#000000] ${goldBg}`}
                 >
                   <CheckCircle2 size={30} aria-hidden="true" />
                 </motion.span>
                 <h2
                   id="enquiry-title"
-                  className="font-marcellus mt-6 text-3xl text-[#1A2A22]"
+                  className="font-marcellus mt-6 text-3xl text-[#000000]"
                 >
                   {firstName ? `Thank you, ${firstName}` : "Thank you"}
                 </h2>
@@ -262,7 +262,7 @@ export default function EnquiryModal({ open, onClose }) {
                 <button
                   type="button"
                   onClick={handleDone}
-                  className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#1A2A22] px-8 py-3 text-sm font-medium text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+                  className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#000000] px-8 py-3 text-sm font-medium text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
                 >
                   Done
                 </button>
@@ -276,7 +276,7 @@ export default function EnquiryModal({ open, onClose }) {
                   </p>
                   <h2
                     id="enquiry-title"
-                    className="font-marcellus text-3xl text-[#1A2A22]"
+                    className="font-marcellus text-3xl text-[#000000]"
                   >
                     Make an enquiry
                   </h2>
@@ -295,7 +295,7 @@ export default function EnquiryModal({ open, onClose }) {
                   <div>
                     <label
                       htmlFor="enquiry-name"
-                      className="mb-1.5 block text-sm text-[#1A2A22]"
+                      className="mb-1.5 block text-sm text-[#000000]"
                     >
                       Full name <span className="text-[#B8902F]">*</span>
                     </label>
@@ -325,7 +325,7 @@ export default function EnquiryModal({ open, onClose }) {
                     <div>
                       <label
                         htmlFor="enquiry-phone"
-                        className="mb-1.5 block text-sm text-[#1A2A22]"
+                        className="mb-1.5 block text-sm text-[#000000]"
                       >
                         Phone number <span className="text-[#B8902F]">*</span>
                       </label>
@@ -353,7 +353,7 @@ export default function EnquiryModal({ open, onClose }) {
                     <div>
                       <label
                         htmlFor="enquiry-email"
-                        className="mb-1.5 block text-sm text-[#1A2A22]"
+                        className="mb-1.5 block text-sm text-[#000000]"
                       >
                         Email address{" "}
                         <span className="font-sans text-xs text-[#52685B]">
@@ -382,7 +382,7 @@ export default function EnquiryModal({ open, onClose }) {
 
                   {/* Property type chips */}
                   <fieldset disabled={loading}>
-                    <legend className="mb-2 block text-sm text-[#1A2A22]">
+                    <legend className="mb-2 block text-sm text-[#000000]">
                       Interested in{" "}
                       <span className="font-sans text-xs text-[#52685B]">
                         (optional)
@@ -402,7 +402,7 @@ export default function EnquiryModal({ open, onClose }) {
                           />
                           <label
                             htmlFor={`enquiry-type-${value}`}
-                            className="flex cursor-pointer flex-col items-center gap-1.5 rounded-xl border border-[#1A2A22]/15 bg-white px-2 py-3 text-center text-[13px] text-[#52685B] transition hover:border-[#D4AF37] peer-checked:border-[#D4AF37] peer-checked:bg-[#1A2A22] peer-checked:text-[#F5D77A] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#D4AF37] peer-disabled:cursor-not-allowed peer-disabled:opacity-60"
+                            className="flex cursor-pointer flex-col items-center gap-1.5 rounded-xl border border-[#000000]/15 bg-white px-2 py-3 text-center text-[13px] text-[#52685B] transition hover:border-[#D4AF37] peer-checked:border-[#D4AF37] peer-checked:bg-[#000000] peer-checked:text-[#F5D77A] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#D4AF37] peer-disabled:cursor-not-allowed peer-disabled:opacity-60"
                           >
                             <Icon size={18} strokeWidth={1.6} aria-hidden="true" />
                             {value}
@@ -416,7 +416,7 @@ export default function EnquiryModal({ open, onClose }) {
                   <div>
                     <label
                       htmlFor="enquiry-message"
-                      className="mb-1.5 block text-sm text-[#1A2A22]"
+                      className="mb-1.5 block text-sm text-[#000000]"
                     >
                       Message{" "}
                       <span className="font-sans text-xs text-[#52685B]">
@@ -456,7 +456,7 @@ export default function EnquiryModal({ open, onClose }) {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-7 pr-2.5 text-base text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
+                    className="group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#000000] py-2.5 pl-7 pr-2.5 text-base text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
                   >
                     <span
                       aria-hidden="true"
@@ -465,7 +465,7 @@ export default function EnquiryModal({ open, onClose }) {
                     <span className="relative z-10">
                       {loading ? "Submitting…" : "Submit enquiry"}
                     </span>
-                    <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+                    <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
                       {loading ? (
                         <Loader2
                           size={18}

@@ -40,7 +40,7 @@ export default function Testimonials() {
   };
 
   const arrowClass =
-    "flex h-12 w-12 items-center justify-center rounded-full border border-[#1a2a22]/20 bg-[#faf9f6] text-[#1a2a22] transition duration-300 hover:border-transparent hover:bg-gradient-to-br hover:from-[#e2a10d] hover:via-[#ffcd39] hover:to-[#e2a10d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f3f0E8]";
+    "flex h-12 w-12 items-center justify-center rounded-full border border-[#000000]/20 bg-[#faf9f6] text-[#000000] transition duration-300 hover:border-transparent hover:bg-gradient-to-br hover:from-[#e2a10d] hover:via-[#ffcd39] hover:to-[#e2a10d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f3f0E8]";
 
   return (
     <section
@@ -52,7 +52,7 @@ export default function Testimonials() {
         <div>
           <h2
             id="testimonials-heading"
-            className={`${marcellus.className} text-[clamp(1.9rem,4vw,3rem)] font-normal leading-tight tracking-tight text-[#1a2a22]`}
+            className={`${marcellus.className} text-[clamp(1.9rem,4vw,3rem)] font-normal leading-tight tracking-tight text-[#000000]`}
           >
             Trusted by Families and Investors
           </h2>
@@ -86,7 +86,7 @@ Real experiences from families, homebuyers, and investors who trusted us to find
               className={`${marcellus.className} text-lg text-[#52685B]`}
               aria-hidden="true"
             >
-              <span className="text-[#1a2a22]">{pad(index + 1)}</span> / {pad(total)}
+              <span className="text-[#000000]">{pad(index + 1)}</span> / {pad(total)}
             </p>
 
             
@@ -97,7 +97,7 @@ Real experiences from families, homebuyers, and investors who trusted us to find
     href="https://www.google.com/search?gs_ssp=eJzj4tVP1zc0zDHLtTRJT8ozYLRSNagwtjRITk1KMTA0Mk6xsEhKszKosACyjSwtzE2NzFPMzEzMvYSSijLz0vMVilITcxRSi0sSS1IB9PgVYA&q=bringo+real+estate&oq=bringo+re&gs_lcrp=EgZjaHJvbWUqDQgCEC4YrwEYxwEYgAQyBggAEEUYOTIGCAEQIxgnMg0IAhAuGK8BGMcBGIAEMgcIAxAAGIAEMgcIBBAAGIAEMggIBRAAGBYYHjIICAYQABgWGB4yBggHEEUYPdIBCDY1NjRqMGo3qAIAsAIA&sourceid=chrome&source=chrome.ob&ie=UTF-8#lrd=0x390cebd0123d88bf:0x81232987527d6647,1,,,,"
     target="_blank"
     rel="noopener noreferrer"
-    className="font-medium text-[#1a2a22] underline decoration-[#e2a10d] decoration-2 underline-offset-4 transition-colors duration-300 hover:text-[#e2a10d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f3f0E8]"
+    className="font-medium text-[#000000] underline decoration-[#e2a10d] decoration-2 underline-offset-4 transition-colors duration-300 hover:text-[#e2a10d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f3f0E8]"
   >
     Google Review
   </a>
@@ -107,7 +107,7 @@ Real experiences from families, homebuyers, and investors who trusted us to find
 
         {/* ===== Right: quote card ===== */}
         <div className="min-w-0">
-          <div className="relative overflow-hidden rounded-[28px] bg-[#1a2a22] p-6 shadow-[0_24px_60px_-24px_rgba(26,42,34,0.55)] sm:p-10 lg:p-12">
+          <div className="relative overflow-hidden rounded-[28px] bg-[#000000] p-6 shadow-[0_24px_60px_-24px_rgba(26,42,34,0.55)] sm:p-10 lg:p-12">
             <span
               aria-hidden="true"
               className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`}
@@ -167,7 +167,7 @@ Real experiences from families, homebuyers, and investors who trusted us to find
                   <figcaption className="mt-8 flex items-center gap-4 border-t border-[#faf9f6]/10 pt-6">
                     <span
                       aria-hidden="true"
-                      className={`${marcellus.className} flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-lg text-[#1a2a22] ${goldBg}`}
+                      className={`${marcellus.className} flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-lg text-[#000000] ${goldBg}`}
                     >
                       {getInitials(current.name)}
                     </span>
@@ -200,7 +200,7 @@ Real experiences from families, homebuyers, and investors who trusted us to find
                 className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f3f0E8] ${
                   i === index
                     ? `w-9 ${goldBg}`
-                    : "w-2 bg-[#1a2a22]/25 hover:bg-[#1a2a22]/50"
+                    : "w-2 bg-[#000000]/25 hover:bg-[#000000]/50"
                 }`}
               />
             ))}

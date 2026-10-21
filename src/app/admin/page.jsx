@@ -104,7 +104,7 @@ export default function AdminDashboard() {
   });
 
   return (
-    <div className={`${marcellus.className} font-normal text-[#1A2A22]`}>
+    <div className={`${marcellus.className} font-normal text-[#000000]`}>
       {/* ── Header ── */}
       <motion.header
         {...enter()}
@@ -122,14 +122,14 @@ export default function AdminDashboard() {
 
         <Link
           href="/admin/properties/add"
-          className="group relative inline-flex w-fit items-center gap-3 overflow-hidden rounded-full bg-[#1A2A22] py-2 pl-6 pr-2 text-[15px] text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+          className="group relative inline-flex w-fit items-center gap-3 overflow-hidden rounded-full bg-[#000000] py-2 pl-6 pr-2 text-[15px] text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
         >
           <span
             aria-hidden="true"
             className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100"
           />
           <span className="relative z-10">Add a property</span>
-          <span className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+          <span className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
             <Plus size={17} aria-hidden="true" />
           </span>
         </Link>
@@ -151,7 +151,7 @@ export default function AdminDashboard() {
         <motion.section
           {...enter(0.1)}
           aria-labelledby="portfolio"
-          className="relative overflow-hidden rounded-3xl bg-[#1A2A22] p-6 text-[#FAF9F6] sm:p-8"
+          className="relative overflow-hidden rounded-3xl bg-[#000000] p-6 text-[#FAF9F6] sm:p-8"
         >
           <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
           <div
@@ -241,12 +241,12 @@ export default function AdminDashboard() {
         <motion.section
           {...enter(0.2)}
           aria-labelledby="inquiries"
-          className="relative flex flex-col overflow-hidden rounded-3xl border border-[#1A2A22]/10 bg-white p-6 sm:p-8"
+          className="relative flex flex-col overflow-hidden rounded-3xl border border-[#000000]/10 bg-white p-6 sm:p-8"
         >
           <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
 
           <div className="flex items-start justify-between">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1A2A22] text-[#F5D77A]">
+            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#000000] text-[#F5D77A]">
               <Inbox size={22} strokeWidth={1.6} aria-hidden="true" />
             </span>
             {stats.newInquiries > 0 && (
@@ -279,10 +279,10 @@ export default function AdminDashboard() {
 
           <Link
             href="/admin/inquiries"
-            className="group mt-6 inline-flex w-fit items-center gap-3 rounded-full bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] py-2 pl-6 pr-2 font-sans text-sm text-[#1A2A22] transition hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+            className="group mt-6 inline-flex w-fit items-center gap-3 rounded-full bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] py-2 pl-6 pr-2 font-sans text-sm text-[#000000] transition hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
           >
             View inquiries
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#1A2A22] text-[#F5D77A]">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#000000] text-[#F5D77A]">
               <ArrowRight
                 size={14}
                 className="transition-transform duration-300 group-hover:-rotate-45"
@@ -303,13 +303,13 @@ export default function AdminDashboard() {
             <li key={label} className="list-none">
               <Link
                 href={href}
-                className="group relative flex h-full items-center gap-4 overflow-hidden rounded-2xl border border-[#1A2A22]/10 bg-white p-4 transition duration-300 hover:border-[#D4AF37]/60 hover:shadow-[0_18px_40px_-18px_rgba(26,42,34,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+                className="group relative flex h-full items-center gap-4 overflow-hidden rounded-2xl border border-[#000000]/10 bg-white p-4 transition duration-300 hover:border-[#D4AF37]/60 hover:shadow-[0_18px_40px_-18px_rgba(26,42,34,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
               >
                 <span
                   aria-hidden="true"
                   className={`absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100 ${goldBg}`}
                 />
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#1A2A22]/[0.06] text-[#1A2A22] transition group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#000000]/[0.06] text-[#000000] transition group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
                   <Icon size={19} aria-hidden="true" />
                 </span>
                 <span className="min-w-0 flex-1">

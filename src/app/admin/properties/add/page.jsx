@@ -37,12 +37,12 @@ export default function AddPropertyPage() {
 
   return (
     <div
-      className={`${marcellus.variable} mx-auto max-w-5xl pb-16 font-[family-name:var(--font-marcellus)] font-normal text-[#1A2A22]`}
+      className={`${marcellus.variable} mx-auto max-w-5xl pb-16 font-[family-name:var(--font-marcellus)] font-normal text-[#000000]`}
     >
       <motion.header initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
         <Link
           href="/admin/properties"
-          className="inline-flex items-center gap-2 rounded-full text-sm text-[#52685B] transition hover:text-[#1A2A22] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D4AF37]"
+          className="inline-flex items-center gap-2 rounded-full text-sm text-[#52685B] transition hover:text-[#000000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D4AF37]"
         >
           <ArrowLeft size={15} /> Back to properties
         </Link>

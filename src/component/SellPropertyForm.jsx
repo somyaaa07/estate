@@ -66,7 +66,7 @@ const inr = (n) => {
 };
 
 const inputBase =
-  "w-full rounded-xl border bg-white px-4 py-3 text-[15px] text-[#1A2A22] placeholder:text-[#52685B]/50 outline-none transition focus:border-[#1A2A22] focus:ring-4 focus:ring-[#D4AF37]/25";
+  "w-full rounded-xl border bg-white px-4 py-3 text-[15px] text-[#000000] placeholder:text-[#52685B]/50 outline-none transition focus:border-[#000000] focus:ring-4 focus:ring-[#D4AF37]/25";
 
 /* ───────────── HERO ───────────── */
 const perks = [
@@ -85,7 +85,7 @@ const fadeUp = (delay = 0) => ({
 function SellHero() {
   return (
     <section
-      className={`${marcellus.className} relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-[#1A2A22] px-4 pb-24 pt-10 text-[#FAF9F6] sm:px-6 sm:pb-28 sm:pt-12 lg:px-8`}
+      className={`${marcellus.className} relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-[#000000] px-4 pb-24 pt-10 text-[#FAF9F6] sm:px-6 sm:pb-28 sm:pt-12 lg:px-8`}
     >
       <div
         aria-hidden="true"
@@ -147,7 +147,7 @@ function Item({ label, required, hint, error, span, children, htmlFor }) {
     >
       <label
         htmlFor={htmlFor}
-        className="mb-2 flex items-baseline justify-between gap-2 text-[13px] text-[#1A2A22]"
+        className="mb-2 flex items-baseline justify-between gap-2 text-[13px] text-[#000000]"
       >
         <span>
           {label}
@@ -200,8 +200,8 @@ function Segmented({ value, onChange, options, label }) {
             onClick={() => onChange(o.value)}
             className={`rounded-full px-5 py-2.5 text-sm ring-1 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] ${
               on
-                ? "bg-[#1A2A22] text-[#FAF9F6] ring-[#D4AF37]/50"
-                : "bg-white text-[#52685B] ring-[#52685B]/25 hover:ring-[#1A2A22]"
+                ? "bg-[#000000] text-[#FAF9F6] ring-[#D4AF37]/50"
+                : "bg-white text-[#52685B] ring-[#52685B]/25 hover:ring-[#000000]"
             }`}
           >
             {o.label}
@@ -215,7 +215,7 @@ function Segmented({ value, onChange, options, label }) {
 function Stepper({ value, onChange, max = 20 }) {
   const n = value === "" ? 0 : Number(value);
   const btn =
-    "flex h-10 w-10 items-center justify-center rounded-full bg-[#F3F0E8] text-[#1A2A22] transition hover:bg-[#1A2A22] hover:text-[#FAF9F6] disabled:opacity-40 disabled:hover:bg-[#F3F0E8] disabled:hover:text-[#1A2A22] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]";
+    "flex h-10 w-10 items-center justify-center rounded-full bg-[#F3F0E8] text-[#000000] transition hover:bg-[#000000] hover:text-[#FAF9F6] disabled:opacity-40 disabled:hover:bg-[#F3F0E8] disabled:hover:text-[#000000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]";
   return (
     <div className="flex items-center justify-between rounded-xl border border-[#52685B]/25 bg-white px-3 py-1.5">
       <button
@@ -269,8 +269,8 @@ function TagInput({ value = [], onChange, suggestions = [], placeholder }) {
   const chip = (on) =>
     `inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] ring-1 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37] ${
       on
-        ? "bg-[#1A2A22] text-[#FAF9F6] ring-[#1A2A22]"
-        : "bg-white text-[#52685B] ring-[#52685B]/25 hover:ring-[#1A2A22]"
+        ? "bg-[#000000] text-[#FAF9F6] ring-[#000000]"
+        : "bg-white text-[#52685B] ring-[#52685B]/25 hover:ring-[#000000]"
     }`;
 
   return (
@@ -306,7 +306,7 @@ function TagInput({ value = [], onChange, suggestions = [], placeholder }) {
           type="button"
           onClick={commit}
           disabled={!text.trim()}
-          className="shrink-0 rounded-xl bg-[#1A2A22] px-5 text-sm text-[#FAF9F6] transition hover:bg-[#52685B] disabled:opacity-40"
+          className="shrink-0 rounded-xl bg-[#000000] px-5 text-sm text-[#FAF9F6] transition hover:bg-[#52685B] disabled:opacity-40"
         >
           Add
         </button>
@@ -479,7 +479,7 @@ function SellFormBody() {
   if (success) {
     return (
       <div
-        className={`${marcellus.variable} font-[family-name:var(--font-marcellus)] font-normal text-[#1A2A22]`}
+        className={`${marcellus.variable} font-[family-name:var(--font-marcellus)] font-normal text-[#000000]`}
       >
         <motion.div
           role="status"
@@ -502,7 +502,7 @@ function SellFormBody() {
           <button
             type="button"
             onClick={() => setSuccess(false)}
-            className="mt-8 rounded-full bg-[#1A2A22] px-7 py-2.5 text-sm text-[#FAF9F6] transition hover:bg-[#52685B]"
+            className="mt-8 rounded-full bg-[#000000] px-7 py-2.5 text-sm text-[#FAF9F6] transition hover:bg-[#52685B]"
           >
             Submit another property
           </button>
@@ -513,7 +513,7 @@ function SellFormBody() {
 
   return (
     <div
-      className={`${marcellus.variable} font-[family-name:var(--font-marcellus)] font-normal text-[#1A2A22]`}
+      className={`${marcellus.variable} font-[family-name:var(--font-marcellus)] font-normal text-[#000000]`}
     >
       <AnimatePresence>
         {shownError && (
@@ -764,7 +764,7 @@ function SellFormBody() {
         </Section>
 
         {/* Sticky action bar */}
-        <div className="sticky bottom-4 z-20 flex flex-col gap-3 rounded-2xl bg-[#1A2A22]/95 p-3 pl-5 text-[#FAF9F6] shadow-[0_20px_50px_rgba(26,42,34,0.35)] ring-1 ring-[#D4AF37]/30 backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+        <div className="sticky bottom-4 z-20 flex flex-col gap-3 rounded-2xl bg-[#000000]/95 p-3 pl-5 text-[#FAF9F6] shadow-[0_20px_50px_rgba(26,42,34,0.35)] ring-1 ring-[#D4AF37]/30 backdrop-blur sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0 flex-1">
             <p className="text-xs text-[#FAF9F6]/80">
               {doneCount === totalReq
@@ -782,7 +782,7 @@ function SellFormBody() {
             type="button"
             onClick={handleSubmit}
             disabled={loading}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5D77A] px-7 py-2.5 text-sm text-[#1A2A22] transition hover:shadow-[0_8px_24px_rgba(212,175,55,0.45)] disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5D77A] px-7 py-2.5 text-sm text-[#000000] transition hover:shadow-[0_8px_24px_rgba(212,175,55,0.45)] disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
           >
             {loading && <Loader2 size={15} className="animate-spin" />}
             {loading ? "Submitting…" : "Submit Property"}

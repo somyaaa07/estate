@@ -25,10 +25,10 @@ const EMAIL_KEY = 'bringo_admin_email';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const inputClass = (invalid) =>
-  `w-full rounded-xl border bg-[#F3F0E8]/60 py-3.5 pl-11 pr-4 font-sans text-[15px] text-[#1A2A22] outline-none transition placeholder:text-[#52685B]/60 hover:border-[#1A2A22]/30 focus:bg-white focus:ring-4 disabled:opacity-60 ${
+  `w-full rounded-xl border bg-[#F3F0E8]/60 py-3.5 pl-11 pr-4 font-sans text-[15px] text-[#000000] outline-none transition placeholder:text-[#52685B]/60 hover:border-[#000000]/30 focus:bg-white focus:ring-4 disabled:opacity-60 ${
     invalid
       ? 'border-[#9C3B2B] focus:border-[#9C3B2B] focus:ring-[#9C3B2B]/15'
-      : 'border-[#1A2A22]/15 focus:border-[#D4AF37] focus:ring-[#FFCD39]/30'
+      : 'border-[#000000]/15 focus:border-[#D4AF37] focus:ring-[#FFCD39]/30'
   }`;
 
 /* ---------- Architectural line drawing (brand panel) ---------- */
@@ -174,9 +174,9 @@ export default function LoginPage() {
   const busy = loading || redirecting;
 
   return (
-    <div className={`${marcellus.className} grid min-h-screen bg-[#FAF9F6] font-normal text-[#1A2A22] lg:grid-cols-[1.05fr_1fr]`}>
+    <div className={`${marcellus.className} grid min-h-screen bg-[#FAF9F6] font-normal text-[#000000] lg:grid-cols-[1.05fr_1fr]`}>
       {/* ===== Brand panel (desktop) ===== */}
-      <aside className="relative hidden overflow-hidden bg-[#1A2A22] p-12 text-[#FAF9F6] lg:flex lg:flex-col lg:justify-between">
+      <aside className="relative hidden overflow-hidden bg-[#000000] p-12 text-[#FAF9F6] lg:flex lg:flex-col lg:justify-between">
         <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
         <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-[#D4AF37]/10 blur-3xl" />
 
@@ -210,14 +210,14 @@ export default function LoginPage() {
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className="relative w-full max-w-md"
         >
-          <Link href="/" className="mb-6 inline-flex items-center gap-2 font-sans text-sm text-[#52685B] transition hover:text-[#1A2A22] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D4AF37] lg:hidden">
+          <Link href="/" className="mb-6 inline-flex items-center gap-2 font-sans text-sm text-[#52685B] transition hover:text-[#000000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D4AF37] lg:hidden">
             <ArrowLeft size={16} aria-hidden="true" /> Back to website
           </Link>
 
-          <div className="relative overflow-hidden rounded-3xl border border-[#1A2A22]/10 bg-white p-7 shadow-[0_24px_60px_-20px_rgba(26,42,34,0.25)] sm:p-10">
+          <div className="relative overflow-hidden rounded-3xl border border-[#000000]/10 bg-white p-7 shadow-[0_24px_60px_-20px_rgba(26,42,34,0.25)] sm:p-10">
             <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
 
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1A2A22] text-[#F5D77A] ring-1 ring-[#D4AF37]/50">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#000000] text-[#F5D77A] ring-1 ring-[#D4AF37]/50">
               <ShieldCheck size={22} aria-hidden="true" />
             </span>
 
@@ -302,7 +302,7 @@ export default function LoginPage() {
                     onClick={() => setShowPassword((s) => !s)}
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                     aria-pressed={showPassword}
-                    className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg text-[#52685B] transition hover:bg-[#1A2A22]/5 hover:text-[#1A2A22] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
+                    className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg text-[#52685B] transition hover:bg-[#000000]/5 hover:text-[#000000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
                   >
                     {showPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
                   </button>
@@ -322,7 +322,7 @@ export default function LoginPage() {
                   checked={remember}
                   onChange={(e) => setRemember(e.target.checked)}
                   disabled={busy}
-                  className="h-4 w-4 cursor-pointer rounded border-[#1A2A22]/30 accent-[#1A2A22] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
+                  className="h-4 w-4 cursor-pointer rounded border-[#000000]/30 accent-[#000000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
                 />
                 Remember my email on this device
               </label>
@@ -331,13 +331,13 @@ export default function LoginPage() {
                 type="submit"
                 disabled={busy}
                 aria-busy={busy}
-                className="group relative mt-2 inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-7 pr-2.5 text-base text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
+                className="group relative mt-2 inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#000000] py-2.5 pl-7 pr-2.5 text-base text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
               >
                 <span aria-hidden="true" className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100" />
                 <span className="relative z-10">
                   {redirecting ? 'Opening dashboard…' : loading ? 'Signing in…' : 'Sign in'}
                 </span>
-                <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+                <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
                   {busy ? (
                     <Loader2 size={18} className="animate-spin" aria-hidden="true" />
                   ) : (
@@ -350,7 +350,7 @@ export default function LoginPage() {
             {needsSetup && (
               <div className="mt-8 rounded-2xl border border-[#D4AF37]/40 bg-[#F3F0E8] p-5 text-center font-sans text-sm text-[#52685B]">
                 No admin account exists yet.{' '}
-                <Link href="/admin/signup" className="text-[#1A2A22] underline underline-offset-4 transition hover:text-[#B8902F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]">
+                <Link href="/admin/signup" className="text-[#000000] underline underline-offset-4 transition hover:text-[#B8902F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]">
                   Register the first admin
                 </Link>
               </div>

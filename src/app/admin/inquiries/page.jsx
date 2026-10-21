@@ -23,7 +23,7 @@ const marcellus = Marcellus({
 
 /* ---------------------------------------------------------------
    COLORS (same system as About page)
-   Primary  : #1A2A22
+   Primary  : #000000
    Secondary: #52685B
    BG       : #FAF9F6  &  #F3F0E8
    Gold     : #D4AF37 / #D4A62A / #F5D77A
@@ -44,9 +44,9 @@ const STATUS_CONFIG = {
   },
   replied: {
     label: 'Replied',
-    badge: 'bg-[#1A2A22] text-[#FAF9F6]',
+    badge: 'bg-[#000000] text-[#FAF9F6]',
     dot: 'bg-[#F5D77A]',
-    active: 'border-[#1A2A22] bg-[#1A2A22] text-[#FAF9F6]',
+    active: 'border-[#000000] bg-[#000000] text-[#FAF9F6]',
   },
 };
 
@@ -82,7 +82,7 @@ const StatusBadge = ({ status }) => {
 const Initial = ({ name }) => (
   <span
     aria-hidden="true"
-    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1A2A22] text-sm text-[#F5D77A] ring-1 ring-[#D4AF37]/40"
+    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#000000] text-sm text-[#F5D77A] ring-1 ring-[#D4AF37]/40"
   >
     {(name || '?').trim().charAt(0).toUpperCase()}
   </span>
@@ -188,7 +188,7 @@ export default function AdminInquiriesPage() {
 
   return (
     <div
-      className={`${marcellus.variable} font-[family-name:var(--font-marcellus)] font-normal text-[#1A2A22]`}
+      className={`${marcellus.variable} font-[family-name:var(--font-marcellus)] font-normal text-[#000000]`}
     >
       {/* ============ HEADER ============ */}
       <header className="mb-8">
@@ -214,13 +214,13 @@ export default function AdminInquiriesPage() {
                 aria-pressed={active}
                 className={`flex flex-col items-center rounded-2xl px-4 py-5 text-center transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] ${
                   active
-                    ? 'bg-[#1A2A22] text-[#FAF9F6] ring-1 ring-[#D4AF37]/40'
-                    : 'text-[#1A2A22] hover:bg-[#FAF9F6]'
+                    ? 'bg-[#000000] text-[#FAF9F6] ring-1 ring-[#D4AF37]/40'
+                    : 'text-[#000000] hover:bg-[#FAF9F6]'
                 }`}
               >
                 <span
                   className={`text-3xl leading-none ${
-                    active ? 'text-[#F5D77A]' : 'text-[#1A2A22]'
+                    active ? 'text-[#F5D77A]' : 'text-[#000000]'
                   }`}
                 >
                   {stats[key]}
@@ -270,7 +270,7 @@ export default function AdminInquiriesPage() {
                 <button
                   type="button"
                   onClick={() => setFilter('all')}
-                  className="mt-5 rounded-full bg-[#1A2A22] px-6 py-2.5 text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+                  className="mt-5 rounded-full bg-[#000000] px-6 py-2.5 text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
                 >
                   Show all inquiries
                 </button>
@@ -413,7 +413,7 @@ export default function AdminInquiriesPage() {
                 type="button"
                 onClick={() => setSelectedId(null)}
                 aria-label="Close detail panel"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F3F0E8] text-[#52685B] transition hover:bg-[#1A2A22] hover:text-[#FAF9F6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F3F0E8] text-[#52685B] transition hover:bg-[#000000] hover:text-[#FAF9F6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
               >
                 <X size={16} />
               </button>
@@ -463,13 +463,13 @@ export default function AdminInquiriesPage() {
                   <MapPin size={13} className="shrink-0 text-[#D4A62A]" />
                   {selected.property.location}, {selected.property.city}
                 </p>
-                <p className="mt-3 text-xl text-[#1A2A22]">
+                <p className="mt-3 text-xl text-[#000000]">
                   ₹{Number(selected.property.price).toLocaleString('en-IN')}
                 </p>
                 <Link
                   href={`/properties/${selected.property.id}`}
                   target="_blank"
-                  className="mt-3 inline-flex items-center gap-2 text-sm text-[#1A2A22] underline decoration-[#D4AF37] decoration-1 underline-offset-4 transition hover:text-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+                  className="mt-3 inline-flex items-center gap-2 text-sm text-[#000000] underline decoration-[#D4AF37] decoration-1 underline-offset-4 transition hover:text-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
                 >
                   View property <ArrowRight size={14} />
                 </Link>
@@ -477,7 +477,7 @@ export default function AdminInquiriesPage() {
             )}
 
             {/* Message (dark card, same as Vision / Mission block) */}
-            <div className="mt-4 rounded-2xl bg-[#1A2A22] p-5 text-[#FAF9F6]">
+            <div className="mt-4 rounded-2xl bg-[#000000] p-5 text-[#FAF9F6]">
               <p className="mb-3 text-[11px] uppercase tracking-[0.25em] text-[#FAF9F6]/70">
                 Message
               </p>
@@ -519,14 +519,14 @@ export default function AdminInquiriesPage() {
                 href={`mailto:${selected.email}?subject=${encodeURIComponent(
                   `Re: ${selected.property?.title || 'Your Inquiry'}`
                 )}`}
-                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-[#1A2A22] py-2 pl-5 pr-2 text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-[#000000] py-2 pl-5 pr-2 text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
               >
                 <span
                   aria-hidden="true"
                   className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100"
                 />
                 <span className="relative z-10">Send Email</span>
-                <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+                <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
                   <Mail size={14} />
                 </span>
               </a>
@@ -534,7 +534,7 @@ export default function AdminInquiriesPage() {
               {selected.phone && (
                 <a
                   href={`tel:${selected.phone}`}
-                  className="inline-flex items-center gap-2 rounded-full bg-[#F3F0E8] px-5 py-3 text-sm text-[#1A2A22] ring-1 ring-[#52685B]/25 transition hover:bg-[#52685B] hover:text-[#FAF9F6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#F3F0E8] px-5 py-3 text-sm text-[#000000] ring-1 ring-[#52685B]/25 transition hover:bg-[#52685B] hover:text-[#FAF9F6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
                 >
                   <Phone size={15} /> Call
                 </a>

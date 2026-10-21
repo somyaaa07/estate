@@ -44,9 +44,9 @@ const marcellus = Marcellus({
 const goldBg = 'bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D]';
 
 const fieldBase =
-  'w-full rounded-xl border border-[#1A2A22]/15 bg-[#F3F0E8]/60 px-4 py-3 font-sans text-sm text-[#1A2A22] outline-none transition placeholder:text-[#52685B]/60 hover:border-[#1A2A22]/30 focus:border-[#D4AF37] focus:bg-white focus:ring-4 focus:ring-[#FFCD39]/30 disabled:opacity-60';
-const labelBase = 'mb-1.5 block text-sm text-[#1A2A22]';
-const card = 'rounded-3xl border border-[#1A2A22]/10 bg-white';
+  'w-full rounded-xl border border-[#000000]/15 bg-[#F3F0E8]/60 px-4 py-3 font-sans text-sm text-[#000000] outline-none transition placeholder:text-[#52685B]/60 hover:border-[#000000]/30 focus:border-[#D4AF37] focus:bg-white focus:ring-4 focus:ring-[#FFCD39]/30 disabled:opacity-60';
+const labelBase = 'mb-1.5 block text-sm text-[#000000]';
+const card = 'rounded-3xl border border-[#000000]/10 bg-white';
 
 /* ---------------------------------------------------------------
    IMAGE GALLERY
@@ -59,7 +59,7 @@ function ImageGallery({ images = [], title }) {
 
   if (!total) {
     return (
-      <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 rounded-3xl border border-[#1A2A22]/10 bg-white text-[#52685B]">
+      <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 rounded-3xl border border-[#000000]/10 bg-white text-[#52685B]">
         <ImageOff size={32} strokeWidth={1.4} aria-hidden="true" />
         <span className="font-sans text-sm">No images available</span>
       </div>
@@ -67,7 +67,7 @@ function ImageGallery({ images = [], title }) {
   }
 
   const arrow =
-    'absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#FAF9F6]/90 text-[#1A2A22] shadow-md backdrop-blur transition hover:bg-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]';
+    'absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#FAF9F6]/90 text-[#000000] shadow-md backdrop-blur transition hover:bg-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]';
 
   return (
     <div
@@ -80,7 +80,7 @@ function ImageGallery({ images = [], title }) {
         if (e.key === 'ArrowRight') go(1);
       }}
     >
-      <div className="group relative aspect-[16/10] overflow-hidden rounded-3xl bg-[#1A2A22] shadow-[0_24px_60px_-28px_rgba(26,42,34,0.55)] ring-1 ring-[#1A2A22]/10">
+      <div className="group relative aspect-[16/10] overflow-hidden rounded-3xl bg-[#000000] shadow-[0_24px_60px_-28px_rgba(26,42,34,0.55)] ring-1 ring-[#000000]/10">
         <img
           key={current}
           src={images[current].url}
@@ -88,7 +88,7 @@ function ImageGallery({ images = [], title }) {
           className="h-full w-full animate-[fadeIn_0.4s_ease-out] object-cover"
         />
         <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#1A2A22]/55 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#000000]/55 to-transparent" />
         <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
 
         {total > 1 && (
@@ -99,7 +99,7 @@ function ImageGallery({ images = [], title }) {
             <button type="button" onClick={() => go(1)} aria-label="Next image" className={`${arrow} right-4`}>
               <ChevronRight size={20} aria-hidden="true" />
             </button>
-            <span className="absolute bottom-4 right-4 rounded-full bg-[#1A2A22]/70 px-3 py-1 font-sans text-xs text-[#FAF9F6] backdrop-blur">
+            <span className="absolute bottom-4 right-4 rounded-full bg-[#000000]/70 px-3 py-1 font-sans text-xs text-[#FAF9F6] backdrop-blur">
               {current + 1} / {total}
             </span>
           </>
@@ -167,7 +167,7 @@ function SaveButton({ propertyId, dark = false }) {
 
   const idle = dark
     ? 'border-[#FAF9F6]/25 text-[#FAF9F6] hover:border-[#D4AF37] hover:text-[#F5D77A]'
-    : 'border-[#1A2A22]/20 bg-white text-[#52685B] hover:border-[#D4AF37] hover:text-[#1A2A22]';
+    : 'border-[#000000]/20 bg-white text-[#52685B] hover:border-[#D4AF37] hover:text-[#000000]';
 
   return (
     <button
@@ -247,15 +247,15 @@ function InquiryForm({ propertyId }) {
     return (
       <div aria-live="polite" className={`${card} relative overflow-hidden p-8 text-center`}>
         <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
-        <span className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full text-[#1A2A22] ${goldBg}`}>
+        <span className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full text-[#000000] ${goldBg}`}>
           <CheckCircle2 size={26} aria-hidden="true" />
         </span>
-        <p className="mt-5 text-2xl text-[#1A2A22]">Inquiry sent</p>
+        <p className="mt-5 text-2xl text-[#000000]">Inquiry sent</p>
         <p className="mt-2 font-sans text-sm text-[#52685B]">We will contact you shortly.</p>
         <button
           type="button"
           onClick={() => setStatus('idle')}
-          className="mt-5 font-sans text-sm text-[#52685B] underline underline-offset-4 transition hover:text-[#1A2A22] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
+          className="mt-5 font-sans text-sm text-[#52685B] underline underline-offset-4 transition hover:text-[#000000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
         >
           Send another inquiry
         </button>
@@ -268,7 +268,7 @@ function InquiryForm({ propertyId }) {
   return (
     <div className={`${card} relative overflow-hidden p-6 sm:p-7`}>
       <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
-      <h2 className="text-2xl text-[#1A2A22]">Send an inquiry</h2>
+      <h2 className="text-2xl text-[#000000]">Send an inquiry</h2>
       <p className="mt-1 font-sans text-sm text-[#52685B]">We usually reply within a day.</p>
 
       <form onSubmit={handleSubmit} noValidate className="mt-5 space-y-4">
@@ -307,11 +307,11 @@ function InquiryForm({ propertyId }) {
         <button
           type="submit"
           disabled={loading}
-          className="group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-6 pr-2.5 text-[15px] text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
+          className="group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#000000] py-2.5 pl-6 pr-2.5 text-[15px] text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
         >
           <span aria-hidden="true" className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100" />
           <span className="relative z-10">{loading ? 'Sending…' : 'Send inquiry'}</span>
-          <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+          <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
             {loading ? (
               <Loader2 size={17} className="animate-spin" aria-hidden="true" />
             ) : (
@@ -328,14 +328,14 @@ function InquiryForm({ propertyId }) {
    SMALL PIECES
 ---------------------------------------------------------------- */
 const TYPE_BADGE = {
-  buy: 'bg-[#1A2A22] text-[#F5D77A]',
-  sell: `${goldBg} text-[#1A2A22]`,
-  rent: 'bg-white text-[#1A2A22] ring-1 ring-[#1A2A22]/15',
+  buy: 'bg-[#000000] text-[#F5D77A]',
+  sell: `${goldBg} text-[#000000]`,
+  rent: 'bg-white text-[#000000] ring-1 ring-[#000000]/15',
 };
 
 function PriceCard({ property, price, perSqft, propertyId, className = '' }) {
   return (
-    <div className={`relative overflow-hidden rounded-3xl bg-[#1A2A22] p-6 text-[#FAF9F6] sm:p-7 ${className}`}>
+    <div className={`relative overflow-hidden rounded-3xl bg-[#000000] p-6 text-[#FAF9F6] sm:p-7 ${className}`}>
       <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
       <div aria-hidden="true" className="pointer-events-none absolute -bottom-20 -right-16 h-52 w-52 rounded-full bg-[#D4AF37]/10 blur-3xl" />
       <p className="relative font-sans text-sm text-[#FAF9F6]/60">
@@ -349,7 +349,7 @@ function PriceCard({ property, price, perSqft, propertyId, className = '' }) {
       <div className="relative mt-5 flex flex-wrap items-center gap-3">
         <a
           href="#inquiry"
-          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] px-5 py-2.5 font-sans text-sm text-[#1A2A22] transition hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] px-5 py-2.5 font-sans text-sm text-[#000000] transition hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
         >
           Inquire now <ArrowRight size={15} aria-hidden="true" />
         </a>
@@ -376,7 +376,7 @@ function TagSection({ title, icon: Icon, items }) {
         {items.map((item) => (
           <li
             key={item}
-            className="inline-flex items-center gap-2 rounded-full border border-[#1A2A22]/10 bg-[#F3F0E8]/60 px-4 py-2 font-sans text-sm text-[#1A2A22]"
+            className="inline-flex items-center gap-2 rounded-full border border-[#000000]/10 bg-[#F3F0E8]/60 px-4 py-2 font-sans text-sm text-[#000000]"
           >
             <Icon size={14} className="text-[#B8902F]" aria-hidden="true" />
             {item}
@@ -414,14 +414,14 @@ function NotFound() {
       <span className="flex h-20 w-20 items-center justify-center rounded-full bg-white text-[#B8902F] ring-1 ring-[#D4AF37]/40">
         <SearchX size={34} strokeWidth={1.3} aria-hidden="true" />
       </span>
-      <h1 className="mt-6 text-3xl text-[#1A2A22]">Property not found</h1>
+      <h1 className="mt-6 text-3xl text-[#000000]">Property not found</h1>
       <span aria-hidden="true" className={`mt-4 block h-[3px] w-14 rounded-full ${goldBg}`} />
       <p className="mt-4 max-w-sm font-sans text-sm text-[#52685B]">
         This property does not exist or has been removed.
       </p>
       <Link
         href="/properties"
-        className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#1A2A22] px-6 py-3 font-sans text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+        className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#000000] px-6 py-3 font-sans text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
       >
         <ChevronLeft size={16} aria-hidden="true" /> Back to properties
       </Link>
@@ -467,7 +467,7 @@ export default function PropertyDetailPage() {
       });
   }, [id]);
 
-  const shell = `${marcellus.variable} min-h-screen bg-[#F3F0E8] font-[family-name:var(--font-marcellus)] font-normal text-[#1A2A22]`;
+  const shell = `${marcellus.variable} min-h-screen bg-[#F3F0E8] font-[family-name:var(--font-marcellus)] font-normal text-[#000000]`;
 
   if (loading) return <div className={shell}><LoadingSkeleton /></div>;
   if (notFound || !property) return <div className={shell}><NotFound /></div>;
@@ -519,11 +519,11 @@ export default function PropertyDetailPage() {
       >
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1.5 font-sans text-[13px] text-[#52685B]">
-          <Link href="/" className="transition hover:text-[#1A2A22]">Home</Link>
+          <Link href="/" className="transition hover:text-[#000000]">Home</Link>
           <ChevronRight size={13} aria-hidden="true" />
-          <Link href="/properties" className="transition hover:text-[#1A2A22]">Properties</Link>
+          <Link href="/properties" className="transition hover:text-[#000000]">Properties</Link>
           <ChevronRight size={13} aria-hidden="true" />
-          <span aria-current="page" className="line-clamp-1 text-[#1A2A22]">{property.title}</span>
+          <span aria-current="page" className="line-clamp-1 text-[#000000]">{property.title}</span>
         </nav>
 
         <div className="grid items-start gap-8 lg:grid-cols-[1fr_380px]">
@@ -570,10 +570,10 @@ export default function PropertyDetailPage() {
 
             {/* Key stats */}
             {keyStats.length > 0 && (
-              <ul className={`${card} mt-6 grid divide-x divide-[#1A2A22]/10 overflow-hidden`} style={{ gridTemplateColumns: `repeat(${keyStats.length}, minmax(0, 1fr))` }}>
+              <ul className={`${card} mt-6 grid divide-x divide-[#000000]/10 overflow-hidden`} style={{ gridTemplateColumns: `repeat(${keyStats.length}, minmax(0, 1fr))` }}>
                 {keyStats.map(({ icon: Icon, label: l, value }) => (
                   <li key={l} className="flex flex-col items-center gap-1 px-2 py-5 text-center sm:flex-row sm:justify-center sm:gap-3 sm:text-left">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#1A2A22] text-[#F5D77A]">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#000000] text-[#F5D77A]">
                       <Icon size={20} strokeWidth={1.6} aria-hidden="true" />
                     </span>
                     <span>
@@ -590,7 +590,7 @@ export default function PropertyDetailPage() {
               <Section title="Overview" className="mt-6">
                 <dl className="grid gap-x-10 sm:grid-cols-2">
                   {facts.map(({ icon: Icon, label: l, value }) => (
-                    <div key={l} className="flex items-center gap-3 border-b border-[#1A2A22]/10 py-3.5">
+                    <div key={l} className="flex items-center gap-3 border-b border-[#000000]/10 py-3.5">
                       <Icon size={18} strokeWidth={1.6} className="shrink-0 text-[#B8902F]" aria-hidden="true" />
                       <dt className="flex-1 font-sans text-sm text-[#52685B]">{l}</dt>
                       <dd className="text-right text-[15px] capitalize">{value}</dd>
@@ -603,7 +603,7 @@ export default function PropertyDetailPage() {
             {/* Description */}
             {property.description && (
               <Section title="About this property" className="mt-6">
-                <p className="whitespace-pre-line font-sans text-[15px] leading-[1.8] text-[#1A2A22]/85">
+                <p className="whitespace-pre-line font-sans text-[15px] leading-[1.8] text-[#000000]/85">
                   {property.description}
                 </p>
               </Section>
@@ -640,7 +640,7 @@ export default function PropertyDetailPage() {
       </motion.div>
 
       {/* Mobile sticky bar */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#D4AF37]/30 bg-[#1A2A22]/95 px-5 py-3 backdrop-blur lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#D4AF37]/30 bg-[#000000]/95 px-5 py-3 backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-xl items-center justify-between gap-4">
           <p className="text-2xl leading-tight text-[#F5D77A]">
             ₹{price}
@@ -648,7 +648,7 @@ export default function PropertyDetailPage() {
           </p>
           <a
             href="#inquiry"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] px-5 py-2.5 font-sans text-sm text-[#1A2A22] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] px-5 py-2.5 font-sans text-sm text-[#000000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
           >
             Send inquiry <ArrowRight size={15} aria-hidden="true" />
           </a>

@@ -45,7 +45,7 @@ export default function ContactMethods() {
 
             <div className="flex items-start justify-between">
               <span
-                className="flex h-12 w-12 items-center justify-center rounded-full text-[#e2a10d] transition-all duration-500 group-hover:border-transparent group-hover:text-[#1a2a22] group-hover:[background:linear-gradient(135deg,#ffcd39_0%,#e2a10d_100%)]"
+                className="flex h-12 w-12 items-center justify-center rounded-full text-[#e2a10d] transition-all duration-500 group-hover:border-transparent group-hover:text-[#000000] group-hover:[background:linear-gradient(135deg,#ffcd39_0%,#e2a10d_100%)]"
                 style={{
                   border: "1px solid rgba(226,161,13,0.55)",
                   background: "rgba(255,205,57,0.1)",
@@ -65,12 +65,12 @@ export default function ContactMethods() {
               {m.label}
             </span>
             <span
-              className={`${marcellus.className} mt-2 break-words text-xl leading-snug text-[#1a2a22]`}
+              className={`${marcellus.className} mt-2 break-words text-xl leading-snug text-[#000000]`}
             >
               {m.value}
             </span>
 
-            <span className="mt-4 border-t border-[#1a2a22]/10 pt-4 text-sm leading-relaxed text-[#52685B]">
+            <span className="mt-4 border-t border-[#000000]/10 pt-4 text-sm leading-relaxed text-[#52685B]">
               {m.note}
             </span>
           </motion.a>

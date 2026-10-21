@@ -12,15 +12,15 @@ const marcellus = Marcellus({
   display: 'swap',
 });
 
-/* Palette — Primary #1A2A22 | Secondary #52685B | BG #FAF9F6 / #F3F0E8 | Gold #D4A62A */
+/* Palette — Primary #000000 | Secondary #52685B | BG #FAF9F6 / #F3F0E8 | Gold #D4A62A */
 const typeStyles = {
-  buy: 'bg-[#E3EAE5] text-[#1A2A22]',
+  buy: 'bg-[#E3EAE5] text-[#000000]',
   sell: 'bg-[#F6ECCB] text-[#8A6A14]',
   rent: 'bg-[#E6E9EE] text-[#3F5470]',
 };
 
 const statusStyles = {
-  active: 'bg-[#E3EAE5] text-[#1A2A22]',
+  active: 'bg-[#E3EAE5] text-[#000000]',
   sold: 'bg-[#F6E3DF] text-[#9C3B2B]',
   rented: 'bg-[#E6E9EE] text-[#3F5470]',
 };
@@ -80,7 +80,7 @@ export default function PropertiesPage() {
 
   return (
     <div
-      className={`${marcellus.variable} font-[family-name:var(--font-marcellus)] font-normal text-[#1A2A22]`}
+      className={`${marcellus.variable} font-[family-name:var(--font-marcellus)] font-normal text-[#000000]`}
     >
       {/* Header */}
       <motion.header
@@ -101,14 +101,14 @@ export default function PropertiesPage() {
 
         <Link
           href="/admin/properties/add"
-          className="group relative inline-flex w-fit items-center gap-3 overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-6 pr-2.5 text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+          className="group relative inline-flex w-fit items-center gap-3 overflow-hidden rounded-full bg-[#000000] py-2.5 pl-6 pr-2.5 text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
         >
           <span
             aria-hidden="true"
             className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100"
           />
           <span className="relative z-10">Add Property</span>
-          <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+          <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
             <Plus size={15} className="transition-transform duration-500 group-hover:rotate-90" />
           </span>
         </Link>
@@ -154,7 +154,7 @@ export default function PropertiesPage() {
             </p>
             <Link
               href="/admin/properties/add"
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#1A2A22] px-5 py-2.5 text-sm text-[#FAF9F6] transition hover:bg-[#52685B]"
+              className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#000000] px-5 py-2.5 text-sm text-[#FAF9F6] transition hover:bg-[#52685B]"
             >
               Add Property <ArrowRight size={14} />
             </Link>
@@ -231,7 +231,7 @@ export default function PropertiesPage() {
                 <div className="flex gap-2 pt-1 lg:pt-0">
                   <Link
                     href={`/admin/properties/edit/${p.id}`}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-[#1A2A22] px-4 py-2 text-xs text-[#FAF9F6] transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-[#000000] px-4 py-2 text-xs text-[#FAF9F6] transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
                   >
                     <Pencil size={12} /> Edit
                   </Link>

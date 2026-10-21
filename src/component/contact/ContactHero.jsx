@@ -27,7 +27,7 @@ const Eyebrow = ({ children }) => (
 const BtnDark = ({ href, children }) => (
   <a
     href={href}
-    className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-6 pr-2.5 text-sm font-medium text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)] hover:ring-[#D4AF37] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+    className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-[#000000] py-2.5 pl-6 pr-2.5 text-sm font-medium text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)] hover:ring-[#D4AF37] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
   >
     {/* Golden fill */}
     <span
@@ -44,7 +44,7 @@ const BtnDark = ({ href, children }) => (
     <span className="relative z-10">{children}</span>
 
     {/* Arrow */}
-    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
       <ArrowRight
         size={14}
         className="transition-transform duration-500 group-hover:-rotate-45"
@@ -69,7 +69,7 @@ export default function ContactHero() {
 
           <h1
             id="contact-hero"
-            className={`${marcellus.className} mt-5 text-5xl font-normal leading-[1.05] text-[#1A2A22] sm:text-6xl lg:text-[64px]`}
+            className={`${marcellus.className} mt-5 text-5xl font-normal leading-[1.05] text-[#000000] sm:text-6xl lg:text-[64px]`}
           >
             Let’s Start a Conversation
           </h1>
@@ -84,7 +84,7 @@ export default function ContactHero() {
             <BtnDark href="#enquiry-form">Send an Enquiry</BtnDark>
             <a
               href={PHONE_HREF}
-              className="inline-flex items-center justify-center rounded-full border border-[#52685B]/40 px-7 py-3.5 text-sm font-medium text-[#1A2A22] transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#F3F0E8] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+              className="inline-flex items-center justify-center rounded-full border border-[#52685B]/40 px-7 py-3.5 text-sm font-medium text-[#000000] transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#F3F0E8] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
             >
               Call Us
             </a>
@@ -93,7 +93,7 @@ export default function ContactHero() {
           <div className="mt-8 flex items-center gap-8">
             <div>
               <p
-                className={`${marcellus.className} text-5xl font-normal text-[#1A2A22]`}
+                className={`${marcellus.className} text-5xl font-normal text-[#000000]`}
               >
                 24/7
               </p>
@@ -132,7 +132,7 @@ export default function ContactHero() {
           {/* Floating call card */}
           <div className="absolute -bottom-8 left-4 right-4 flex items-center gap-4 rounded-2xl bg-[#FAF9F6] p-3 shadow-[0_20px_50px_rgba(26,42,34,0.15)] sm:left-0 sm:right-auto sm:w-[340px] lg:-left-10">
             <span
-              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl text-[#1A2A22]"
+              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl text-[#000000]"
               style={{
                 background: "linear-gradient(135deg, #ffcd39 0%, #e2a10d 100%)",
               }}
@@ -140,13 +140,13 @@ export default function ContactHero() {
               <Phone size={22} aria-hidden="true" />
             </span>
             <div className="min-w-0 flex-1">
-              <p className="text-sm text-[#1A2A22]">Call Us Directly</p>
+              <p className="text-sm text-[#000000]">Call Us Directly</p>
               <p className="truncate text-sm text-[#52685B]">{PHONE}</p>
             </div>
             <a
               href={PHONE_HREF}
               aria-label="Call us"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1A2A22] text-[#FAF9F6] transition hover:bg-[#52685B]"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#000000] text-[#FAF9F6] transition hover:bg-[#52685B]"
             >
               <ArrowRight size={16} />
             </a>

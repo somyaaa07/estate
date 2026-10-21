@@ -76,7 +76,7 @@ function Card({ property, index, reduce }) {
 
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#1a2a22]/55 to-transparent" />
 
-          {property.type && (
+          {/* {property.type && (
             <span
               className={`absolute left-3 top-3 rounded-full px-3 py-1 text-xs capitalize shadow-sm ${
                 TYPE_BADGE[property.type] || TYPE_BADGE.rent
@@ -84,7 +84,7 @@ function Card({ property, index, reduce }) {
             >
               For {property.type}
             </span>
-          )}
+          )} */}
 
           {property.images?.length > 1 && (
             <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-[#1a2a22]/65 px-2.5 py-1 text-[11px] text-[#faf9f6] backdrop-blur">
@@ -159,7 +159,7 @@ const SkeletonCard = () => (
 ---------------------------------------------------------------- */
 export default function PropertiesList({
   type,
-  heading = 'Ongoing Projects',
+  heading = 'Big Builders',
   subheading = 'Recently added homes, plots and commercial spaces, picked for location and value.',
   limit = 4,
   viewAllHref,

@@ -392,7 +392,7 @@ export default function AboutPage() {
 
             <div className="mt-6 flex items-center gap-8">
               <div>
-                <p className="text-5xl font-normal">10+</p>
+                <p className="text-5xl font-normal">3+</p>
                 <p className="text-xs text-[#52685B]">Years of Experience</p>
               </div>
               <span className="hidden h-14 w-px bg-[#52685B]/25 sm:block" />
@@ -608,11 +608,10 @@ export default function AboutPage() {
               id="why-title"
               className="mt-5 text-4xl font-normal leading-tight text-[#1A2A22] sm:text-5xl"
             >
-              More Than a Property Dealer.
+              More Than a Broker.
               <br />
-              <span className="text-[#52685B]">
-                Your Complete Real Estate Partner.
-              </span>
+              <span className="text-[#52685B] ">
+we are your complete Real Estate Partner              </span>
             </h2>
 
             <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#52685B] sm:text-[15px]">
@@ -871,9 +870,9 @@ export default function AboutPage() {
               together to create exceptional spaces that enrich lives and
               communities.
             </p>
-            <div className="mt-6">
-              <BtnDark href="/team">Meet Our Team</BtnDark>
-            </div>
+            {/* <div className="mt-6">
+              <BtnDark href="#"></BtnDark>
+            </div> */}
           </div>
 
           <div className="grid overflow-hidden rounded-2xl sm:grid-cols-[1.1fr_1fr]">
@@ -919,7 +918,7 @@ export default function AboutPage() {
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-[4/3.4]">
             <Image
-              src="/image/faq.jpg"
+              src="/image/faq.webp"
               alt="Spacious living room with cream sofa and natural light"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"

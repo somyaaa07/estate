@@ -5,13 +5,13 @@ import { Marcellus } from "next/font/google";
 import { FaWhatsapp } from "react-icons/fa";
 import {
   FiPhone,
-  
-  FiClock,
   FiArrowRight,
   FiCheck,
   FiAlertCircle,
   FiLock,
   FiUser,
+  FiMapPin,
+  FiChevronDown,
 } from "react-icons/fi";
 import { CgSpinner } from "react-icons/cg";
 
@@ -26,9 +26,8 @@ const goldBg = "bg-gradient-to-r from-[#e2a10d] via-[#ffcd39] to-[#e2a10d]";
 
 // TODO: replace with your real details
 const PHONE = "+91 9999300301";
-const PHONE_HREF = "tel:+9999300301";
+const PHONE_HREF = "tel:+919999300301"; // fixed: country code was missing
 const WHATSAPP_URL = "https://wa.me/919999300301";
-const HOURS = "Mon – Sat, 10 AM – 7 PM";
 
 const contactLinks = [
   { icon: FiPhone, label: "Call us", value: PHONE, href: PHONE_HREF },
@@ -39,66 +38,182 @@ const contactLinks = [
     href: WHATSAPP_URL,
     external: true,
   },
-  { icon: FiClock, label: "Working hours", value: HOURS },
 ];
 
+/* ---------- Form options ---------- */
+const INTENTS = ["Buy", "Rent", "Invest"];
+
+const PROPERTY_TYPES = [
+  "Flat / Apartment",
+  "Villa / House",
+  "Plot / Land",
+  "Commercial",
+  "Other",
+];
+
+const BHK_OPTIONS = ["1 BHK", "2 BHK", "3 BHK", "4 BHK", "5+ BHK"];
+
+const BUY_BUDGETS = [
+  "Under ₹50 Lakh",
+  "₹50 Lakh – ₹1 Cr",
+  "₹1 Cr – ₹2 Cr",
+  "₹2 Cr – ₹5 Cr",
+  "Above ₹5 Cr",
+];
+
+const RENT_BUDGETS = [
+  "Under ₹15,000 / month",
+  "₹15,000 – ₹30,000 / month",
+  "₹30,000 – ₹60,000 / month",
+  "Above ₹60,000 / month",
+];
+
+const CALL_TIMES = ["Morning", "Afternoon", "Evening", "Anytime"];
+
+const initialForm = {
+  name: "",
+  phone: "",
+  intent: "Buy",
+  propertyType: "Flat / Apartment",
+  bhk: "",
+  budget: "",
+  location: "",
+  callTime: "Anytime",
+  notes: "",
+};
+
+/* ---------- Shared classes ---------- */
 const fieldClass =
   "w-full rounded-xl border border-[#1a2a22]/15 bg-[#f3f0E8]/60 py-3.5 pl-11 pr-4 text-base text-[#1a2a22] placeholder:text-[#52685B]/70 transition focus:border-[#D4AF37] focus:bg-[#faf9f6] focus:outline-none focus:ring-4 focus:ring-[#ffcd39]/30 disabled:opacity-60";
+const selectClass = `${fieldClass} appearance-none pr-10`;
 const labelClass = "mb-1.5 block text-sm text-[#1a2a22]";
 const fieldIcon =
   "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#52685B]";
 
+/* ---------- Chip group (radio buttons styled as pills) ---------- */
+function ChipGroup({ legend, name, options, value, onChange, disabled }) {
+  return (
+    <fieldset disabled={disabled} className="min-w-0">
+      <legend className={labelClass}>{legend}</legend>
+      <div className="flex flex-wrap gap-2">
+        {options.map((opt) => {
+          const checked = value === opt;
+          return (
+            <label key={opt} className="cursor-pointer">
+              <input
+                type="radio"
+                name={name}
+                value={opt}
+                checked={checked}
+                onChange={onChange}
+                className="peer sr-only"
+              />
+              <span
+                className={`inline-block rounded-full border px-4 py-2 text-sm transition peer-focus-visible:ring-2 peer-focus-visible:ring-[#D4AF37] peer-focus-visible:ring-offset-2 ${
+                  checked
+                    ? `border-transparent text-[#1a2a22] ${goldBg}`
+                    : "border-[#1a2a22]/15 bg-[#f3f0E8]/60 text-[#1a2a22] hover:border-[#D4AF37]"
+                }`}
+              >
+                {opt}
+              </span>
+            </label>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+}
+
 export default function CTACallback({ image = null }) {
   const reduce = useReducedMotion();
-  const [form, setForm] = useState({ name: "", phone: "" });
-  const [status, setStatus] = useState("idle"); 
+  const [form, setForm] = useState(initialForm);
+  const [status, setStatus] = useState("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
-  const handleChange = (e) =>
-    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  const isRent = form.intent === "Rent";
+  const showBhk = ["Flat / Apartment", "Villa / House"].includes(
+    form.propertyType
+  );
+  const budgetOptions = isRent ? RENT_BUDGETS : BUY_BUDGETS;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((p) => {
+      const next = { ...p, [name]: value };
+      // Buy/Invest and Rent use different budget scales, so reset on switch
+      if (name === "intent" && (value === "Rent") !== (p.intent === "Rent")) {
+        next.budget = "";
+      }
+      // BHK only applies to flats and villas
+      if (name === "propertyType" && !showBhkFor(value)) {
+        next.bhk = "";
+      }
+      return next;
+    });
+  };
+
+  const showBhkFor = (type) =>
+    ["Flat / Apartment", "Villa / House"].includes(type);
+
+  const buildMessage = () => {
+    const lines = [
+      "Customer requested a callback from the website.",
+      `Looking to: ${form.intent}`,
+      `Property type: ${form.propertyType}`,
+      form.bhk && `Configuration: ${form.bhk}`,
+      form.budget && `Budget: ${form.budget}`,
+      form.location.trim() && `Preferred location: ${form.location.trim()}`,
+      `Best time to call: ${form.callTime}`,
+      form.notes.trim() && `Notes: ${form.notes.trim()}`,
+    ];
+    return lines.filter(Boolean).join("\n");
+  };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  setStatus("loading");
-  setErrorMsg("");
+    setStatus("loading");
+    setErrorMsg("");
 
-  try {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: form.name,
-        phone: form.phone,
-        email: "",
-        enquiryType: "Callback Request",
-        message: "Customer requested a callback from the website.",
-      }),
-    });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          email: "",
+          enquiryType: "Callback Request",
+          // Structured fields, in case your API/CRM wants them separately
+          intent: form.intent,
+          propertyType: form.propertyType,
+          bhk: form.bhk,
+          budget: form.budget,
+          location: form.location,
+          callTime: form.callTime,
+          // Readable summary for email / WhatsApp notifications
+          message: buildMessage(),
+        }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) {
-      throw new Error(data.message || "Something went wrong.");
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong.");
+      }
+
+      setStatus("success");
+      setForm(initialForm);
+    } catch (error) {
+      console.error("Callback request error:", error);
+      setErrorMsg(
+        error.message || "Unable to submit callback request. Please try again."
+      );
+      setStatus("error");
     }
+  };
 
-    setStatus("success");
-    setForm({
-      name: "",
-      phone: "",
-    });
-  } catch (error) {
-    console.error("Callback request error:", error);
-
-    setErrorMsg(
-      error.message || "Unable to submit callback request. Please try again."
-    );
-
-    setStatus("error");
-  }
-};
   const loading = status === "loading";
 
   return (
@@ -135,9 +250,9 @@ export default function CTACallback({ image = null }) {
             className="pointer-events-none absolute -bottom-32 -left-20 h-72 w-72 rounded-full bg-[#e2a10d]/10 blur-3xl"
           />
 
-          <div className="relative grid items-center gap-10 p-6 sm:p-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14 lg:p-14">
+          <div className="relative grid items-start gap-10 p-6 sm:p-10 lg:grid-cols-[1fr_1.25fr] lg:gap-14 lg:p-14">
             {/* ===== LEFT: message + contact ===== */}
-            <div className="min-w-0">
+            <div className="min-w-0 lg:sticky lg:top-24 lg:self-center">
               <h2
                 id="cta-callback-heading"
                 className={`${serif} text-[clamp(1.9rem,3.8vw,3rem)] leading-[1.12] tracking-tight text-[#faf9f6]`}
@@ -149,8 +264,9 @@ export default function CTACallback({ image = null }) {
                 className={`mt-5 block h-[3px] w-16 rounded-full ${goldBg}`}
               />
               <p className="mt-5 max-w-md text-base leading-relaxed text-[#faf9f6]/70">
-                Share your name and number. Our team will reach out with honest,
-                no-pressure guidance on the right property for you.
+                Tell us what you are looking for. Our team will call with
+                honest, no-pressure guidance and shortlist properties that match
+                your budget and preferences.
               </p>
 
               <ul className="mt-9 divide-y divide-[#faf9f6]/10 border-y border-[#faf9f6]/10">
@@ -211,7 +327,8 @@ export default function CTACallback({ image = null }) {
                     Request received
                   </h3>
                   <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-[#52685B]">
-                    Thank you! We’ll call you back shortly on the number you shared.
+                    Thank you! We’ll call you back shortly with options that
+                    match your requirements.
                   </p>
                   <button
                     type="button"
@@ -227,53 +344,173 @@ export default function CTACallback({ image = null }) {
                     Request a Callback
                   </h3>
                   <p className="mt-2 text-sm text-[#52685B]">
-                    Takes less than a minute. Both fields are required.
+                    Name and phone are required. The rest helps us prepare
+                    better options for you.
                   </p>
 
                   <form onSubmit={handleSubmit} className="mt-7 space-y-5">
-                    <div>
-                      <label htmlFor="cta-name" className={labelClass}>
-                        Full name
-                      </label>
-                      <div className="relative">
-                        <FiUser size={17} className={fieldIcon} aria-hidden="true" />
-                        <input
-                          id="cta-name"
-                          name="name"
-                          type="text"
-                          required
-                          autoComplete="name"
-                          value={form.name}
-                          onChange={handleChange}
-                          disabled={loading}
-                          placeholder="Your full name"
-                          className={fieldClass}
-                        />
+                    {/* Name + Phone */}
+                    <div className="grid gap-5 sm:grid-cols-2">
+                      <div>
+                        <label htmlFor="cta-name" className={labelClass}>
+                          Full name
+                        </label>
+                        <div className="relative">
+                          <FiUser size={17} className={fieldIcon} aria-hidden="true" />
+                          <input
+                            id="cta-name"
+                            name="name"
+                            type="text"
+                            required
+                            autoComplete="name"
+                            value={form.name}
+                            onChange={handleChange}
+                            disabled={loading}
+                            placeholder="Your full name"
+                            className={fieldClass}
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label htmlFor="cta-phone" className={labelClass}>
+                          Phone number
+                        </label>
+                        <div className="relative">
+                          <FiPhone size={17} className={fieldIcon} aria-hidden="true" />
+                          <input
+                            id="cta-phone"
+                            name="phone"
+                            type="tel"
+                            required
+                            autoComplete="tel"
+                            inputMode="tel"
+                            pattern="[0-9+\-\s]{10,15}"
+                            title="Enter a valid phone number"
+                            value={form.phone}
+                            onChange={handleChange}
+                            disabled={loading}
+                            placeholder="+91 00000 00000"
+                            className={fieldClass}
+                          />
+                        </div>
                       </div>
                     </div>
 
-                    <div>
-                      <label htmlFor="cta-phone" className={labelClass}>
-                        Phone number
-                      </label>
-                      <div className="relative">
-                        <FiPhone size={17} className={fieldIcon} aria-hidden="true" />
-                        <input
-                          id="cta-phone"
-                          name="phone"
-                          type="tel"
-                          required
-                          autoComplete="tel"
-                          inputMode="tel"
-                          pattern="[0-9+\-\s]{10,15}"
-                          title="Enter a valid phone number"
-                          value={form.phone}
-                          onChange={handleChange}
-                          disabled={loading}
-                          placeholder="+91 00000 00000"
-                          className={fieldClass}
-                        />
+                    {/* Intent */}
+                    <ChipGroup
+                      legend="I want to"
+                      name="intent"
+                      options={INTENTS}
+                      value={form.intent}
+                      onChange={handleChange}
+                      disabled={loading}
+                    />
+
+                    {/* Property type */}
+                    <ChipGroup
+                      legend="Property type"
+                      name="propertyType"
+                      options={PROPERTY_TYPES}
+                      value={form.propertyType}
+                      onChange={handleChange}
+                      disabled={loading}
+                    />
+
+                    {/* BHK (flat / villa only) */}
+                    {showBhk && (
+                      <ChipGroup
+                        legend="Configuration"
+                        name="bhk"
+                        options={BHK_OPTIONS}
+                        value={form.bhk}
+                        onChange={handleChange}
+                        disabled={loading}
+                      />
+                    )}
+
+                    {/* Budget + Location */}
+                    <div className="grid gap-5 sm:grid-cols-2">
+                      <div>
+                        <label htmlFor="cta-budget" className={labelClass}>
+                          {isRent ? "Monthly budget" : "Budget"}
+                        </label>
+                        <div className="relative">
+                          <span
+                            aria-hidden="true"
+                            className={`${fieldIcon} text-base leading-none`}
+                          >
+                            ₹
+                          </span>
+                          <select
+                            id="cta-budget"
+                            name="budget"
+                            value={form.budget}
+                            onChange={handleChange}
+                            disabled={loading}
+                            className={selectClass}
+                          >
+                            <option value="">Select a range</option>
+                            {budgetOptions.map((b) => (
+                              <option key={b} value={b}>
+                                {b}
+                              </option>
+                            ))}
+                          </select>
+                          <FiChevronDown
+                            size={17}
+                            aria-hidden="true"
+                            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#52685B]"
+                          />
+                        </div>
                       </div>
+
+                      <div>
+                        <label htmlFor="cta-location" className={labelClass}>
+                          Preferred location
+                        </label>
+                        <div className="relative">
+                          <FiMapPin size={17} className={fieldIcon} aria-hidden="true" />
+                          <input
+                            id="cta-location"
+                            name="location"
+                            type="text"
+                            value={form.location}
+                            onChange={handleChange}
+                            disabled={loading}
+                            placeholder="Area or city"
+                            className={fieldClass}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Best time to call */}
+                    <ChipGroup
+                      legend="Best time to call"
+                      name="callTime"
+                      options={CALL_TIMES}
+                      value={form.callTime}
+                      onChange={handleChange}
+                      disabled={loading}
+                    />
+
+                    {/* Notes */}
+                    <div>
+                      <label htmlFor="cta-notes" className={labelClass}>
+                        Anything else we should know?
+                      </label>
+                      <textarea
+                        id="cta-notes"
+                        name="notes"
+                        rows={3}
+                        maxLength={500}
+                        value={form.notes}
+                        onChange={handleChange}
+                        disabled={loading}
+                        placeholder="Possession timeline, parking, near a metro, loan needed..."
+                        className="w-full resize-none rounded-xl border border-[#1a2a22]/15 bg-[#f3f0E8]/60 px-4 py-3.5 text-base text-[#1a2a22] placeholder:text-[#52685B]/70 transition focus:border-[#D4AF37] focus:bg-[#faf9f6] focus:outline-none focus:ring-4 focus:ring-[#ffcd39]/30 disabled:opacity-60"
+                      />
                     </div>
 
                     <button

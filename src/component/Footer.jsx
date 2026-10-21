@@ -139,8 +139,7 @@ export default function Footer() {
               />
             </Link>
             <p className="-mt-12 max-w-sm text-sm leading-relaxed text-[#f3f0E8]/70">
-              Building trusted residential, commercial and investment
-              opportunities across Delhi NCR with transparency and care.
+      Bringo is not just about finding property. It is about finding the right opportunity.
             </p>
             <div className="mt-6 flex gap-3">
               {socials.map(({ label, icon: Icon, href }) => (

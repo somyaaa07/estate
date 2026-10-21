@@ -14,7 +14,7 @@ const marcellus = Marcellus({
 const stats = [
   { icon: Users, value: "25+", label: "Happy Clients" },
   { icon: Home, value: "4.8k+", label: "Successful Matches", highlight: true },
-  { icon: Award, value: "08+", label: "Years Experience" },
+  { icon: Award, value: "10+", label: "Years Experience" },
   { icon: Handshake, value: "40+", label: "Homes Closed" },
 ];
 

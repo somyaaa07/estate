@@ -62,14 +62,6 @@ function NavbarInner() {
   const [scrolled, setScrolled] = useState(false);
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
 
-  // Automatically open enquiry modal after a delay
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsEnquiryOpen(true);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const isAdmin = session?.user?.role?.toLowerCase() === "admin";
   const allLinks = isAdmin

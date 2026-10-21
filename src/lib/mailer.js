@@ -272,3 +272,104 @@ export async function sendContactEnquiryEmail({ enquiry }) {
   });
 }
 
+export async function sendSellPropertyEmail({ form }) {
+  const f = form;
+
+  const row = (label, value) =>
+    value === undefined || value === null || value === '' ||
+    (Array.isArray(value) && value.length === 0)
+      ? ''
+      : `
+      <tr>
+        <td style="padding:8px 0;color:#6b7c72;font-size:13px;width:150px;vertical-align:top;">${esc(label)}</td>
+        <td style="padding:8px 0;color:#1a2a22;font-size:14px;line-height:1.6;">${esc(
+          Array.isArray(value) ? value.join(', ') : value
+        )}</td>
+      </tr>`;
+
+  const section = (title) =>
+    `<h3 style="color:#1a2a22;margin:24px 0 8px;font-size:16px;border-bottom:1px solid #e8e8e8;padding-bottom:6px;">${title}</h3>`;
+
+  const price = Number(f.price);
+  const priceText = price ? `₹${price.toLocaleString('en-IN')}` : '';
+
+  const images = (f.images || [])
+    .map(
+      (url, i) => `
+      <a href="${esc(url)}" style="display:inline-block;margin:0 8px 8px 0;">
+        <img src="${esc(url)}" alt="Photo ${i + 1}" width="120" height="90"
+             style="object-fit:cover;border-radius:8px;border:1px solid #e8e8e8;" />
+      </a>`
+    )
+    .join('');
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto;background:#f9f9f9;border-radius:12px;overflow:hidden;">
+      <div style="background:#1a2a22;padding:24px 32px;">
+        <h2 style="color:#ffffff;margin:0;font-size:20px;">New Property Submission</h2>
+        <p style="color:#d8dfda;margin:6px 0 0;font-size:14px;">A seller submitted a property through the Sell form.</p>
+      </div>
+
+      <div style="padding:28px 32px;background:#ffffff;">
+        ${section('Seller Contact')}
+        <table style="width:100%;border-collapse:collapse;">
+          ${row('Name', f.name)}
+          <tr>
+            <td style="padding:8px 0;color:#6b7c72;font-size:13px;">Phone</td>
+            <td style="padding:8px 0;font-size:14px;"><a href="tel:${esc(f.phone)}" style="color:#2e5d42;">${esc(f.phone)}</a></td>
+          </tr>
+          <tr>
+            <td style="padding:8px 0;color:#6b7c72;font-size:13px;">Email</td>
+            <td style="padding:8px 0;font-size:14px;"><a href="mailto:${esc(f.email)}" style="color:#2e5d42;">${esc(f.email)}</a></td>
+          </tr>
+        </table>
+
+        ${section('Basic Information')}
+        <table style="width:100%;border-collapse:collapse;">
+          ${row('Title', f.title)}
+          ${row('Property type', f.property_type)}
+          ${row('Expected price', priceText)}
+          ${row('Description', f.description)}
+        </table>
+
+        ${section('Location')}
+        <table style="width:100%;border-collapse:collapse;">
+          ${row('Address', f.location)}
+          ${row('City', f.city)}
+          ${row('Area (sq ft)', f.area)}
+          ${row('Nearby landmarks', f.nearby_landmarks)}
+        </table>
+
+        ${section('Property Details')}
+        <table style="width:100%;border-collapse:collapse;">
+          ${row('Bedrooms', f.bedrooms)}
+          ${row('Bathrooms', f.bathrooms)}
+          ${row('Balconies', f.balcony)}
+          ${row('Total floors', f.total_floors)}
+          ${row('Age of property', f.age_of_property)}
+          ${row('Furnishing', f.furnishing)}
+          ${row('Transaction type', f.transaction_type)}
+          ${row('Parking', f.parking)}
+          ${row('Facing', f.facing)}
+          ${row('Construction type', f.construction_type)}
+          ${row('Highlights', f.property_highlights)}
+          ${row('Amenities', f.amenities)}
+        </table>
+
+        ${images ? `${section(`Photos (${f.images.length})`)}<div>${images}</div>` : ''}
+      </div>
+
+      <div style="padding:16px 32px;background:#f0f4f1;text-align:center;">
+        <p style="color:#6b7c72;font-size:12px;margin:0;">Sent from your website's Sell Property form.</p>
+      </div>
+    </div>
+  `;
+
+  await transporter.sendMail({
+    from: `"Sell Property Form" <${process.env.MAIL_USER}>`,
+    to: process.env.ADMIN_TO || process.env.CONTACT_TO || process.env.MAIL_USER,
+    replyTo: f.email || undefined,
+    subject: `New Property Submission — ${f.title} (${f.city})`,
+    html,
+  });
+}

@@ -5,7 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Marcellus, Jost } from "next/font/google";
-import { FiMenu, FiX, FiLogOut } from "react-icons/fi";
+import { FiMenu, FiX, FiLogOut, FiChevronDown } from "react-icons/fi";
 import EnquiryModal from "@/component/EnquiryModal";
 
 const marcellus = Marcellus({
@@ -21,11 +21,17 @@ const jost = Jost({
 
 const links = [
   { label: "Home", href: "/" },
+  {
+    label: "All Properties",
+    href: "/properties",
+    children: [
+      { label: "Buy", href: "/properties?type=buy" },
+      // { label: "Sell", href: "/properties?type=sell" },
+      { label: "Sell", href: "/properties/sell" },
+      { label: "Rent", href: "/properties?type=rent" },
+    ],
+  },
   { label: "About", href: "/about" },
-  { label: "All Properties", href: "/properties" },
-  { label: "Buy", href: "/properties?type=buy" },
-  { label: "Sell", href: "/properties?type=sell" },
-  { label: "Rent", href: "/properties?type=rent" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -52,6 +58,7 @@ function NavbarInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
+  const [mobileSubOpen, setMobileSubOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
 
@@ -84,8 +91,14 @@ function NavbarInner() {
     return pathname === path || pathname.startsWith(path + "/");
   };
 
+  // Parent "All Properties" stays highlighted for any /properties page
+  const isParentActive = (href) => pathname.startsWith(href);
+
   // Close menu on route change
-  useEffect(() => setOpen(false), [pathname, searchParams]);
+  useEffect(() => {
+    setOpen(false);
+    setMobileSubOpen(false);
+  }, [pathname, searchParams]);
 
   // Shadow on scroll
   useEffect(() => {
@@ -148,7 +161,56 @@ function NavbarInner() {
 
         {/* Desktop links */}
         <ul className="hidden items-center gap-6 xl:gap-8 lg:flex">
-          {allLinks.map(({ label, href }) => {
+          {allLinks.map(({ label, href, children }) => {
+            if (children) {
+              const parentActive = isParentActive(href);
+              return (
+                <li key={href} className="group relative">
+                  <Link
+                    href={href}
+                    aria-current={parentActive ? "page" : undefined}
+                    aria-haspopup="true"
+                    className={`inline-flex items-center gap-1 border-b-2 py-1 text-sm transition-colors ${focusRing} ${
+                      parentActive
+                        ? "border-[#faf9f6] font-semibold text-[#faf9f6]"
+                        : "border-transparent font-normal text-[#faf9f6]/70 hover:text-[#faf9f6]"
+                    }`}
+                  >
+                    {label}
+                    <FiChevronDown
+                      size={14}
+                      aria-hidden="true"
+                      className="transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+                    />
+                  </Link>
+
+                  {/* Dropdown */}
+                  <div className="invisible absolute left-0 top-full z-50 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                    <ul className="min-w-[170px] overflow-hidden rounded-lg border border-white/10 bg-[#1a2a22] py-1.5 shadow-xl">
+                      {children.map((child) => {
+                        const childActive = isActive(child.href);
+                        return (
+                          <li key={child.href}>
+                            <Link
+                              href={child.href}
+                              aria-current={childActive ? "page" : undefined}
+                              className={`block px-4 py-2.5 text-sm transition-colors ${focusRing} ${
+                                childActive
+                                  ? "bg-white/10 font-semibold text-[#faf9f6]"
+                                  : "font-normal text-[#faf9f6]/70 hover:bg-white/5 hover:text-[#faf9f6]"
+                              }`}
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </li>
+              );
+            }
+
             const active = isActive(href);
             return (
               <li key={href}>
@@ -224,7 +286,82 @@ function NavbarInner() {
               className="absolute inset-x-0 top-full max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-white/10 bg-[#1a2a22] shadow-xl lg:hidden"
             >
               <ul className="mx-auto max-w-7xl space-y-1 px-4 pb-2 pt-4 sm:px-6">
-                {allLinks.map(({ label, href }) => {
+                {allLinks.map(({ label, href, children }) => {
+                  if (children) {
+                    const parentActive = isParentActive(href);
+                    return (
+                      <li key={href}>
+                        <div
+                          className={`flex items-center rounded-xl transition ${
+                            parentActive ? "bg-white/10" : "hover:bg-white/5"
+                          }`}
+                        >
+                          <Link
+                            href={href}
+                            aria-current={parentActive ? "page" : undefined}
+                            className={`flex-1 rounded-xl px-4 py-3 text-base transition ${focusRing} ${
+                              parentActive
+                                ? "font-semibold text-[#faf9f6]"
+                                : "font-normal text-[#faf9f6]/70 hover:text-[#faf9f6]"
+                            }`}
+                          >
+                            {label}
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => setMobileSubOpen((s) => !s)}
+                            aria-expanded={mobileSubOpen}
+                            aria-label={
+                              mobileSubOpen
+                                ? "Collapse property types"
+                                : "Expand property types"
+                            }
+                            className={`mr-1 flex h-10 w-10 items-center justify-center rounded-lg text-[#faf9f6]/80 ${focusRing}`}
+                          >
+                            <FiChevronDown
+                              size={18}
+                              aria-hidden="true"
+                              className={`transition-transform duration-200 ${
+                                mobileSubOpen ? "rotate-180" : ""
+                              }`}
+                            />
+                          </button>
+                        </div>
+
+                        {mobileSubOpen && (
+                          <ul className="mt-1 space-y-1 border-l border-white/10 pl-3 ml-4">
+                            {children.map((child) => {
+                              const childActive = isActive(child.href);
+                              return (
+                                <li key={child.href}>
+                                  <Link
+                                    href={child.href}
+                                    aria-current={
+                                      childActive ? "page" : undefined
+                                    }
+                                    className={`flex items-center justify-between rounded-xl px-4 py-2.5 text-[15px] transition ${focusRing} ${
+                                      childActive
+                                        ? "bg-white/10 font-semibold text-[#faf9f6]"
+                                        : "font-normal text-[#faf9f6]/70 hover:bg-white/5 hover:text-[#faf9f6]"
+                                    }`}
+                                  >
+                                    {child.label}
+                                    {childActive && (
+                                      <span
+                                        className="h-1.5 w-1.5 rounded-full bg-[#faf9f6]"
+                                        aria-hidden="true"
+                                      />
+                                    )}
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                      </li>
+                    );
+                  }
+
                   const active = isActive(href);
                   return (
                     <li key={href}>

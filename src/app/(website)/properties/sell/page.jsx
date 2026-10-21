@@ -1,5 +1,4 @@
-
-import PropertiesList from "@/component/PropertyListing";
+import SellPropertyForm from "@/component/SellPropertyForm";
 
 export const metadata = {
   title: "Sell Your Property in Greater Noida | Bringo Real Estate",
@@ -19,9 +18,11 @@ export const metadata = {
 
 export default function SellPage() {
   return (
-    <PropertiesList
-      type="sell"
-      heading="Properties for Sell"
-    />
+    <main className="min-h-screen bg-[#FAF9F6] px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-3xl">
+        
+        <SellPropertyForm />
+      </div>
+    </main>
   );
 }

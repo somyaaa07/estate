@@ -21,7 +21,7 @@ const jost = Jost({
 
 const links = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
+  { label: "About ", href: "/about" },
   { label: "All Properties", href: "/properties" },
   { label: "Buy", href: "/properties?type=buy" },
   { label: "Sell", href: "/properties?type=sell" },
@@ -55,14 +55,6 @@ function NavbarInner() {
   const [scrolled, setScrolled] = useState(false);
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
 
-  // Automatically open enquiry modal after a delay
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsEnquiryOpen(true);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const isAdmin = session?.user?.role?.toLowerCase() === "admin";
   const allLinks = isAdmin

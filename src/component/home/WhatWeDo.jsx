@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Wrench,
   BriefcaseBusiness,
+
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -26,6 +27,7 @@ const marcellus = Marcellus({
 // ============================================================
 // MAIN BUSINESS VERTICALS
 // ============================================================
+
 
 const mainVerticals = [
   {
@@ -47,6 +49,11 @@ const mainVerticals = [
     icon: Wrench,
     title: "Construction & Interiors",
     text: "Building, interior and renovation work for homes, offices and plants.",
+  },
+  {
+    icon: Landmark,
+    title: "Loan Facility Services",
+    text: "Home, property and business loan assistance to help you finance your purchase or project.",
   },
 ];
 
@@ -138,7 +145,7 @@ export default function WhatWeDo() {
             <span className="h-px flex-1 bg-[#1A2A22]/10" />
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-5 sm:grid-cols-1 lg:grid-cols-5">
             {mainVerticals.map((item, index) => {
               const Icon = item.icon;
 
@@ -160,7 +167,7 @@ export default function WhatWeDo() {
                   </span>
 
                   {/* Icon */}
-                  <div className="flex h-12 w-12 items-center justify-center bg-[#1A2A22] text-[#D4AF37] transition-colors duration-300 group-hover:bg-[#D4AF37] group-hover:text-[#1A2A22]">
+                  <div className="flex h-12 w-12 items-center justify-center  text-[#D4AF37] transition-colors duration-300 group-hover:bg-[#D4AF37] group-hover:text-[#1A2A22]">
                     <Icon size={22} strokeWidth={1.6} />
                   </div>
 
@@ -215,11 +222,11 @@ export default function WhatWeDo() {
                     duration: 0.5,
                     delay: index * 0.08,
                   }}
-                  className="group flex gap-5 border border-[#1A2A22]/10 rounded-3xl bg-[#F3F0E8] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/50 hover:shadow-lg"
+                  className="group flex gap-1 border border-[#1A2A22]/10 rounded-3xl bg-[#F3F0E8] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/50 hover:shadow-lg"
                 >
                   {/* Icon */}
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#1A2A22] text-[#D4AF37] transition-colors duration-300 group-hover:bg-[#D4AF37] group-hover:text-[#1A2A22]">
-                    <Icon size={20} strokeWidth={1.6} />
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center  text-[#D4AF37] transition-colors duration-300 group-hover:bg-[#D4AF37] group-hover:text-[#1A2A22]">
+                    <Icon size={20} strokeWidth={1.2} />
                   </div>
 
                   <div>
@@ -231,7 +238,7 @@ export default function WhatWeDo() {
                     </h4>
 
                     {/* Description */}
-                    <p className="mt-2 text-sm leading-6 text-[#52685B]">
+                    <p className=" text-[11px] leading-4 text-[#52685B]">
                       {item.text}
                     </p>
                   </div>

@@ -60,7 +60,7 @@ export default function Testimonials() {
             aria-hidden="true"
             className={`mt-5 block h-[3px] w-16 rounded-full ${goldBg}`}
           />
-          <p className="mt-5 max-w-sm text-base leading-relaxed text-[#52685B]">
+          <p className="mt-5 max-w-sm text-base leading-relaxed text-[#52685B] md:max-w-2xl">
 Real experiences from families, homebuyers, and investors who trusted us to find the right property. From finding a dream home to making a confident investment, we’re proud to be part of every successful property journey.          </p>
 
           <div className="mt-8 flex items-center gap-5">

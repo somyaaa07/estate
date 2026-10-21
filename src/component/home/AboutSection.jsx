@@ -95,7 +95,7 @@ export default function AboutSection() {
             />
             <div
               className="relative 
-              w-[90%] sm:w-[70%] md:w-[80%] lg:w-full
+              w-[98%] sm:w-[80%] md:w-[98%] lg:w-full
               aspect-[4/3.5] md:aspect-[4/3.8] lg:aspect-[4/4.4]
               mx-auto lg:mx-0
               overflow-hidden rounded-3xl bg-[#f3f0E8]
@@ -120,7 +120,7 @@ export default function AboutSection() {
               />
               <div>
                 <p className={`${serif} text-3xl leading-none text-[#F5D77A]`}>
-                  10+
+                  3+
                 </p>
                 <p className="mt-1 text-xs text-[#faf9f6]/75">
                   Years of Experience
@@ -135,7 +135,7 @@ export default function AboutSection() {
               id="about-heading"
               className={`${serif} text-[clamp(2.2rem,5vw,3.6rem)] leading-[1.1] tracking-tight text-[#1a2a22]`}
             >
-              Your Trusted Real Estate Partner
+              Why Choose to Bringo
             </h2>
             <span
               aria-hidden="true"

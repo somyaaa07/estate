@@ -140,13 +140,13 @@ export default function HomeHero() {
               initial="hidden"
               animate="show"
               custom={0}
-              className="flex items-center gap-3 -mt-14"
+              className="flex items-center gap-3 -mt-0"
             >
-              <span className={`h-px w-10 ${goldBg}`} aria-hidden="true" />
+              {/* <span className={`h-px w-10 ${goldBg}`} aria-hidden="true" /> */}
               <span
-                className={`text-[8px] md:text-[14px] lg:text-[16px] font-semibold uppercase tracking-[0.20em] ${goldText}`}
+                className={`text-[8px] md:text-[8px] lg:text-[10px] font-semibold uppercase tracking-[0.20em] ${goldText} max-w-xl`}
               >
-                Trusted Bringo Real Estate · Greater Noida
+                Your Trusted Real Estate Partner  · Greater Noida , Noida , YXP , Gurgaon
               </span>
             </motion.div>
 
@@ -155,7 +155,7 @@ export default function HomeHero() {
               initial="hidden"
               animate="show"
               custom={1}
-              className={`${marcellus.className} mt-6 text-[clamp(2.4rem,5.5vw,4.5rem)] font-normal leading-[1.06] tracking-tight text-[#faf9f6]`}
+              className={`${marcellus.className} mt-5 text-[clamp(2.4rem,5.5vw,4.5rem)] font-normal leading-[1.06] tracking-tight text-[#faf9f6]`}
             >
               Find a Place You’ll Be{" "}
               <span className={` pr-1 ${goldText}`}>Proud</span> to Call Home
@@ -166,14 +166,14 @@ export default function HomeHero() {
               initial="hidden"
               animate="show"
               custom={2}
-              className="mt-6 max-w-[240px] lg:max-w-xl text-base leading-relaxed text-[#faf9f6]/80 sm:text-lg"
+              className="mt-6 max-w-[340px] lg:max-w-xl text-base leading-relaxed text-[#faf9f6]/80 sm:text-base"
             >
               Bringo is not just about finding property. It is about finding the
               right opportunity.
             </motion.p>
 
             {/* Buttons — About page jaisa BtnDark */}
-            <div className="mt-9 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+            <div className="mt-9 flex flex-ow items-start gap-3 sm:flex-row md:flex-row sm:items-center">
               <motion.div
                 variants={fadeIn}
                 initial="hidden"

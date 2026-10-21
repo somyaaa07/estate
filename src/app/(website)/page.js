@@ -46,7 +46,7 @@ export default function HomePage() {
       <HomeHero />
       <AboutSection />
       <FeaturedProperties />
-      <Propertyguidance />
+      {/* <Propertyguidance /> */}
       <WhatWeDo/>
       <HowWeHelp />
       <Testimonial />

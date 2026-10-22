@@ -128,12 +128,12 @@ export const metadata = {
    CONTENT
    NOTE: stats 
 ---------------------------------------------------------------- */
-const stats = [
-  { icon: Home, value: "300+", label: "Properties Sold Every Year" },
-  { icon: Users, value: "20+", label: "Team Members & Growing" },
-  { icon: Star, value: "150+", label: "Google Reviews" },
-  { icon: Eye, value: "400K+", label: "Social Media Views" },
-];
+// const stats = [
+//   { icon: Home, value: "300+", label: "Properties Sold Every Year" },
+//   { icon: Users, value: "20+", label: "Team Members & Growing" },
+//   { icon: Star, value: "150+", label: "Google Reviews" },
+//   { icon: Eye, value: "400K+", label: "Social Media Views" },
+// ];
 const values = [
   {
     icon: Handshake,
@@ -446,7 +446,7 @@ export default function AboutPage() {
       </section>
 
       {/* ============ STATS BAR ============ */}
-      <section
+      {/* <section
         aria-label="Bringo Real Estates in numbers"
         className="relative z-10 mx-auto -mt-10 max-w-7xl px-5 sm:px-8 lg:-mt-16"
       >
@@ -464,7 +464,7 @@ export default function AboutPage() {
             </div>
           ))}
         </dl>
-      </section>
+      </section> */}
 
       {/* Behind the Numbers */}
       <div className="mx-auto mt-8 max-w-3xl text-center">
@@ -608,7 +608,7 @@ export default function AboutPage() {
               id="why-title"
               className="mt-5 text-4xl font-normal leading-tight text-[#000000] sm:text-5xl"
             >
-              More Than a Broker.
+              More Than a Realtor.
               <br />
               <span className="text-[#52685B] ">
 we are your complete Real Estate Partner              </span>

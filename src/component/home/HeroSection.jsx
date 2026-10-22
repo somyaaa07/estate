@@ -24,7 +24,7 @@ const HERO_IMAGE = {
 
 const stats = [
   { value: "20+", label: "Team Members & Growing" },
-  { value: "300+", label: "Properties Sold Every Year" },
+  { value: "150+", label: "Properties Sold Every Year" },
   { value: "150+", label: "Google Reviews" },
   { value: "400K+", label: "Social Media Views" },
 ];
@@ -58,6 +58,7 @@ const fadeIn = {
 
 // Gold gradient: #E2A10D on left & right edges, #FFCD39 in the center
 const goldBg = "bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D]";
+
 const goldText = `${goldBg} bg-clip-text text-transparent`;
 
 const fieldClass =
@@ -78,7 +79,7 @@ const BtnDark = ({ href, children }) => (
     {/* Golden fill slides in from left */}
     <span
       aria-hidden="true"
-      className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100"
+      className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] transition-transform duration-500 ease-out group-hover:scale-x-100"
     />
 
     {/* Glass shine sweep */}
@@ -90,7 +91,7 @@ const BtnDark = ({ href, children }) => (
     <span className="relative z-10">{children}</span>
 
     {/* Arrow circle */}
-    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
+    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
       <FiArrowRight
         size={14}
         className="transition-transform duration-500 group-hover:-rotate-45"
@@ -107,24 +108,54 @@ export default function HomeHero() {
       <div className="relative min-h-[640px] overflow-hidden bg-[#000000] lg:min-h-[760px]">
         {/* Background image */}
         {/* Desktop Image */}
-        <motion.img
+        {/* <motion.img
           src={HERO_IMAGE.src}
           alt={HERO_IMAGE.alt}
           initial={{ scale: 1.08 }}
           animate={{ scale: 1 }}
           transition={{ duration: 2.5, ease: "easeOut" }}
           className="absolute inset-0 hidden h-full w-full object-cover object-right md:block"
-        />
+        /> */}
 
         {/* Mobile Image */}
-        <motion.img
+        {/* <motion.img
           src="/banner/home-mobile.webp"
           alt={HERO_IMAGE.alt}
           initial={{ scale: 1.08 }}
           animate={{ scale: 1 }}
           transition={{ duration: 2.5, ease: "easeOut" }}
           className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
-        />
+        /> */}
+
+        {/* Desktop Background Video */}
+        <motion.video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          initial={{ scale: 1.08 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 2.5, ease: "easeOut" }}
+          className="absolute inset-0 hidden h-full w-full object-cover object-center md:block"
+        >
+          <source src="/banner/video3.mp4" type="video/mp4" />
+        </motion.video>
+
+        {/* Mobile Background Video */}
+        <motion.video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          initial={{ scale: 1.08 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 2.5, ease: "easeOut" }}
+          className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
+        >
+          <source src="/banner/video3.mp4" type="video/mp4" />
+        </motion.video>
 
         {/* Mobile/tablet: even overlay for readability */}
         <div className="absolute inset-0 bg-[#000000]/75 lg:hidden" />
@@ -146,7 +177,8 @@ export default function HomeHero() {
               <span
                 className={`text-[8px] md:text-[8px] lg:text-[10px] font-semibold uppercase tracking-[0.20em] ${goldText} max-w-xl`}
               >
-                Your Trusted Real Estate Partner  · Greater Noida , Noida , YXP , Gurgaon
+                Your Trusted Real Estate Partner · Greater Noida , Noida , YXP ,
+                Gurgaon
               </span>
             </motion.div>
 

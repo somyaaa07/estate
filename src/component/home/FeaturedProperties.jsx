@@ -159,9 +159,9 @@ const SkeletonCard = () => (
 ---------------------------------------------------------------- */
 export default function PropertiesList({
   type,
-  heading = 'Big Builders',
-  subheading = 'Recently added homes, plots and commercial spaces, picked for location and value.',
-  limit = 4,
+ heading = 'Exclusive Projects',
+subheading = 'Explore premium residential and commercial projects offering exceptional locations, modern living, and great investment opportunities.',
+limit = 4,
   viewAllHref,
 }) {
   const reduce = useReducedMotion();
@@ -234,8 +234,8 @@ export default function PropertiesList({
             href={href}
             className="group inline-flex w-fit items-center gap-3 rounded-full border border-[#000000]/20 bg-[#faf9f6] py-2 pl-5 pr-2 text-sm text-[#000000] transition hover:border-[#D4AF37] hover:shadow-[0_8px_24px_rgba(212,175,55,0.3)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
           >
-            View all properties
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#000000] text-[#F5D77A] transition group-hover:bg-gradient-to-br group-hover:from-[#F5D77A] group-hover:to-[#B8902F] group-hover:text-[#000000]">
+            View all properties   
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#000000] text-[#FFCD39] transition group-hover:bg-gradient-to-br group-hover:from-[#E2A10D] group-hover:to-[#FFCD39] group-hover:text-[#000000]">
               <ArrowRight size={14} className="transition-transform duration-300 group-hover:-rotate-45" />
             </span>
           </Link>

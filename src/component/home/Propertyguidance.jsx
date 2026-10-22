@@ -63,7 +63,8 @@ export default function PropertyGuidance() {
                   <Icon
                     size={34}
                     strokeWidth={1.4}
-                    className="text-[#D4A62A]"
+                    className="text-[#E2A10D]"
+                     
                   />
                   <div>
                     <p className={`${marcellus.className} font-bold leading-none text-[#000000]`}>
@@ -115,7 +116,8 @@ export default function PropertyGuidance() {
 
           {/* Tagline */}
           <div className="absolute right-0 top-[6%] hidden w-[16%] sm:block">
-            <span className="block h-px w-full bg-[#D4A62A]/50" />
+            <span className="block h-px w-full bg-[#E2A10D]" />
+       
             <p
               className={`${marcellus.className} my-4 text-[20px] italic leading-[1.4] text-[#52685B] lg:text-[24px]`}
             >

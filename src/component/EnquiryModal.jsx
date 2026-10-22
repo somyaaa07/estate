@@ -40,8 +40,7 @@ const inputClass =
 const okBorder =
   "border-[#000000]/15 focus:border-[#D4AF37] focus:ring-[#FFCD39]/30";
 const badBorder = "border-red-300 focus:border-red-400 focus:ring-red-200/60";
-const iconClass =
-  "pointer-events-none absolute left-4 top-3.5 text-[#52685B]";
+const iconClass = "pointer-events-none absolute left-4 top-3.5 text-[#52685B]";
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -175,7 +174,7 @@ export default function EnquiryModal({ open, onClose }) {
     } catch (error) {
       console.error("Enquiry submission error:", error);
       setServerError(
-        error.message || "Unable to submit enquiry. Please try again."
+        error.message || "Unable to submit enquiry. Please try again.",
       );
       setStatus("error");
     }
@@ -300,7 +299,11 @@ export default function EnquiryModal({ open, onClose }) {
                       Full name <span className="text-[#B8902F]">*</span>
                     </label>
                     <div className="relative">
-                      <User size={17} aria-hidden="true" className={iconClass} />
+                      <User
+                        size={17}
+                        aria-hidden="true"
+                        className={iconClass}
+                      />
                       <input
                         ref={firstFieldRef}
                         id="enquiry-name"
@@ -330,7 +333,11 @@ export default function EnquiryModal({ open, onClose }) {
                         Phone number <span className="text-[#B8902F]">*</span>
                       </label>
                       <div className="relative">
-                        <Phone size={17} aria-hidden="true" className={iconClass} />
+                        <Phone
+                          size={17}
+                          aria-hidden="true"
+                          className={iconClass}
+                        />
                         <input
                           id="enquiry-phone"
                           type="tel"
@@ -343,7 +350,9 @@ export default function EnquiryModal({ open, onClose }) {
                           required
                           disabled={loading}
                           aria-invalid={!!errors.phone}
-                          aria-describedby={errors.phone ? "err-phone" : undefined}
+                          aria-describedby={
+                            errors.phone ? "err-phone" : undefined
+                          }
                           className={`${inputClass} ${errors.phone ? badBorder : okBorder}`}
                         />
                       </div>
@@ -361,7 +370,11 @@ export default function EnquiryModal({ open, onClose }) {
                         </span>
                       </label>
                       <div className="relative">
-                        <Mail size={17} aria-hidden="true" className={iconClass} />
+                        <Mail
+                          size={17}
+                          aria-hidden="true"
+                          className={iconClass}
+                        />
                         <input
                           id="enquiry-email"
                           type="email"
@@ -372,7 +385,9 @@ export default function EnquiryModal({ open, onClose }) {
                           autoComplete="email"
                           disabled={loading}
                           aria-invalid={!!errors.email}
-                          aria-describedby={errors.email ? "err-email" : undefined}
+                          aria-describedby={
+                            errors.email ? "err-email" : undefined
+                          }
                           className={`${inputClass} ${errors.email ? badBorder : okBorder}`}
                         />
                       </div>
@@ -404,7 +419,11 @@ export default function EnquiryModal({ open, onClose }) {
                             htmlFor={`enquiry-type-${value}`}
                             className="flex cursor-pointer flex-col items-center gap-1.5 rounded-xl border border-[#000000]/15 bg-white px-2 py-3 text-center text-[13px] text-[#52685B] transition hover:border-[#D4AF37] peer-checked:border-[#D4AF37] peer-checked:bg-[#000000] peer-checked:text-[#F5D77A] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#D4AF37] peer-disabled:cursor-not-allowed peer-disabled:opacity-60"
                           >
-                            <Icon size={18} strokeWidth={1.6} aria-hidden="true" />
+                            <Icon
+                              size={18}
+                              strokeWidth={1.6}
+                              aria-hidden="true"
+                            />
                             {value}
                           </label>
                         </div>
@@ -460,12 +479,12 @@ export default function EnquiryModal({ open, onClose }) {
                   >
                     <span
                       aria-hidden="true"
-                      className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100"
+                      className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] transition-transform duration-500 ease-out group-hover:scale-x-100"
                     />
                     <span className="relative z-10">
                       {loading ? "Submitting…" : "Submit enquiry"}
                     </span>
-                    <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
+                    <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
                       {loading ? (
                         <Loader2
                           size={18}
@@ -488,6 +507,6 @@ export default function EnquiryModal({ open, onClose }) {
         </motion.div>
       )}
     </AnimatePresence>,
-    document.body
+    document.body,
   );
 }

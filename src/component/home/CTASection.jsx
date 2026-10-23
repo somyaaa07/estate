@@ -132,34 +132,6 @@ function ChipGroup({ legend, name, options, value, onChange, disabled }) {
   );
 }
 
-/* ---------- Button inner (shared look) ---------- */
-function BtnInner({ label, loading }) {
-  return (
-    <>
-      <span
-        aria-hidden="true"
-        className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/3 -translate-x-full -skew-x-[20deg] bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-0 transition-all duration-700 ease-out group-hover:translate-x-[450%] group-hover:opacity-100"
-      />
-      <span className="relative z-10 text-nowrap">{label}</span>
-      <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
-        {loading ? (
-          <CgSpinner size={20} className="animate-spin" aria-hidden="true" />
-        ) : (
-          <FiArrowRight
-            size={16}
-            className="transition-transform duration-500 group-hover:-rotate-45"
-            aria-hidden="true"
-          />
-        )}
-      </span>
-    </>
-  );
-}
-
 export default function CTACallback({ image = null }) {
   const reduce = useReducedMotion();
   const [form, setForm] = useState(initialForm);
@@ -314,7 +286,13 @@ export default function CTACallback({ image = null }) {
 
           <div className="relative grid items-center gap-10 p-6 sm:p-10 lg:grid-cols-[1fr_1.25fr] lg:gap-14 lg:p-14">
             {/* ===== LEFT: message + contact ===== */}
-            <div className="min-w-0">
+            <motion.div
+              initial={reduce ? false : { opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+              className="min-w-0 lg:sticky lg:top-24 lg:self-center"
+            >
               <h2
                 id="cta-callback-heading"
                 className={`${serif} text-[clamp(1.9rem,3.8vw,3rem)] leading-[1.12] tracking-tight text-[#faf9f6]`}
@@ -374,7 +352,7 @@ export default function CTACallback({ image = null }) {
                   );
                 })}
               </ul>
-            </div>
+            </motion.div>
 
             {/* ===== RIGHT: form card ===== */}
             <div className="min-w-0 rounded-3xl bg-[#faf9f6] p-6 shadow-xl sm:p-9">

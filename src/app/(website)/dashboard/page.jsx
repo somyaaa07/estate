@@ -90,7 +90,7 @@ function PropertyRow({ property, right }) {
             {property?.title}
           </p>
           <p style={{ fontSize: '13px', color: C.muted, margin: '0 0 4px' }}>
-            📍 {property?.city}
+             {property?.city}
             {property?.type && ` · ${property.type.toUpperCase()}`}
           </p>
           <p style={{ fontSize: '16px', fontWeight: '700', color: C.primary, margin: 0, fontFamily: "'Marcellus', serif" }}>
@@ -242,7 +242,7 @@ export default function Dashboard() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Jost:wght@300;400;500;600&display=swap');
-      
+
         @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
 
@@ -442,3 +442,4 @@ export default function Dashboard() {
     </>
   );
 }
+

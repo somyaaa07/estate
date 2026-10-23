@@ -175,7 +175,7 @@ export default function HomeHero() {
             >
               {/* <span className={`h-px w-10 ${goldBg}`} aria-hidden="true" /> */}
               <span
-                className={`text-[8px] md:text-[8px] lg:text-[10px] font-semibold uppercase tracking-[0.20em] ${goldText} max-w-xl`}
+                className={`text-[7px] sm:text-[7px] md:text-[8px] lg:text-[10px] font-semibold uppercase tracking-[0.10em] ${goldText} max-w-xl`}
               >
                 Your Trusted Real Estate Partner · Greater Noida , Noida , YXP ,
                 Gurgaon

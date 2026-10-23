@@ -89,6 +89,22 @@ function Logo({ small }) {
   );
 }
 
+
+/* Mobile row label: gold dot before the label when active */
+function RowLabel({ active, children }) {
+  return (
+    <span className="flex items-center gap-2.5">
+      <span
+        aria-hidden="true"
+        className={`h-1.5 w-1.5 rounded-full transition-all duration-200 ${
+          active ? "scale-100 bg-[#E2A10D]" : "scale-0 bg-transparent"
+        }`}
+      />
+      {children}
+    </span>
+  );
+}
+
 /* ───────────────────────── Desktop dropdown ───────────────────────── */
 function DesktopDropdown({
   label,
@@ -361,10 +377,11 @@ function NavbarInner() {
     />
   );
 
+  /* Mobile row: active = gold text + faint highlight (no gold background) */
   const mobileRow = (active) =>
     `flex min-h-[42px] items-center justify-between rounded-lg px-3.5 text-[15px] transition ${ring} ${
       active
-        ? "bg-[#E2A10D] font-bold text-black"
+        ? "bg-white/[0.06] font-bold text-[#E2A10D]"
         : "font-semibold text-white hover:bg-white/10"
     }`;
 
@@ -531,7 +548,7 @@ function NavbarInner() {
                           aria-current={active ? "page" : undefined}
                           className={`flex-1 ${mobileRow(active)}`}
                         >
-                          {label}
+                          <RowLabel active={active}>{label}</RowLabel>
                         </Link>
                         <button
                           type="button"
@@ -617,7 +634,7 @@ function NavbarInner() {
                                       <span
                                         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
                                           ca
-                                            ? "bg-black/15 text-black"
+                                            ? "bg-[#E2A10D]/15 text-[#E2A10D]"
                                             : "bg-white/10 text-[#E2A10D]"
                                         }`}
                                       >
@@ -628,7 +645,7 @@ function NavbarInner() {
                                         <span
                                           className={`block text-xs font-medium ${
                                             ca
-                                              ? "text-black/80"
+                                              ? "text-[#E2A10D]/80"
                                               : "text-[#d9d4c4]"
                                           }`}
                                         >
@@ -636,12 +653,17 @@ function NavbarInner() {
                                         </span>
                                       </span>
                                     </span>
-                                    <FiArrowRight
-                                      aria-hidden="true"
-                                      className={
-                                        ca ? "text-black" : "text-[#E2A10D]"
-                                      }
-                                    />
+                                    {/* {ca ? (
+                                      <span
+                                        aria-hidden="true"
+                                        className="h-1.5 w-1.5 rounded-full bg-[#E2A10D]"
+                                      />
+                                    ) : (
+                                      <FiArrowRight
+                                        aria-hidden="true"
+                                        className="text-[#E2A10D]"
+                                      />
+                                    )} */}
                                   </Link>
                                 </motion.li>
                               );
@@ -660,7 +682,7 @@ function NavbarInner() {
                       aria-current={active ? "page" : undefined}
                       className={mobileRow(active)}
                     >
-                      {label}
+                      <RowLabel active={active}>{label}</RowLabel>
                     </Link>
                   </motion.li>
                 );

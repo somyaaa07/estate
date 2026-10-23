@@ -87,7 +87,7 @@ function ColumnHeading({ children }) {
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-[#1a2a22] text-[#faf9f6]">
+    <footer className="relative overflow-hidden bg-[#000000] text-[#faf9f6]">
       {/* Gradient definition used by the stroke icons (keep width/height 0, not display:none) */}
       <svg
         width="0"
@@ -149,12 +149,12 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="group flex h-10 w-10 items-center justify-center rounded-full border border-[#52685B] transition duration-300 hover:-translate-y-0.5 hover:border-transparent hover:bg-gradient-to-br hover:from-[#e2a10d] hover:via-[#ffcd39] hover:to-[#e2a10d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ffcd39] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a2a22]"
+                  className="group flex h-10 w-10 items-center justify-center rounded-full border border-[#52685B] transition duration-300 hover:-translate-y-0.5 hover:border-transparent hover:bg-gradient-to-br hover:from-[#e2a10d] hover:via-[#ffcd39] hover:to-[#e2a10d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ffcd39] focus-visible:ring-offset-2 focus-visible:ring-offset-[#000000]"
                 >
                   <Icon
                     size={18}
                     aria-hidden="true"
-                    className="text-[#f3f0E8] transition-colors group-hover:text-[#1a2a22]"
+                    className="text-[#f3f0E8] transition-colors group-hover:text-[#000000]"
                   />
                 </a>
               ))}
@@ -228,7 +228,7 @@ export default function Footer() {
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               aria-label="Back to top"
-              className={`flex h-9 w-9 items-center justify-center rounded-full text-[#1a2a22] shadow-[0_8px_20px_-8px_rgba(226,161,13,0.8)] transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ffcd39] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a2a22] ${goldBg}`}
+              className={`flex h-9 w-9 items-center justify-center rounded-full text-[#000000] shadow-[0_8px_20px_-8px_rgba(226,161,13,0.8)] transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ffcd39] focus-visible:ring-offset-2 focus-visible:ring-offset-[#000000] ${goldBg}`}
             >
               <FiArrowUp size={16} aria-hidden="true" />
             </button>

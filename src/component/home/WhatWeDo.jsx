@@ -113,13 +113,13 @@ export default function WhatWeDo() {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-4xl text-center "
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D4AF37]">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#E2A10D]">     
             What We Do
           </p>
 
           <h2
             id="what-we-do-title"
-            className={`${marcellus.className} mt-4 text-2xl font-normal leading-tight text-[#1A2A22] sm:text-5xl lg:text-6xl`}
+            className={`${marcellus.className} mt-4 text-2xl font-normal leading-tight text-[#000000] sm:text-5xl lg:text-6xl`}
           >
             More Than Property.
             <span className="mt-1 block whitespace-nowrap">
@@ -134,15 +134,15 @@ export default function WhatWeDo() {
 
         <div className="mt-14">
           <div className="mb-6 flex items-center gap-4">
-            <span className="h-px flex-1 bg-[#1A2A22]/10" />
+            <span className="h-px flex-1 bg-[#000000]/10" />
 
             <h3
-              className={`${marcellus.className} whitespace-nowrap text-lg font-normal text-[#1A2A22]`}
+              className={`${marcellus.className} whitespace-nowrap text-lg font-normal text-[#000000]`}
             >
               Our Core Verticals
             </h3>
 
-            <span className="h-px flex-1 bg-[#1A2A22]/10" />
+            <span className="h-px flex-1 bg-[#000000]/10" />
           </div>
 
           <div className="grid gap-5 sm:grid-cols-1 lg:grid-cols-5">
@@ -159,21 +159,21 @@ export default function WhatWeDo() {
                     duration: 0.5,
                     delay: index * 0.08,
                   }}
-                  className="group relative overflow-hidden rounded-3xl border border-[#1A2A22]/10 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/50 hover:shadow-xl"
+                  className="group relative overflow-hidden rounded-3xl border border-[#000000]/10 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/50 hover:shadow-xl"
                 >
                   {/* Number */}
-                  <span className="absolute right-5 top-5 text-xs font-medium text-[#1A2A22]/20">
+                  <span className="absolute right-5 top-5 text-xs font-medium text-[#000000]/20">
                     0{index + 1}
                   </span>
 
                   {/* Icon */}
-                  <div className="flex h-12 w-12 items-center justify-center  text-[#D4AF37] transition-colors duration-300 group-hover:bg-[#D4AF37] group-hover:text-[#1A2A22]">
+                  <div className="flex h-12 w-12 items-center rounded-md justify-center  text-[#E2A10D] transition-colors duration-300 group-hover:bg-[#FFCD39] group-hover:text-[#000000]">
                     <Icon size={22} strokeWidth={1.6} />
                   </div>
 
                   {/* Title */}
                   <h4
-                    className={`${marcellus.className} mt-7 text-xl font-normal text-[#1A2A22]`}
+                    className={`${marcellus.className} mt-7 text-xl font-normal text-[#000000]`}
                   >
                     {item.title}
                   </h4>
@@ -184,7 +184,7 @@ export default function WhatWeDo() {
                   </p>
 
                   {/* Gold hover line */}
-                  <span className="absolute bottom-0 left-0 h-1 w-0 bg-[#D4AF37] transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute bottom-0 left-0 h-1 w-0 bg-[#FFCD39] transition-all duration-300 group-hover:w-full" />
                 </motion.article>
               );
             })}
@@ -197,15 +197,15 @@ export default function WhatWeDo() {
 
         <div className="mt-16">
           <div className="mb-6 flex items-center gap-4">
-            <span className="h-px flex-1 bg-[#1A2A22]/10" />
+            <span className="h-px flex-1 bg-[#000000]/10" />
 
             <h3
-              className={`${marcellus.className} whitespace-nowrap text-lg font-normal text-[#1A2A22]`}
+              className={`${marcellus.className} whitespace-nowrap text-lg font-normal text-[#000000]`}
             >
               Additional Support
             </h3>
 
-            <span className="h-px flex-1 bg-[#1A2A22]/10" />
+            <span className="h-px flex-1 bg-[#000000]/10" />
           </div>
 
           <div className="grid gap-5 md:grid-cols-3">
@@ -222,17 +222,17 @@ export default function WhatWeDo() {
                     duration: 0.5,
                     delay: index * 0.08,
                   }}
-                  className="group flex gap-1 border border-[#1A2A22]/10 rounded-3xl bg-[#F3F0E8] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/50 hover:shadow-lg"
+                  className="group flex gap-1 border border-[#000000]/10 rounded-3xl bg-[#F3F0E8] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/50 hover:shadow-lg"
                 >
-                  {/* Icon */}
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center  text-[#D4AF37] transition-colors duration-300 group-hover:bg-[#D4AF37] group-hover:text-[#1A2A22]">
+                  {/* Icon */}  
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center  rounded-md text-[#E2A10D] transition-colors duration-300 group-hover:bg-[#FFCD39] group-hover:text-[#000000]">
                     <Icon size={20} strokeWidth={1.2} />
                   </div>
 
                   <div>
                     {/* Title */}
                     <h4
-                      className={`${marcellus.className} text-lg font-normal text-[#1A2A22]`}
+                      className={`${marcellus.className} text-lg font-normal text-[#000000]`}
                     >
                       {item.title}
                     </h4>
@@ -257,21 +257,21 @@ export default function WhatWeDo() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
-          className="mt-16 overflow-hidden  rounded-3xl border border-[#1A2A22]/15 bg-[#1A2A22]"
+          className="mt-16 overflow-hidden  rounded-3xl border border-[#000000]/15 bg-[#000000]"
         >
           <div className="flex flex-col gap-6 p-7 sm:flex-row sm:items-center sm:justify-between sm:p-9">
 
             <div className="flex items-start gap-5">
 
               {/* Icon */}
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-[#D4AF37]/40 text-[#D4AF37]">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-[#D4AF37]/40 text-[#E2A10D]">
                 <comingSoon.icon size={22} strokeWidth={1.5} />
               </div>
 
               <div>
 
                 {/* Badge */}
-                <div className="mb-2 inline-flex items-center border border-[#D4AF37]/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#D4AF37]">
+                <div className="mb-2 inline-flex items-center border border-[#D4AF37]/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#E2A10D]">
                   Coming Soon
                 </div>
 
@@ -293,7 +293,7 @@ export default function WhatWeDo() {
             {/* Arrow */}
             <ArrowUpRight
               size={26}
-              className="hidden shrink-0 text-[#D4AF37] sm:block"
+              className="hidden shrink-0 text-[#E2A10D] sm:block"
             />
 
           </div>

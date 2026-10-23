@@ -26,7 +26,7 @@ export default function ContactInfo() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="relative min-w-0 overflow-hidden rounded-3xl p-7 sm:p-10"
       style={{
-        background: "#1a2a22",
+        background: "#000000",
         boxShadow: "0 30px 60px -30px rgba(26,42,34,0.55)",
       }}
     >

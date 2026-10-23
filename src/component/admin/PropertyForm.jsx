@@ -16,13 +16,13 @@ export const marcellus = Marcellus({
 
 /* Kept for other files that import COLORS */
 export const COLORS = {
-  primary: '#1A2A22',
+  primary: '#000000',
   primaryLight: '#52685B',
   primaryPale: '#F3F0E8',
   bg: '#FAF9F6',
   white: '#ffffff',
   border: '#D9D5C8',
-  text: '#1A2A22',
+  text: '#000000',
   muted: '#52685B',
   accent: '#D4A62A',
   error: '#9C3B2B',
@@ -59,13 +59,13 @@ const inr = (n) => {
 };
 
 const inputBase =
-  'w-full rounded-xl border bg-white px-4 py-3 text-[15px] text-[#1A2A22] placeholder:text-[#52685B]/50 outline-none transition focus:border-[#1A2A22] focus:ring-4 focus:ring-[#D4AF37]/25';
+  'w-full rounded-xl border bg-white px-4 py-3 text-[15px] text-[#000000] placeholder:text-[#52685B]/50 outline-none transition focus:border-[#000000] focus:ring-4 focus:ring-[#D4AF37]/25';
 
 /* ───────────── UI pieces ───────────── */
 function Item({ label, required, hint, error, span, children, htmlFor }) {
   return (
     <div className={span ? 'sm:col-span-2' : ''} data-error={error ? 'true' : undefined}>
-      <label htmlFor={htmlFor} className="mb-2 flex items-baseline justify-between gap-2 text-[13px] text-[#1A2A22]">
+      <label htmlFor={htmlFor} className="mb-2 flex items-baseline justify-between gap-2 text-[13px] text-[#000000]">
         <span>
           {label}
           {required && <span className="ml-1 text-[#9C3B2B]" aria-hidden="true">*</span>}
@@ -111,8 +111,8 @@ function Segmented({ value, onChange, options, label }) {
             onClick={() => onChange(o.value)}
             className={`rounded-full px-5 py-2.5 text-sm ring-1 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] ${
               on
-                ? 'bg-[#1A2A22] text-[#FAF9F6] ring-[#D4AF37]/50'
-                : 'bg-white text-[#52685B] ring-[#52685B]/25 hover:ring-[#1A2A22]'
+                ? 'bg-[#000000] text-[#FAF9F6] ring-[#D4AF37]/50'
+                : 'bg-white text-[#52685B] ring-[#52685B]/25 hover:ring-[#000000]'
             }`}
           >
             {o.label}
@@ -127,7 +127,7 @@ function Segmented({ value, onChange, options, label }) {
 function Stepper({ value, onChange, max = 20 }) {
   const n = value === '' ? 0 : Number(value);
   const btn =
-    'flex h-10 w-10 items-center justify-center rounded-full bg-[#F3F0E8] text-[#1A2A22] transition hover:bg-[#1A2A22] hover:text-[#FAF9F6] disabled:opacity-40 disabled:hover:bg-[#F3F0E8] disabled:hover:text-[#1A2A22] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]';
+    'flex h-10 w-10 items-center justify-center rounded-full bg-[#F3F0E8] text-[#000000] transition hover:bg-[#000000] hover:text-[#FAF9F6] disabled:opacity-40 disabled:hover:bg-[#F3F0E8] disabled:hover:text-[#000000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]';
   return (
     <div className="flex items-center justify-between rounded-xl border border-[#52685B]/25 bg-white px-3 py-1.5">
       <button type="button" aria-label="Decrease" disabled={n <= 0} onClick={() => onChange(n - 1 <= 0 ? '0' : String(n - 1))} className={btn}>
@@ -158,7 +158,7 @@ function TagInput({ value = [], onChange, suggestions = [], placeholder }) {
   const custom = value.filter((v) => !suggestions.some((s) => s.toLowerCase() === v.toLowerCase()));
   const chip = (on) =>
     `inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] ring-1 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37] ${
-      on ? 'bg-[#1A2A22] text-[#FAF9F6] ring-[#1A2A22]' : 'bg-white text-[#52685B] ring-[#52685B]/25 hover:ring-[#1A2A22]'
+      on ? 'bg-[#000000] text-[#FAF9F6] ring-[#000000]' : 'bg-white text-[#52685B] ring-[#52685B]/25 hover:ring-[#000000]'
     }`;
 
   return (
@@ -183,7 +183,7 @@ function TagInput({ value = [], onChange, suggestions = [], placeholder }) {
           type="button"
           onClick={commit}
           disabled={!text.trim()}
-          className="shrink-0 rounded-xl bg-[#1A2A22] px-5 text-sm text-[#FAF9F6] transition hover:bg-[#52685B] disabled:opacity-40"
+          className="shrink-0 rounded-xl bg-[#000000] px-5 text-sm text-[#FAF9F6] transition hover:bg-[#52685B] disabled:opacity-40"
         >
           Add
         </button>
@@ -319,7 +319,7 @@ export default function PropertyForm({
   const descMax = 1000;
 
   return (
-    <div className={`${marcellus.variable} font-[family-name:var(--font-marcellus)] font-normal text-[#1A2A22]`}>
+    <div className={`${marcellus.variable} font-[family-name:var(--font-marcellus)] font-normal text-[#000000]`}>
       <AnimatePresence>
         {shownError && (
           <motion.div
@@ -343,9 +343,9 @@ export default function PropertyForm({
                 <a
                   href={`#${s.id}`}
                   onClick={(e) => { e.preventDefault(); document.getElementById(s.id)?.scrollIntoView({ behavior: 'smooth' }); }}
-                  className="flex items-center gap-3 rounded-full px-3 py-2 text-sm text-[#52685B] transition hover:bg-[#F3F0E8] hover:text-[#1A2A22]"
+                  className="flex items-center gap-3 rounded-full px-3 py-2 text-sm text-[#52685B] transition hover:bg-[#F3F0E8] hover:text-[#000000]"
                 >
-                  <span className={`flex h-6 w-6 items-center justify-center rounded-full text-[#1A2A22] ring-1 ${s.done ? 'bg-[#D4A62A] ring-[#D4A62A]' : 'ring-[#52685B]/30'}`}>
+                  <span className={`flex h-6 w-6 items-center justify-center rounded-full text-[#000000] ring-1 ${s.done ? 'bg-[#D4A62A] ring-[#D4A62A]' : 'ring-[#52685B]/30'}`}>
                     {s.done && <Check size={13} />}
                   </span>
                   {s.label}
@@ -438,7 +438,7 @@ export default function PropertyForm({
           </Section>
 
           {/* Sticky action bar */}
-          <div className="sticky bottom-4 z-20 flex flex-col gap-3 rounded-2xl bg-[#1A2A22]/95 p-3 pl-5 text-[#FAF9F6] shadow-[0_20px_50px_rgba(26,42,34,0.35)] ring-1 ring-[#D4AF37]/30 backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+          <div className="sticky bottom-4 z-20 flex flex-col gap-3 rounded-2xl bg-[#000000]/95 p-3 pl-5 text-[#FAF9F6] shadow-[0_20px_50px_rgba(26,42,34,0.35)] ring-1 ring-[#D4AF37]/30 backdrop-blur sm:flex-row sm:items-center sm:justify-between">
             <div className="min-w-0 flex-1">
               <p className="text-xs text-[#FAF9F6]/80">
                 {doneCount === totalReq ? 'All required fields done' : `${doneCount} of ${totalReq} required fields done`}
@@ -458,7 +458,7 @@ export default function PropertyForm({
                 type="button"
                 onClick={handleSubmit}
                 disabled={loading}
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5D77A] px-7 py-2.5 text-sm text-[#1A2A22] transition hover:shadow-[0_8px_24px_rgba(212,175,55,0.45)] disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5D77A] px-7 py-2.5 text-sm text-[#000000] transition hover:shadow-[0_8px_24px_rgba(212,175,55,0.45)] disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
               >
                 {loading && <Loader2 size={15} className="animate-spin" />}
                 {loading ? loadingLabel : submitLabel}

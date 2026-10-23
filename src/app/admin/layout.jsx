@@ -44,7 +44,7 @@ function BrandMark({ size = 40 }) {
     <span
       aria-hidden="true"
       style={{ width: size, height: size }}
-      className="flex shrink-0 items-center justify-center rounded-xl bg-[#1A2A22] text-[#F5D77A] ring-1 ring-[#D4AF37]/50"
+      className="flex shrink-0 items-center justify-center rounded-xl bg-[#000000] text-[#F5D77A] ring-1 ring-[#D4AF37]/50"
     >
       <Building2 size={size * 0.5} strokeWidth={1.5} />
     </span>
@@ -58,7 +58,7 @@ function SidebarContent({ pathname, user, onNavigate }) {
   const initial = user?.name?.charAt(0)?.toUpperCase() || 'A';
 
   return (
-    <div className="relative flex h-full flex-col overflow-hidden bg-[#1A2A22] text-[#FAF9F6]">
+    <div className="relative flex h-full flex-col overflow-hidden bg-[#000000] text-[#FAF9F6]">
       <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
       
 
@@ -101,7 +101,7 @@ function SidebarContent({ pathname, user, onNavigate }) {
                   <span
                     className={`flex h-9 w-9 items-center justify-center rounded-lg transition ${
                       active
-                        ? 'bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22]'
+                        ? 'bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000]'
                         : 'bg-[#FAF9F6]/5 group-hover:text-[#F5D77A]'
                     }`}
                   >
@@ -131,7 +131,7 @@ function SidebarContent({ pathname, user, onNavigate }) {
           <div className="flex items-center gap-3">
             <span
               aria-hidden="true"
-              className={`${marcellus.className} flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-base text-[#1A2A22] ${goldBg}`}
+              className={`${marcellus.className} flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-base text-[#000000] ${goldBg}`}
             >
               {initial}
             </span>
@@ -166,7 +166,7 @@ function StatusScreen({ text, reduce }) {
       <motion.span
         animate={reduce ? undefined : { scale: [1, 1.08, 1] }}
         transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
-        className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#1A2A22] text-[#F5D77A] ring-1 ring-[#D4AF37]/50"
+        className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#000000] text-[#F5D77A] ring-1 ring-[#D4AF37]/50"
       >
         <Building2 size={26} strokeWidth={1.5} aria-hidden="true" />
       </motion.span>
@@ -237,7 +237,7 @@ export default function AdminLayout({ children }) {
   });
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] text-[#1A2A22] lg:flex">
+    <div className="min-h-screen bg-[#FAF9F6] text-[#000000] lg:flex">
       {/* Desktop sidebar */}
       <aside className="hidden w-72 shrink-0 lg:block">
         <div className="sticky top-0 h-screen">
@@ -247,7 +247,7 @@ export default function AdminLayout({ children }) {
 
       <div className="min-w-0 flex-1">
         {/* Mobile header */}
-        <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[#1A2A22]/10 bg-[#FAF9F6]/95 px-4 py-3 backdrop-blur lg:hidden">
+        <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[#000000]/10 bg-[#FAF9F6]/95 px-4 py-3 backdrop-blur lg:hidden">
           <Link
             href="/admin"
             className="flex items-center gap-2.5 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
@@ -262,21 +262,21 @@ export default function AdminLayout({ children }) {
             onClick={() => setDrawerOpen(true)}
             aria-label="Open menu"
             aria-expanded={drawerOpen}
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#1A2A22]/15 bg-white transition hover:bg-[#F3F0E8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#000000]/15 bg-white transition hover:bg-[#F3F0E8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
           >
             <Menu size={22} aria-hidden="true" />
           </button>
         </header>
 
         {/* Desktop top bar */}
-        <div className="sticky top-0 z-30 hidden items-center justify-between border-b border-[#1A2A22]/10 bg-[#FAF9F6]/90 px-10 py-4 backdrop-blur lg:flex">
+        <div className="sticky top-0 z-30 hidden items-center justify-between border-b border-[#000000]/10 bg-[#FAF9F6]/90 px-10 py-4 backdrop-blur lg:flex">
           <div className="flex items-center gap-3">
             <span aria-hidden="true" className={`h-6 w-[3px] rounded-full ${goldBg}`} />
             <p className={`${marcellus.className} text-lg`}>{currentPage}</p>
           </div>
           <div className="flex items-center gap-5 font-sans text-sm text-[#52685B]">
             <span>{today}</span>
-            <span className="flex items-center gap-1.5 rounded-full border border-[#D4AF37]/40 bg-white px-3 py-1.5 text-xs text-[#1A2A22]">
+            <span className="flex items-center gap-1.5 rounded-full border border-[#D4AF37]/40 bg-white px-3 py-1.5 text-xs text-[#000000]">
               <ShieldCheck size={14} className="text-[#B8902F]" aria-hidden="true" />
               Admin
             </span>
@@ -298,7 +298,7 @@ export default function AdminLayout({ children }) {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
                 onClick={() => setDrawerOpen(false)}
-                className="absolute inset-0 bg-[#1A2A22]/60 backdrop-blur-[2px]"
+                className="absolute inset-0 bg-[#000000]/60 backdrop-blur-[2px]"
                 aria-hidden="true"
               />
               <motion.div

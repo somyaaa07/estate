@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 
 import FaqAccordion from "@/component/about/FaqAccordion";
+import TeamSection from "@/component/TeamSection";
 
 const marcellus = Marcellus({
   subsets: ["latin"],
@@ -59,7 +60,7 @@ const teamMembers = [
 ];
 /* ---------------------------------------------------------------
    COLORS
-   Primary  : #1A2A22
+   Primary  : #000000
    Secondary: #52685B
    BG       : #FAF9F6  &  #F3F0E8
 ---------------------------------------------------------------- */
@@ -128,12 +129,12 @@ export const metadata = {
    CONTENT
    NOTE: stats 
 ---------------------------------------------------------------- */
-const stats = [
-  { icon: Home, value: "300+", label: "Properties Sold Every Year" },
-  { icon: Users, value: "20+", label: "Team Members & Growing" },
-  { icon: Star, value: "150+", label: "Google Reviews" },
-  { icon: Eye, value: "400K+", label: "Social Media Views" },
-];
+// const stats = [
+//   { icon: Home, value: "300+", label: "Properties Sold Every Year" },
+//   { icon: Users, value: "20+", label: "Team Members & Growing" },
+//   { icon: Star, value: "150+", label: "Google Reviews" },
+//   { icon: Eye, value: "400K+", label: "Social Media Views" },
+// ];
 const values = [
   {
     icon: Handshake,
@@ -282,12 +283,12 @@ const Eyebrow = ({ children, line = false }) => (
 const BtnDark = ({ href, children }) => (
   <Link
     href={href}
-    className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-6 pr-2.5 text-sm font-normal text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+    className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-[#000000] py-2.5 pl-6 pr-2.5 text-sm font-normal text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
   >
     {/* Golden fill slides in from left */}
     <span
       aria-hidden="true"
-      className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100"
+      className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] transition-transform duration-500 ease-out group-hover:scale-x-100"
     />
 
     {/* Glass shine sweep */}
@@ -299,7 +300,7 @@ const BtnDark = ({ href, children }) => (
     <span className="relative z-10">{children}</span>
 
     {/* Arrow circle */}
-    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
       <ArrowRight
         size={14}
         className="transition-transform duration-500 group-hover:-rotate-45"
@@ -346,7 +347,7 @@ const TeamPhoto = ({ name, photo, sizes, className = "" }) => (
     ) : (
       <div
         aria-hidden="true"
-        className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#52685B] to-[#1A2A22]"
+        className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#52685B] to-[#000000]"
       >
         <span className="text-5xl tracking-widest text-[#D4A62A]">
           {getInitials(name)}
@@ -361,7 +362,7 @@ const TeamPhoto = ({ name, photo, sizes, className = "" }) => (
 export default function AboutPage() {
   return (
     <main
-      className={`${marcellus.variable} overflow-x-hidden bg-[#FAF9F6] font-[family-name:var(--font-marcellus)] font-normal text-[#1A2A22]`}
+      className={`${marcellus.variable} overflow-x-hidden bg-[#FAF9F6] font-[family-name:var(--font-marcellus)] font-normal text-[#000000]`}
     >
       <script
         type="application/ld+json"
@@ -436,7 +437,7 @@ export default function AboutPage() {
               <Link
                 href="/projects"
                 aria-label="View our projects"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1A2A22] text-[#FAF9F6] transition hover:bg-[#52685B]"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#000000] text-[#FAF9F6] transition hover:bg-[#52685B]"
               >
                 <ArrowRight size={16} />
               </Link>
@@ -446,7 +447,7 @@ export default function AboutPage() {
       </section>
 
       {/* ============ STATS BAR ============ */}
-      <section
+      {/* <section
         aria-label="Bringo Real Estates in numbers"
         className="relative z-10 mx-auto -mt-10 max-w-7xl px-5 sm:px-8 lg:-mt-16"
       >
@@ -464,7 +465,7 @@ export default function AboutPage() {
             </div>
           ))}
         </dl>
-      </section>
+      </section> */}
 
       {/* Behind the Numbers */}
       <div className="mx-auto mt-8 max-w-3xl text-center">
@@ -506,7 +507,7 @@ export default function AboutPage() {
                 className="object-cover"
               />
             </div>
-            <div className="absolute bottom-6 left-0 w-[46%] rounded-xl bg-[#1A2A22] p-4 text-sm text-[#FAF9F6] shadow-lg sm:bottom-2">
+            <div className="absolute bottom-6 left-0 w-[46%] rounded-xl bg-[#000000] p-4 text-sm text-[#FAF9F6] shadow-lg sm:bottom-2">
               <p className="flex items-center justify-between gap-2">
                 Modern Spaces <ArrowRight size={14} />
               </p>
@@ -573,7 +574,7 @@ export default function AboutPage() {
               }`}
             >
               <Icon className="text-[#D4A62A]" size={34} strokeWidth={1.4} />
-              <h3 className="mt-3 text-sm text-[#1A2A22]">{title}</h3>
+              <h3 className="mt-3 text-sm text-[#000000]">{title}</h3>
               <p className="mt-1 text-xs text-[#52685B]">{text}</p>
             </li>
           ))}
@@ -594,7 +595,7 @@ export default function AboutPage() {
 
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -left-40 bottom-0 h-96 w-96 rounded-full bg-[#1A2A22]/5 blur-3xl"
+          className="pointer-events-none absolute -left-40 bottom-0 h-96 w-96 rounded-full bg-[#000000]/5 blur-3xl"
         />
 
         <div className="relative mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
@@ -606,9 +607,9 @@ export default function AboutPage() {
 
             <h2
               id="why-title"
-              className="mt-5 text-4xl font-normal leading-tight text-[#1A2A22] sm:text-5xl"
+              className="mt-5 text-4xl font-normal leading-tight text-[#000000] sm:text-5xl"
             >
-              More Than a Broker.
+              More Than a Realtor.
               <br />
               <span className="text-[#52685B] ">
 we are your complete Real Estate Partner              </span>
@@ -625,7 +626,7 @@ we are your complete Real Estate Partner              </span>
             {reasons.map(({ icon: Icon, number, title, text }, i) => (
               <li
                 key={title}
-                className="group relative overflow-hidden rounded-3xl border border-[#1A2A22]/8 bg-[#FAF9F6] p-7 shadow-[0_10px_35px_rgba(26,42,34,0.06)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(26,42,34,0.12)]"
+                className="group relative overflow-hidden rounded-3xl border border-[#000000]/8 bg-[#FAF9F6] p-7 shadow-[0_10px_35px_rgba(26,42,34,0.06)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(26,42,34,0.12)]"
               >
                 {/* Golden hover background */}
                 <span
@@ -639,13 +640,13 @@ we are your complete Real Estate Partner              </span>
                     {number}
                   </span>
 
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F3F0E8] text-[#D4A62A] transition-all duration-500 group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F3F0E8] text-[#D4A62A] transition-all duration-500 group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
                     <Icon size={22} strokeWidth={1.5} />
                   </div>
                 </div>
 
                 {/* Content */}
-                <h3 className="mt-7 text-base font-medium text-[#1A2A22]">
+                <h3 className="mt-7 text-base font-medium text-[#000000]">
                   {title}
                 </h3>
 
@@ -655,7 +656,7 @@ we are your complete Real Estate Partner              </span>
           </ul>
 
           {/* Bottom trust strip */}
-          <div className="mt-8 grid gap-4 rounded-3xl bg-[#1A2A22] p-6 text-[#FAF9F6] sm:grid-cols-3 sm:p-8">
+          <div className="mt-8 grid gap-4 rounded-3xl bg-[#000000] p-6 text-[#FAF9F6] sm:grid-cols-3 sm:p-8">
             <div className="flex items-center gap-4">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#D4AF37]/15 text-[#F5D77A]">
                 <ShieldCheck size={22} strokeWidth={1.4} />
@@ -699,88 +700,11 @@ we are your complete Real Estate Partner              </span>
       </section>
 
       {/* ============ FOUNDER + TEAM ============ */}
-<section
-  id="team"
-  aria-labelledby="team-title"
-  className="bg-[#F3F0E8]"
->
-  <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-20">
-    <div className="text-center">
-      <div className="flex justify-center">
-        <Eyebrow>Leadership</Eyebrow>
-      </div>
-      <h2 id="team-title" className="mt-4 text-3xl font-normal sm:text-4xl">
-        The People Behind Bringo
-      </h2>
-      <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-[#52685B]">
-        Experienced leaders and trusted partners working together to make
-        every property journey simple and transparent.
-      </p>
-    </div>
-
-    {/* Founder */}
-    <article className="mt-12 grid overflow-hidden rounded-3xl bg-[#1A2A22] text-[#FAF9F6] shadow-[0_20px_50px_rgba(26,42,34,0.15)] lg:grid-cols-[0.8fr_1.2fr]">
-      <TeamPhoto
-        name={founder.name}
-        photo={founder.photo}
-        sizes="(min-width: 1024px) 40vw, 100vw"
-        className="min-h-[320px] lg:min-h-[460px] lg:rounded-br-[120px]"
-      />
-
-      <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-12">
-        <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-[#D4A62A]">
-          Founder
-          <span className="h-px w-12 bg-[#D4A62A]/50" />
-        </p>
-        <h3 className="mt-4 text-3xl sm:text-4xl">{founder.name}</h3>
-        <p className="mt-1 text-sm text-[#FAF9F6]/70">{founder.role}</p>
-
-        <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-[#FAF9F6]/85">
-          {founder.bio}
-        </p>
-
-        <div className="mt-7">
-          <p className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#FAF9F6]/60">
-            <Briefcase size={14} strokeWidth={1.5} className="text-[#D4A62A]" />
-            Previously with
-          </p>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {founder.experience.map((company) => (
-              <li
-                key={company}
-                className="rounded-full border border-[#D4AF37]/40 bg-[#FAF9F6]/5 px-4 py-1.5 text-xs text-[#FAF9F6]/90"
-              >
-                {company}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    {/* Team members */}
-    <ul className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
-      {teamMembers.map((member) => (
-        <li
-          key={member.name}
-          className="group overflow-hidden rounded-2xl bg-[#FAF9F6] p-3 text-center shadow-[0_8px_30px_rgba(26,42,34,0.06)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_14px_40px_rgba(26,42,34,0.12)]"
-        >
-          <TeamPhoto
-            name={member.name}
-            photo={member.photo}
-            sizes="(min-width: 1024px) 20vw, 50vw"
-            className="aspect-[4/4.4] rounded-xl rounded-t-[80px]"
-          />
-          <h3 className="mt-4 text-sm text-[#1A2A22]">{member.name}</h3>
-          <p className="mx-auto mt-1 mb-2 max-w-[170px] text-xs leading-relaxed text-[#52685B]">
-            {member.role}
-          </p>
-        </li>
-      ))}
-    </ul>
-  </div>
-</section>
-
+<TeamSection
+  founder={founder}
+  teamMembers={teamMembers}
+  TeamPhoto={TeamPhoto}
+/>
       {/* ============ PARTNERS ============ */}
       <section
         aria-labelledby="partners-title"
@@ -885,7 +809,7 @@ we are your complete Real Estate Partner              </span>
                 className="object-cover"
               />
             </div>
-            <div className="flex flex-col justify-center gap-6 bg-[#1A2A22] p-7 text-[#FAF9F6]">
+            <div className="flex flex-col justify-center gap-6 bg-[#000000] p-7 text-[#FAF9F6]">
               <div>
                 <p className="flex items-center gap-3">
                   <Eye size={22} strokeWidth={1.5} /> Vision
@@ -943,7 +867,7 @@ we are your complete Real Estate Partner              </span>
         aria-labelledby="cta-title"
         className="mx-auto max-w-7xl px-5 pb-16 pt-6 sm:px-8"
       >
-        <div className="relative overflow-hidden rounded-3xl bg-[#1A2A22] px-6 py-12 text-[#FAF9F6] sm:px-12 lg:py-16">
+        <div className="relative overflow-hidden rounded-3xl bg-[#000000] px-6 py-12 text-[#FAF9F6] sm:px-12 lg:py-16">
           <Image
             src="/image/ctaa.webp"
             alt=""
@@ -952,7 +876,7 @@ we are your complete Real Estate Partner              </span>
             className="object-cover object-right opacity-30 mix-blend-luminosity lg:opacity-45"
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1A2A22] via-[#1A2A22]/90 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#000000] via-[#000000]/90 to-transparent" />
 
           <div className="relative z-10 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-xl">
@@ -999,7 +923,7 @@ we are your complete Real Estate Partner              </span>
 
               <Link
                 href="/contact"
-                className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#FAF9F6] px-6 py-3 text-sm font-normal text-[#1A2A22] transition hover:bg-[#F3F0E8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FAF9F6]"
+                className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#FAF9F6] px-6 py-3 text-sm font-normal text-[#000000] transition hover:bg-[#F3F0E8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FAF9F6]"
               >
                 Contact Us <ArrowRight size={16} />
               </Link>

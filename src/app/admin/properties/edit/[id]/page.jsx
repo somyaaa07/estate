@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, CheckCircle2, Home } from 'lucide-react';
 import PropertyForm, { marcellus, propertyToForm } from '@/component/admin/PropertyForm';
 
-const shell = `${marcellus.variable} mx-auto max-w-5xl pb-16 font-[family-name:var(--font-marcellus)] font-normal text-[#1A2A22]`;
+const shell = `${marcellus.variable} mx-auto max-w-5xl pb-16 font-[family-name:var(--font-marcellus)] font-normal text-[#000000]`;
 
 export default function EditPropertyPage() {
   const router = useRouter();
@@ -74,7 +74,7 @@ export default function EditPropertyPage() {
           </p>
           <Link
             href="/admin/properties"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#1A2A22] px-6 py-2.5 text-sm text-[#FAF9F6] transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#000000] px-6 py-2.5 text-sm text-[#FAF9F6] transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
           >
             Back to properties <ArrowRight size={14} />
           </Link>
@@ -105,7 +105,7 @@ export default function EditPropertyPage() {
       <motion.header initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
         <Link
           href="/admin/properties"
-          className="inline-flex items-center gap-2 rounded-full text-sm text-[#52685B] transition hover:text-[#1A2A22] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D4AF37]"
+          className="inline-flex items-center gap-2 rounded-full text-sm text-[#52685B] transition hover:text-[#000000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D4AF37]"
         >
           <ArrowLeft size={15} /> Back to properties
         </Link>
@@ -126,7 +126,7 @@ export default function EditPropertyPage() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="mb-6 flex items-center gap-3 rounded-2xl border-l-4 border-[#D4A62A] bg-[#F3F0E8] px-5 py-4 text-sm text-[#1A2A22]"
+            className="mb-6 flex items-center gap-3 rounded-2xl border-l-4 border-[#D4A62A] bg-[#F3F0E8] px-5 py-4 text-sm text-[#000000]"
           >
             <CheckCircle2 size={18} className="shrink-0 text-[#D4A62A]" />
             Property updated. Taking you back to the list…

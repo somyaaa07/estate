@@ -4,74 +4,63 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Marcellus, Jost } from "next/font/google";
-import { FiMenu, FiX, FiLogOut, FiChevronDown } from "react-icons/fi";
+import { Jost } from "next/font/google";
+import { FiMenu, FiX, FiLogOut, FiChevronDown, FiArrowRight } from "react-icons/fi";
 import EnquiryModal from "@/component/EnquiryModal";
 
-const marcellus = Marcellus({
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-});
 const jost = Jost({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["500", "600", "700", "800"],
   display: "swap",
 });
 
+/* Colours: white = active, #f1ede2 = inactive (high contrast), #e0c07a = gold accent */
 const links = [
   { label: "Home", href: "/" },
   {
     label: "All Properties",
     href: "/properties",
     children: [
-      { label: "Buy", href: "/properties?type=buy" },
-      // { label: "Sell", href: "/properties?type=sell" },
-      { label: "Rent", href: "/properties?type=rent" },
-            { label: "Sell", href: "/properties/sell" },
-
+      { label: "Buy", desc: "Homes & plots for sale", href: "/properties?type=buy" },
+      { label: "Rent", desc: "Properties available to rent", href: "/properties?type=rent" },
+      { label: "Sell", desc: "List your property with us", href: "/properties/sell" },
     ],
   },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
-/* ---------- Logo ---------- */
-function Logo() {
+const ring =
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e0c07a] focus-visible:ring-offset-2 focus-visible:ring-offset-black";
+
+function Logo({ small }) {
   return (
-    <Link
-      href="/"
-      aria-label="Estate – Home"
-      className="flex items-center gap-2.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#faf9f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a2a22]"
-    >
+    <Link href="/" aria-label="Estate – Home" className={`shrink-0 rounded-lg ${ring}`}>
       <img
         src="/uploads/logo.png"
         alt="Estate"
-        className="h-28 w-auto object-contain sm:h-30"
+        className={`w-auto object-contain transition-all duration-300 ${
+          small ? "h-10 lg:h-35" : "h-35 lg:h-35"
+        }`}
       />
     </Link>
   );
 }
 
-/* ---------- Main ---------- */
 function NavbarInner() {
   const { data: session } = useSession();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
-  const [mobileSubOpen, setMobileSubOpen] = useState(false);
+  const [subOpen, setSubOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
-
+  const [enquiry, setEnquiry] = useState(false);
 
   const isAdmin = session?.user?.role?.toLowerCase() === "admin";
-  const allLinks = isAdmin
-    ? [...links, { label: "Admin", href: "/admin" }]
-    : links;
+  const allLinks = isAdmin ? [...links, { label: "Admin", href: "/admin" }] : links;
   const firstName = session?.user?.name?.split(" ")[0];
   const initial = session?.user?.name?.charAt(0).toUpperCase();
 
-  // Active state (handles ?type=buy/sell/rent)
   const isActive = (href) => {
     const [path, query] = href.split("?");
     if (path === "/") return pathname === "/";
@@ -79,121 +68,144 @@ function NavbarInner() {
       const [k, v] = query.split("=");
       return pathname === path && searchParams.get(k) === v;
     }
-    if (path === "/properties")
-      return pathname.startsWith(path) && !searchParams.get("type");
+    if (path === "/properties") return pathname === path && !searchParams.get("type");
     return pathname === path || pathname.startsWith(path + "/");
   };
-
-  // Parent "All Properties" stays highlighted for any /properties page
   const isParentActive = (href) => pathname.startsWith(href);
 
-  // Close menu on route change
+  // Close on navigation, auto-expand submenu on property pages
   useEffect(() => {
     setOpen(false);
-    setMobileSubOpen(false);
+    setSubOpen(pathname.startsWith("/properties"));
   }, [pathname, searchParams]);
 
-  // Shadow on scroll
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll + Esc to close
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     const onKey = (e) => e.key === "Escape" && setOpen(false);
-
+    const onResize = () => window.innerWidth >= 1024 && setOpen(false);
     window.addEventListener("keydown", onKey);
-
+    window.addEventListener("resize", onResize);
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
     };
   }, [open]);
 
-  const focusRing =
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#faf9f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a2a22]";
+  const desktopLink = (active) =>
+    `relative inline-flex items-center gap-1.5 py-2 text-base tracking-wide transition-colors ${ring} ${
+      active ? "font-bold text-white" : "font-semibold text-[#f1ede2] hover:text-[#e0c07a]"
+    }`;
+
+  const underline = (
+    <motion.span
+      layoutId="nav-underline"
+      className="absolute inset-x-0 -bottom-0.5 h-[3px] rounded-full bg-[#e0c07a]"
+      transition={{ type: "spring", stiffness: 500, damping: 40 }}
+    />
+  );
+
+  const mobileRow = (active) =>
+    `flex min-h-[56px] items-center justify-between rounded-xl px-4 text-xl transition ${ring} ${
+      active ? "bg-[#e0c07a] font-extrabold text-black" : "font-bold text-white hover:bg-white/10"
+    }`;
 
   const logoutBtn = (extra = "") => (
     <button
       type="button"
       onClick={() => signOut({ callbackUrl: "/" })}
-      className={`inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 px-4 py-2 text-sm font-medium text-[#faf9f6]/80 transition hover:border-red-400 hover:bg-red-500/10 hover:text-red-300 ${focusRing} ${extra}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/50 px-4 py-2.5 text-sm font-bold text-white transition hover:border-red-400 hover:bg-red-500/20 hover:text-red-200 ${ring} ${extra}`}
     >
-      <FiLogOut size={15} aria-hidden="true" />
-      Logout
+      <FiLogOut size={16} aria-hidden="true" /> Logout
     </button>
   );
 
   const dashboardChip = (extra = "") => (
     <Link
       href={isAdmin ? "/admin" : "/dashboard"}
-      className={`inline-flex items-center gap-2 rounded-lg bg-white/10 px-3.5 py-2 text-sm font-medium text-[#faf9f6] transition hover:bg-white/20 ${focusRing} ${extra}`}
+      className={`inline-flex items-center gap-2 rounded-lg bg-white/15 px-3.5 py-2 text-sm font-bold text-white transition hover:bg-white/25 ${ring} ${extra}`}
     >
-      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#faf9f6] text-xs font-bold text-[#1a2a22]">
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#e0c07a] text-xs font-extrabold text-black">
         {initial}
       </span>
       <span className="truncate">{firstName}</span>
     </Link>
   );
 
+  const enquiryBtn = (extra = "", onClick = () => setEnquiry(true)) => (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] font-extrabold tracking-wide text-black shadow-lg shadow-[#e0c07a]/20 transition hover:bg-white active:scale-[0.98] ${ring} ${extra}`}
+    >
+      Enquiry Now
+      <FiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+    </button>
+  );
+
   return (
     <header
-      className={`${jost.className} sticky top-0 z-50 border-b border-white/10 bg-[#1a2a22]/95 backdrop-blur transition-shadow ${
-        scrolled ? "shadow-[0_4px_20px_-10px_rgba(0,0,0,0.5)]" : ""
+      className={`${jost.className} sticky top-0 z-50 border-b border-white/20 bg-black/95 backdrop-blur transition-shadow ${
+        scrolled ? "shadow-[0_8px_28px_-10px_rgba(0,0,0,0.9)]" : ""
       }`}
     >
       <nav
         aria-label="Main navigation"
-        className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:h-[72px] lg:px-8"
+        className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 transition-all duration-300 sm:px-6 lg:px-8 ${
+          scrolled ? "h-16" : "h-16 lg:h-20"
+        }`}
       >
-        <Logo />
+        <Logo small={scrolled} />
 
         {/* Desktop links */}
-        <ul className="hidden items-center gap-6 xl:gap-8 lg:flex">
+        <ul className="hidden items-center gap-9 lg:flex xl:gap-11">
           {allLinks.map(({ label, href, children }) => {
+            const active = children ? isParentActive(href) : isActive(href);
             if (children) {
-              const parentActive = isParentActive(href);
               return (
                 <li key={href} className="group relative">
                   <Link
                     href={href}
-                    aria-current={parentActive ? "page" : undefined}
+                    aria-current={active ? "page" : undefined}
                     aria-haspopup="true"
-                    className={`inline-flex items-center gap-1 border-b-2 py-1 text-sm transition-colors ${focusRing} ${
-                      parentActive
-                        ? "border-[#faf9f6] font-semibold text-[#faf9f6]"
-                        : "border-transparent font-normal text-[#faf9f6]/70 hover:text-[#faf9f6]"
-                    }`}
+                    className={desktopLink(active)}
                   >
                     {label}
                     <FiChevronDown
-                      size={14}
+                      size={16}
                       aria-hidden="true"
                       className="transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
                     />
+                    {active && underline}
                   </Link>
 
-                  {/* Dropdown */}
-                  <div className="invisible absolute left-0 top-full z-50 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                    <ul className="min-w-[170px] overflow-hidden rounded-lg border border-white/10 bg-[#1a2a22] py-1.5 shadow-xl">
-                      {children.map((child) => {
-                        const childActive = isActive(child.href);
+                  <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                    <ul className="w-[280px] overflow-hidden rounded-2xl border border-white/25 bg-black p-2 shadow-2xl">
+                      {children.map((c) => {
+                        const ca = isActive(c.href);
                         return (
-                          <li key={child.href}>
+                          <li key={c.href}>
                             <Link
-                              href={child.href}
-                              aria-current={childActive ? "page" : undefined}
-                              className={`block px-4 py-2.5 text-sm transition-colors ${focusRing} ${
-                                childActive
-                                  ? "bg-white/10 font-semibold text-[#faf9f6]"
-                                  : "font-normal text-[#faf9f6]/70 hover:bg-white/5 hover:text-[#faf9f6]"
+                              href={c.href}
+                              aria-current={ca ? "page" : undefined}
+                              className={`flex items-center justify-between gap-3 rounded-xl px-4 py-3 transition-colors ${ring} ${
+                                ca ? "bg-white/15" : "hover:bg-white/10"
                               }`}
                             >
-                              {child.label}
+                              <span>
+                                <span className={`block text-base ${ca ? "font-extrabold text-[#e0c07a]" : "font-bold text-white"}`}>
+                                  {c.label}
+                                </span>
+                                <span className="block text-sm font-medium text-[#d9d4c4]">{c.desc}</span>
+                              </span>
+                              <FiArrowRight className="shrink-0 text-[#e0c07a]" aria-hidden="true" />
                             </Link>
                           </li>
                         );
@@ -203,38 +215,23 @@ function NavbarInner() {
                 </li>
               );
             }
-
-            const active = isActive(href);
             return (
               <li key={href}>
-                <Link
-                  href={href}
-                  aria-current={active ? "page" : undefined}
-                  className={`border-b-2 py-1 text-sm transition-colors ${focusRing} ${
-                    active
-                      ? "border-[#faf9f6] font-semibold text-[#faf9f6]"
-                      : "border-transparent font-normal text-[#faf9f6]/70 hover:text-[#faf9f6]"
-                  }`}
-                >
+                <Link href={href} aria-current={active ? "page" : undefined} className={desktopLink(active)}>
                   {label}
+                  {active && underline}
                 </Link>
               </li>
             );
           })}
         </ul>
 
-        {/* Desktop auth */}
-        <div className="hidden items-center gap-2.5 lg:flex">
-          <button
-            type="button"
-            onClick={() => setIsEnquiryOpen(true)}
-            className={`rounded-lg bg-[#faf9f6] px-5 py-2.5 text-sm font-medium text-[#1a2a22] transition hover:bg-[#f3f0E8] ${focusRing}`}
-          >
-            Enquiry Now
-          </button>
+        {/* Desktop actions */}
+        <div className="hidden items-center gap-3 lg:flex">
+          {enquiryBtn("px-6 py-3 text-sm")}
           {session && (
             <>
-              {!isAdmin && dashboardChip("max-w-[160px]")}
+              {!isAdmin && dashboardChip("max-w-[170px]")}
               {logoutBtn()}
             </>
           )}
@@ -247,171 +244,99 @@ function NavbarInner() {
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
-          className={`flex h-11 w-11 items-center justify-center rounded-lg border border-white/20 text-[#faf9f6] transition hover:bg-white/10 lg:hidden ${focusRing}`}
+          className={`flex h-12 w-12 items-center justify-center rounded-xl border-2 border-white/50 text-white transition hover:bg-white/10 lg:hidden ${ring}`}
         >
-          {open ? (
-            <FiX size={22} aria-hidden="true" />
-          ) : (
-            <FiMenu size={22} aria-hidden="true" />
-          )}
+          {open ? <FiX size={26} aria-hidden="true" /> : <FiMenu size={26} aria-hidden="true" />}
         </button>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu: full-height panel, Enquiry button pinned at the bottom */}
       <AnimatePresence>
         {open && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={() => setOpen(false)}
-              className="fixed inset-x-0 bottom-0 top-16 bg-black/50 lg:hidden"
-              aria-hidden="true"
-            />
-            <motion.div
-              id="mobile-menu"
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.22 }}
-              className="absolute inset-x-0 top-full max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-white/10 bg-[#1a2a22] shadow-xl lg:hidden"
-            >
-              <ul className="mx-auto max-w-7xl space-y-1 px-4 pb-2 pt-4 sm:px-6">
-                {allLinks.map(({ label, href, children }) => {
-                  if (children) {
-                    const parentActive = isParentActive(href);
-                    return (
-                      <li key={href}>
-                        <div
-                          className={`flex items-center rounded-xl transition ${
-                            parentActive ? "bg-white/10" : "hover:bg-white/5"
-                          }`}
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-0 bottom-0 top-16 flex flex-col bg-black lg:hidden"
+          >
+            <ul className="flex-1 space-y-1.5 overflow-y-auto px-4 pb-4 pt-5 sm:px-6">
+              {allLinks.map(({ label, href, children }) => {
+                if (children) {
+                  const active = isParentActive(href);
+                  return (
+                    <li key={href}>
+                      <div className="flex items-stretch gap-1.5">
+                        <Link href={href} aria-current={active ? "page" : undefined} className={`flex-1 ${mobileRow(active)}`}>
+                          {label}
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => setSubOpen((s) => !s)}
+                          aria-expanded={subOpen}
+                          aria-label={subOpen ? "Collapse property types" : "Expand property types"}
+                          className={`flex w-14 items-center justify-center rounded-xl border-2 border-white/40 text-white ${ring}`}
                         >
-                          <Link
-                            href={href}
-                            aria-current={parentActive ? "page" : undefined}
-                            className={`flex-1 rounded-xl px-4 py-3 text-base transition ${focusRing} ${
-                              parentActive
-                                ? "font-semibold text-[#faf9f6]"
-                                : "font-normal text-[#faf9f6]/70 hover:text-[#faf9f6]"
-                            }`}
+                          <FiChevronDown size={22} aria-hidden="true" className={`transition-transform duration-200 ${subOpen ? "rotate-180" : ""}`} />
+                        </button>
+                      </div>
+                      <AnimatePresence initial={false}>
+                        {subOpen && (
+                          <motion.ul
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="ml-3 mt-1.5 space-y-1.5 overflow-hidden border-l-[3px] border-[#e0c07a] pl-3"
                           >
-                            {label}
-                          </Link>
-                          <button
-                            type="button"
-                            onClick={() => setMobileSubOpen((s) => !s)}
-                            aria-expanded={mobileSubOpen}
-                            aria-label={
-                              mobileSubOpen
-                                ? "Collapse property types"
-                                : "Expand property types"
-                            }
-                            className={`mr-1 flex h-10 w-10 items-center justify-center rounded-lg text-[#faf9f6]/80 ${focusRing}`}
-                          >
-                            <FiChevronDown
-                              size={18}
-                              aria-hidden="true"
-                              className={`transition-transform duration-200 ${
-                                mobileSubOpen ? "rotate-180" : ""
-                              }`}
-                            />
-                          </button>
-                        </div>
-
-                        {mobileSubOpen && (
-                          <ul className="mt-1 space-y-1 border-l border-white/10 pl-3 ml-4">
-                            {children.map((child) => {
-                              const childActive = isActive(child.href);
+                            {children.map((c) => {
+                              const ca = isActive(c.href);
                               return (
-                                <li key={child.href}>
-                                  <Link
-                                    href={child.href}
-                                    aria-current={
-                                      childActive ? "page" : undefined
-                                    }
-                                    className={`flex items-center justify-between rounded-xl px-4 py-2.5 text-[15px] transition ${focusRing} ${
-                                      childActive
-                                        ? "bg-white/10 font-semibold text-[#faf9f6]"
-                                        : "font-normal text-[#faf9f6]/70 hover:bg-white/5 hover:text-[#faf9f6]"
-                                    }`}
-                                  >
-                                    {child.label}
-                                    {childActive && (
-                                      <span
-                                        className="h-1.5 w-1.5 rounded-full bg-[#faf9f6]"
-                                        aria-hidden="true"
-                                      />
-                                    )}
+                                <li key={c.href}>
+                                  <Link href={c.href} aria-current={ca ? "page" : undefined} className={mobileRow(ca).replace("text-xl", "text-lg")}>
+                                    <span>
+                                      {c.label}
+                                      <span className={`block text-sm font-medium ${ca ? "text-black/80" : "text-[#d9d4c4]"}`}>{c.desc}</span>
+                                    </span>
                                   </Link>
                                 </li>
                               );
                             })}
-                          </ul>
+                          </motion.ul>
                         )}
-                      </li>
-                    );
-                  }
-
-                  const active = isActive(href);
-                  return (
-                    <li key={href}>
-                      <Link
-                        href={href}
-                        aria-current={active ? "page" : undefined}
-                        className={`flex items-center justify-between rounded-xl px-4 py-3 text-base transition ${focusRing} ${
-                          active
-                            ? "bg-white/10 font-semibold text-[#faf9f6]"
-                            : "font-normal text-[#faf9f6]/70 hover:bg-white/5 hover:text-[#faf9f6]"
-                        }`}
-                      >
-                        {label}
-                        {active && (
-                          <span
-                            className="h-1.5 w-1.5 rounded-full bg-[#faf9f6]"
-                            aria-hidden="true"
-                          />
-                        )}
-                      </Link>
+                      </AnimatePresence>
                     </li>
                   );
-                })}
-              </ul>
-              <div className="px-4 py-4 sm:px-6">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOpen(false);
-                    setIsEnquiryOpen(true);
-                  }}
-                  className="w-full rounded-lg bg-[#faf9f6] px-5 py-3 text-sm font-medium text-[#1a2a22] transition hover:bg-[#f3f0E8]"
-                >
-                  Enquiry Now
-                </button>
-              </div>
+                }
+                const active = isActive(href);
+                return (
+                  <li key={href}>
+                    <Link href={href} aria-current={active ? "page" : undefined} className={mobileRow(active)}>
+                      {label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
 
+            <div className="space-y-3 border-t border-white/20 bg-black px-4 pb-6 pt-4 sm:px-6">
               {session && (
-                <div className="mx-auto max-w-7xl border-t border-white/10 px-4 pb-6 pt-4 sm:px-6">
-                  <div className="flex flex-col gap-3 sm:flex-row">
-                    {!isAdmin && dashboardChip("flex-1 justify-center py-3")}
-                    {logoutBtn("flex-1 py-3")}
-                  </div>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  {!isAdmin && dashboardChip("flex-1 justify-center py-3")}
+                  {logoutBtn("flex-1 py-3")}
                 </div>
               )}
-
-              {!session && <div className="pb-4" />}
-            </motion.div>
-          </>
+              {enquiryBtn("w-full px-5 py-4 text-lg", () => {
+                setOpen(false);
+                setEnquiry(true);
+              })}
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Enquiry Modal */}
-      <EnquiryModal
-        open={isEnquiryOpen}
-        onClose={() => setIsEnquiryOpen(false)}
-      />
+      <EnquiryModal open={enquiry} onClose={() => setEnquiry(false)} />
     </header>
   );
 }
@@ -419,11 +344,7 @@ function NavbarInner() {
 /* useSearchParams needs a Suspense boundary in the App Router */
 export default function Navbar() {
   return (
-    <Suspense
-      fallback={
-        <div className="sticky top-0 z-50 h-16 border-b border-white/10 bg-[#1a2a22] lg:h-[72px]" />
-      }
-    >
+    <Suspense fallback={<div className="sticky top-0 z-50 h-16 border-b border-white/20 bg-black lg:h-20" />}>
       <NavbarInner />
     </Suspense>
   );

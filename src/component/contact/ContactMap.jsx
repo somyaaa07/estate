@@ -60,12 +60,12 @@ export default function ContactMap() {
                   </span>
                 </div>
                 <h2
-                  className={`${marcellus.className} mt-2 text-[clamp(1.5rem,3vw,2.1rem)] leading-[1.15] tracking-tight text-[#1a2a22]`}
+                  className={`${marcellus.className} mt-2 text-[clamp(1.5rem,3vw,2.1rem)] leading-[1.15] tracking-tight text-[#000000]`}
                 >
                   Find Us on the Map
                 </h2>
                 <p className="mt-1.5 text-sm leading-relaxed text-[#52685B]">
-                  <span className="font-medium text-[#1a2a22]">{mapData.name}</span>
+                  <span className="font-medium text-[#000000]">{mapData.name}</span>
                   <span className="mx-2 text-[#e2a10d]">•</span>
                   <span className="break-words">{mapData.address}</span>
                 </p>
@@ -77,7 +77,7 @@ export default function ContactMap() {
               href={directionsHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex w-fit shrink-0 items-center gap-3 overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-6 pr-2.5 text-sm font-medium text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)] hover:ring-[#D4AF37] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+              className="group relative inline-flex w-fit shrink-0 items-center gap-3 overflow-hidden rounded-full bg-[#000000] py-2.5 pl-6 pr-2.5 text-sm font-medium text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)] hover:ring-[#D4AF37] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
             >
               <span
                 aria-hidden="true"
@@ -88,7 +88,7 @@ export default function ContactMap() {
                 className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/3 -translate-x-full -skew-x-[20deg] bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-0 transition-all duration-700 ease-out group-hover:translate-x-[450%] group-hover:opacity-100"
               />
               <span className="relative z-10">Get Directions</span>
-              <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+              <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#000000] transition-all duration-500 group-hover:bg-none group-hover:bg-[#000000] group-hover:text-[#F5D77A]">
                 <ArrowUpRight
                   size={14}
                   className="transition-transform duration-500 group-hover:rotate-45"

@@ -102,7 +102,7 @@ export async function sendContactEnquiryEmail({ enquiry }) {
     ">
 
       <div style="
-        background: #1a2a22;
+        background: #000000;
         padding: 24px 32px;
       ">
         <h2 style="
@@ -128,7 +128,7 @@ export async function sendContactEnquiryEmail({ enquiry }) {
       ">
 
         <h3 style="
-          color: #1a2a22;
+          color: #000000;
           margin: 0 0 16px;
           font-size: 16px;
         ">
@@ -149,7 +149,7 @@ export async function sendContactEnquiryEmail({ enquiry }) {
 
             <td style="
               padding: 8px 0;
-              color: #1a2a22;
+              color: #000000;
               font-size: 14px;
               font-weight: 600;
             ">
@@ -168,7 +168,7 @@ export async function sendContactEnquiryEmail({ enquiry }) {
 
             <td style="
               padding: 8px 0;
-              color: #1a2a22;
+              color: #000000;
               font-size: 14px;
             ">
               ${phone}
@@ -189,7 +189,7 @@ export async function sendContactEnquiryEmail({ enquiry }) {
 
             <td style="
               padding: 8px 0;
-              color: #1a2a22;
+              color: #000000;
               font-size: 14px;
             ">
               ${email}
@@ -213,7 +213,7 @@ export async function sendContactEnquiryEmail({ enquiry }) {
 
             <td style="
               padding: 8px 0;
-              color: #1a2a22;
+              color: #000000;
               font-size: 14px;
             ">
               ${enquiryType}
@@ -235,7 +235,7 @@ export async function sendContactEnquiryEmail({ enquiry }) {
 
             <td style="
               padding: 8px 0;
-              color: #1a2a22;
+              color: #000000;
               font-size: 14px;
               line-height: 1.6;
             ">
@@ -282,13 +282,13 @@ export async function sendSellPropertyEmail({ form }) {
       : `
       <tr>
         <td style="padding:8px 0;color:#6b7c72;font-size:13px;width:150px;vertical-align:top;">${esc(label)}</td>
-        <td style="padding:8px 0;color:#1a2a22;font-size:14px;line-height:1.6;">${esc(
+        <td style="padding:8px 0;color:#000000;font-size:14px;line-height:1.6;">${esc(
           Array.isArray(value) ? value.join(', ') : value
         )}</td>
       </tr>`;
 
   const section = (title) =>
-    `<h3 style="color:#1a2a22;margin:24px 0 8px;font-size:16px;border-bottom:1px solid #e8e8e8;padding-bottom:6px;">${title}</h3>`;
+    `<h3 style="color:#000000;margin:24px 0 8px;font-size:16px;border-bottom:1px solid #e8e8e8;padding-bottom:6px;">${title}</h3>`;
 
   const price = Number(f.price);
   const priceText = price ? `₹${price.toLocaleString('en-IN')}` : '';
@@ -305,7 +305,7 @@ export async function sendSellPropertyEmail({ form }) {
 
   const html = `
     <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto;background:#f9f9f9;border-radius:12px;overflow:hidden;">
-      <div style="background:#1a2a22;padding:24px 32px;">
+      <div style="background:#000000;padding:24px 32px;">
         <h2 style="color:#ffffff;margin:0;font-size:20px;">New Property Submission</h2>
         <p style="color:#d8dfda;margin:6px 0 0;font-size:14px;">A seller submitted a property through the Sell form.</p>
       </div>

@@ -323,39 +323,39 @@ const Avatars = () => (
     ))}
   </div>
 );
-const getInitials = (name) =>
-  name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
+// const getInitials = (name) =>
+//   name
+//     .split(" ")
+//     .filter(Boolean)
+//     .slice(0, 2)
+//     .map((w) => w[0])
+//     .join("")
+//     .toUpperCase();
 
-const TeamPhoto = ({ name, photo, sizes, className = "" }) => (
-  <div
-    className={`relative overflow-hidden bg-[#F3F0E8] ${className}`}
-  >
-    {photo ? (
-      <Image
-        src={photo}
-        alt={`${name}, Bringo Real Estates`}
-        fill
-        sizes={sizes}
-        className="object-cover"
-      />
-    ) : (
-      <div
-        aria-hidden="true"
-        className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#52685B] to-[#000000]"
-      >
-        <span className="text-5xl tracking-widest text-[#D4A62A]">
-          {getInitials(name)}
-        </span>
-      </div>
-    )}
-  </div>
-);
+// const TeamPhoto = ({ name, photo, sizes, className = "" }) => (
+//   <div
+//     className={`relative overflow-hidden bg-[#F3F0E8] ${className}`}
+//   >
+//     {photo ? (
+//       <Image
+//         src={photo}
+//         alt={`${name}, Bringo Real Estates`}
+//         fill
+//         sizes={sizes}
+//         className="object-cover"
+//       />
+//     ) : (
+//       <div
+//         aria-hidden="true"
+//         className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#52685B] to-[#000000]"
+//       >
+//         <span className="text-5xl tracking-widest text-[#D4A62A]">
+//           {getInitials(name)}
+//         </span>
+//       </div>
+//     )}
+//   </div>
+// );
 /* ---------------------------------------------------------------
    PAGE
 ---------------------------------------------------------------- */
@@ -700,11 +700,14 @@ we are your complete Real Estate Partner              </span>
       </section>
 
       {/* ============ FOUNDER + TEAM ============ */}
-<TeamSection
+{/* <TeamSection
   founder={founder}
   teamMembers={teamMembers}
   TeamPhoto={TeamPhoto}
-/>
+/> */}
+
+{/* ============ FOUNDER + TEAM ============ */}
+<TeamSection founder={founder} teamMembers={teamMembers} />
       {/* ============ PARTNERS ============ */}
       <section
         aria-labelledby="partners-title"

@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 
 import FaqAccordion from "@/component/about/FaqAccordion";
-import TeamSection,{ FounderSection } from "@/component/TeamSection";
+import TeamSection, { FounderSection } from "@/component/TeamSection";
 
 const marcellus = Marcellus({
   subsets: ["latin"],
@@ -52,12 +52,32 @@ const founder = {
 };
 
 const teamMembers = [
-    { name: "Rohit Bhasin", role: "Chief Operating Officer", photo: "/founder/rohit.jpeg" },
+  {
+    name: "Rohit Bhasin",
+    role: "Chief Operating Officer",
+    photo: "/founder/rohit.jpeg",
+  },
 
-  { name: "Mehak Bhasin", role: "Head of New Channel Engagement", photo:"/founder/mehak.jpeg" },
-  { name: "Chetna Bhasin", role: "GM Operations", photo: "/founder/chetna.jpeg" },
-  { name: "Uday Prakash", role: "Operational Channel Head – Unitech", photo: "/founder/uday.jpeg" },
-  { name: "Geetanjali Dayal Prakash", role: " GM – Unitech", photo: "/founder/geetanjali.jpeg" },
+  {
+    name: "Mehak Bhasin",
+    role: "Head of New Channel Engagement",
+    photo: "/founder/mehak.jpeg",
+  },
+  {
+    name: "Chetna Bhasin",
+    role: "GM Operations",
+    photo: "/founder/chetna.jpeg",
+  },
+  {
+    name: "Uday Prakash",
+    role: "Operational Channel Head – Unitech",
+    photo: "/founder/uday.jpeg",
+  },
+  {
+    name: "Geetanjali Dayal Prakash",
+    role: " GM – Unitech",
+    photo: "/founder/geetanjali.jpeg",
+  },
 ];
 /* ---------------------------------------------------------------
    COLORS
@@ -196,15 +216,15 @@ const partners = [
   { name: "Gaurs", logo: "/partners/gaurs.webp" },
   { name: "M3M India", logo: "/partners/m3m.jpg" },
   { name: "Migsun", logo: "/partners/migsun.jpg" },
-  { name: "Hero Homes", logo: "/partners/hero-homes.jpg" },
-  { name: "Max Estates", logo: "/partners/max-estates.jpg" },
-  { name: "L&T Realty", logo: "/partners/l-and-t-realty.jpg" },
-  { name: "ACE Group", logo: "/partners/ace-group.jpg" },
+  { name: "Hero Homes", logo: "/partners/hero-homes.jpg" , scale:2.18},
+  { name: "Max Estates", logo: "/partners/max-estates.jpg" , scale:2.18 },
+  { name: "L&T Realty", logo: "/partners/l-and-t-realty.jpg", scale: 2.18 },
+  { name: "ACE Group", logo: "/partners/ace-group.jpg", scale:2.18 },
   { name: "ATS", logo: "/partners/ats.jpg" },
   { name: "Jacob & Co.", logo: "/partners/jacob-and-co.jpg" },
   { name: "Trump Towers", logo: "/partners/trump-towers.jpg" },
   { name: "Purvanchal Projects", logo: "/partners/purvanchal.webp" },
-  { name: "Kalpataru", logo: "/partners/kalpataru.jpg" },
+  { name: "Kalpataru", logo: "/partners/kalpataru.jpg", scale:1.08 },
   { name: "Prateek Group", logo: "/partners/prateek-group.jpg" },
   { name: "County Group", logo: "/partners/county-group.webp" },
 ];
@@ -708,8 +728,8 @@ export default function AboutPage() {
   TeamPhoto={TeamPhoto}
 /> */}
 
-{/* ============ FOUNDER + TEAM ============ */}
-<TeamSection founder={founder} teamMembers={teamMembers} />
+      {/* ============ FOUNDER + TEAM ============ */}
+      <TeamSection founder={founder} teamMembers={teamMembers} />
       {/* ============ PARTNERS ============ */}
       <section
         aria-labelledby="partners-title"
@@ -729,11 +749,6 @@ export default function AboutPage() {
 
         {/* Partner Logo Marquee */}
         <div className="relative mt-10 w-full overflow-hidden">
-          {/* Left fade */}
-          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-[#FAF9F6] to-transparent" />
-
-          {/* Right fade */}
-          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-[#FAF9F6] to-transparent" />
 
           <div className="partner-marquee flex w-max">
             {/* FIRST SET */}
@@ -741,14 +756,19 @@ export default function AboutPage() {
               {partners.map((partner) => (
                 <div
                   key={`first-${partner.name}`}
-                  className="flex h-24 w-44 shrink-0 items-center justify-center"
+                  className="flex h-28 w-48 shrink-0 items-center justify-center
+                   rounded-lg bg-white px-4 py-3"
                 >
                   <Image
                     src={partner.logo}
                     alt={`${partner.name} logo`}
-                    width={160}
-                    height={90}
-                    className="h-16 w-auto max-w-[160px] object-contain"
+                    width={180}
+                    height={100}
+                    sizes="180px"
+                    className="h-full w-full object-contain"
+                    style={{
+                      transform: `scale(${partner.scale ?? 1})`,
+                    }}
                   />
                 </div>
               ))}
@@ -762,19 +782,25 @@ export default function AboutPage() {
               {partners.map((partner) => (
                 <div
                   key={`second-${partner.name}`}
-                  className="flex h-24 w-44 shrink-0 items-center justify-center"
+                  className="flex h-28 w-48 shrink-0 items-center justify-center
+                   rounded-lg bg-white px-4 py-3"
                 >
                   <Image
                     src={partner.logo}
                     alt=""
-                    width={160}
-                    height={90}
-                    className="h-16 w-auto max-w-[160px] object-contain"
+                    width={180}
+                    height={100}
+                    sizes="180px"
+                    className="h-full w-full object-contain"
+                    style={{
+                      transform: `scale(${partner.scale ?? 1})`,
+                    }}
                   />
                 </div>
               ))}
             </div>
           </div>
+        
         </div>
       </section>
 

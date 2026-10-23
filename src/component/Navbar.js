@@ -27,8 +27,9 @@ const links = [
     children: [
       { label: "Buy", href: "/properties?type=buy" },
       // { label: "Sell", href: "/properties?type=sell" },
-      { label: "Sell", href: "/properties/sell" },
       { label: "Rent", href: "/properties?type=rent" },
+            { label: "Sell", href: "/properties/sell" },
+
     ],
   },
   { label: "About", href: "/about" },

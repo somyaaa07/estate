@@ -12,6 +12,7 @@ import {
   FiUser,
   FiMapPin,
   FiChevronDown,
+  FiArrowLeft,
 } from "react-icons/fi";
 import { CgSpinner } from "react-icons/cg";
 
@@ -26,7 +27,7 @@ const goldBg = "bg-gradient-to-r from-[#e2a10d] via-[#ffcd39] to-[#e2a10d]";
 
 // TODO: replace with your real details
 const PHONE = "+91 9999300301";
-const PHONE_HREF = "tel:+919999300301"; // fixed: country code was missing
+const PHONE_HREF = "tel:+919999300301";
 const WHATSAPP_URL = "https://wa.me/919999300301";
 
 const contactLinks = [
@@ -82,6 +83,9 @@ const initialForm = {
   notes: "",
 };
 
+const showBhkFor = (type) =>
+  ["Flat / Apartment", "Villa / House"].includes(type);
+
 /* ---------- Shared classes ---------- */
 const fieldClass =
   "w-full rounded-xl border border-[#1a2a22]/15 bg-[#f3f0E8]/60 py-3.5 pl-11 pr-4 text-base text-[#1a2a22] placeholder:text-[#52685B]/70 transition focus:border-[#D4AF37] focus:bg-[#faf9f6] focus:outline-none focus:ring-4 focus:ring-[#ffcd39]/30 disabled:opacity-60";
@@ -89,6 +93,9 @@ const selectClass = `${fieldClass} appearance-none pr-10`;
 const labelClass = "mb-1.5 block text-sm text-[#1a2a22]";
 const fieldIcon =
   "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#52685B]";
+
+const primaryBtn =
+  "group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-7 pr-2.5 text-base text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70";
 
 /* ---------- Chip group (radio buttons styled as pills) ---------- */
 function ChipGroup({ legend, name, options, value, onChange, disabled }) {
@@ -125,17 +132,45 @@ function ChipGroup({ legend, name, options, value, onChange, disabled }) {
   );
 }
 
+/* ---------- Button inner (shared look) ---------- */
+function BtnInner({ label, loading }) {
+  return (
+    <>
+      <span
+        aria-hidden="true"
+        className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100"
+      />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/3 -translate-x-full -skew-x-[20deg] bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-0 transition-all duration-700 ease-out group-hover:translate-x-[450%] group-hover:opacity-100"
+      />
+      <span className="relative z-10 text-nowrap">{label}</span>
+      <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
+        {loading ? (
+          <CgSpinner size={20} className="animate-spin" aria-hidden="true" />
+        ) : (
+          <FiArrowRight
+            size={16}
+            className="transition-transform duration-500 group-hover:-rotate-45"
+            aria-hidden="true"
+          />
+        )}
+      </span>
+    </>
+  );
+}
+
 export default function CTACallback({ image = null }) {
   const reduce = useReducedMotion();
   const [form, setForm] = useState(initialForm);
-  const [status, setStatus] = useState("idle");
+  const [step, setStep] = useState(1); // 1 = contact, 2 = requirements
+  const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [errorMsg, setErrorMsg] = useState("");
 
   const isRent = form.intent === "Rent";
-  const showBhk = ["Flat / Apartment", "Villa / House"].includes(
-    form.propertyType
-  );
+  const showBhk = showBhkFor(form.propertyType);
   const budgetOptions = isRent ? RENT_BUDGETS : BUY_BUDGETS;
+  const loading = status === "loading";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -153,9 +188,6 @@ export default function CTACallback({ image = null }) {
     });
   };
 
-  const showBhkFor = (type) =>
-    ["Flat / Apartment", "Villa / House"].includes(type);
-
   const buildMessage = () => {
     const lines = [
       "Customer requested a callback from the website.",
@@ -170,51 +202,81 @@ export default function CTACallback({ image = null }) {
     return lines.filter(Boolean).join("\n");
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const post = async (payload) => {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.message || "Something went wrong.");
+    return data;
+  };
 
+  /* Step 1: only moves to step 2 (nothing is sent yet) */
+  const handleStep1 = (e) => {
+    e.preventDefault();
+    setErrorMsg("");
+    setStatus("idle");
+    setStep(2);
+  };
+
+  /* Step 2: send full requirements */
+  const handleStep2 = async (e) => {
+    e.preventDefault();
     setStatus("loading");
     setErrorMsg("");
-
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name,
-          phone: form.phone,
-          email: "",
-          enquiryType: "Callback Request",
-          // Structured fields, in case your API/CRM wants them separately
-          intent: form.intent,
-          propertyType: form.propertyType,
-          bhk: form.bhk,
-          budget: form.budget,
-          location: form.location,
-          callTime: form.callTime,
-          // Readable summary for email / WhatsApp notifications
-          message: buildMessage(),
-        }),
+      await post({
+        name: form.name,
+        phone: form.phone,
+        email: "",
+        enquiryType: "Callback Request",
+        intent: form.intent,
+        propertyType: form.propertyType,
+        bhk: form.bhk,
+        budget: form.budget,
+        location: form.location,
+        callTime: form.callTime,
+        message: buildMessage(),
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Something went wrong.");
-      }
-
-      setStatus("success");
-      setForm(initialForm);
+      finish();
     } catch (error) {
-      console.error("Callback request error:", error);
+      console.error("Callback step 2 error:", error);
       setErrorMsg(
-        error.message || "Unable to submit callback request. Please try again."
+        error.message || "Unable to submit your details. Please try again."
       );
       setStatus("error");
     }
   };
 
-  const loading = status === "loading";
+  /* Skip: send only name + phone, in a single request */
+  const handleSkip = async () => {
+    setStatus("loading");
+    setErrorMsg("");
+    try {
+      await post({
+        name: form.name,
+        phone: form.phone,
+        email: "",
+        enquiryType: "Callback Request",
+        message: "Customer requested a callback from the website. No extra details provided.",
+      });
+      finish();
+    } catch (error) {
+      console.error("Callback skip error:", error);
+      setErrorMsg(
+        error.message || "Unable to submit your request. Please try again."
+      );
+      setStatus("error");
+    }
+  };
+
+  const finish = () => {
+    setStatus("success");
+    setForm(initialForm);
+    setStep(1);
+  };
 
   return (
     <section
@@ -250,9 +312,9 @@ export default function CTACallback({ image = null }) {
             className="pointer-events-none absolute -bottom-32 -left-20 h-72 w-72 rounded-full bg-[#e2a10d]/10 blur-3xl"
           />
 
-          <div className="relative grid items-start gap-10 p-6 sm:p-10 lg:grid-cols-[1fr_1.25fr] lg:gap-14 lg:p-14">
+          <div className="relative grid items-center gap-10 p-6 sm:p-10 lg:grid-cols-[1fr_1.25fr] lg:gap-14 lg:p-14">
             {/* ===== LEFT: message + contact ===== */}
-            <div className="min-w-0 lg:sticky lg:top-24 lg:self-center">
+            <div className="min-w-0">
               <h2
                 id="cta-callback-heading"
                 className={`${serif} text-[clamp(1.9rem,3.8vw,3rem)] leading-[1.12] tracking-tight text-[#faf9f6]`}
@@ -340,229 +402,254 @@ export default function CTACallback({ image = null }) {
                 </div>
               ) : (
                 <>
-                  <h3 className={`${serif} text-2xl text-[#1a2a22] sm:text-3xl`}>
-                    Request a Callback
-                  </h3>
-                  <p className="mt-2 text-sm text-[#52685B]">
-                    Name and phone are required. The rest helps us prepare
-                    better options for you.
-                  </p>
-
-                  <form onSubmit={handleSubmit} className="mt-7 space-y-5">
-                    {/* Name + Phone */}
-                    <div className="grid gap-5 sm:grid-cols-2">
-                      <div>
-                        <label htmlFor="cta-name" className={labelClass}>
-                          Full name
-                        </label>
-                        <div className="relative">
-                          <FiUser size={17} className={fieldIcon} aria-hidden="true" />
-                          <input
-                            id="cta-name"
-                            name="name"
-                            type="text"
-                            required
-                            autoComplete="name"
-                            value={form.name}
-                            onChange={handleChange}
-                            disabled={loading}
-                            placeholder="Your full name"
-                            className={fieldClass}
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label htmlFor="cta-phone" className={labelClass}>
-                          Phone number
-                        </label>
-                        <div className="relative">
-                          <FiPhone size={17} className={fieldIcon} aria-hidden="true" />
-                          <input
-                            id="cta-phone"
-                            name="phone"
-                            type="tel"
-                            required
-                            autoComplete="tel"
-                            inputMode="tel"
-                            pattern="[0-9+\-\s]{10,15}"
-                            title="Enter a valid phone number"
-                            value={form.phone}
-                            onChange={handleChange}
-                            disabled={loading}
-                            placeholder="+91 00000 00000"
-                            className={fieldClass}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Intent */}
-                    <ChipGroup
-                      legend="I want to"
-                      name="intent"
-                      options={INTENTS}
-                      value={form.intent}
-                      onChange={handleChange}
-                      disabled={loading}
-                    />
-
-                    {/* Property type */}
-                    <ChipGroup
-                      legend="Property type"
-                      name="propertyType"
-                      options={PROPERTY_TYPES}
-                      value={form.propertyType}
-                      onChange={handleChange}
-                      disabled={loading}
-                    />
-
-                    {/* BHK (flat / villa only) */}
-                    {showBhk && (
-                      <ChipGroup
-                        legend="Configuration"
-                        name="bhk"
-                        options={BHK_OPTIONS}
-                        value={form.bhk}
-                        onChange={handleChange}
-                        disabled={loading}
-                      />
-                    )}
-
-                    {/* Budget + Location */}
-                    <div className="grid gap-5 sm:grid-cols-2">
-                      <div>
-                        <label htmlFor="cta-budget" className={labelClass}>
-                          {isRent ? "Monthly budget" : "Budget"}
-                        </label>
-                        <div className="relative">
-                          <span
-                            aria-hidden="true"
-                            className={`${fieldIcon} text-base leading-none`}
-                          >
-                            ₹
-                          </span>
-                          <select
-                            id="cta-budget"
-                            name="budget"
-                            value={form.budget}
-                            onChange={handleChange}
-                            disabled={loading}
-                            className={selectClass}
-                          >
-                            <option value="">Select a range</option>
-                            {budgetOptions.map((b) => (
-                              <option key={b} value={b}>
-                                {b}
-                              </option>
-                            ))}
-                          </select>
-                          <FiChevronDown
-                            size={17}
-                            aria-hidden="true"
-                            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#52685B]"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label htmlFor="cta-location" className={labelClass}>
-                          Preferred location
-                        </label>
-                        <div className="relative">
-                          <FiMapPin size={17} className={fieldIcon} aria-hidden="true" />
-                          <input
-                            id="cta-location"
-                            name="location"
-                            type="text"
-                            value={form.location}
-                            onChange={handleChange}
-                            disabled={loading}
-                            placeholder="Area or city"
-                            className={fieldClass}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Best time to call */}
-                    <ChipGroup
-                      legend="Best time to call"
-                      name="callTime"
-                      options={CALL_TIMES}
-                      value={form.callTime}
-                      onChange={handleChange}
-                      disabled={loading}
-                    />
-
-                    {/* Notes */}
-                    <div>
-                      <label htmlFor="cta-notes" className={labelClass}>
-                        Anything else we should know?
-                      </label>
-                      <textarea
-                        id="cta-notes"
-                        name="notes"
-                        rows={3}
-                        maxLength={500}
-                        value={form.notes}
-                        onChange={handleChange}
-                        disabled={loading}
-                        placeholder="Possession timeline, parking, near a metro, loan needed..."
-                        className="w-full resize-none rounded-xl border border-[#1a2a22]/15 bg-[#f3f0E8]/60 px-4 py-3.5 text-base text-[#1a2a22] placeholder:text-[#52685B]/70 transition focus:border-[#D4AF37] focus:bg-[#faf9f6] focus:outline-none focus:ring-4 focus:ring-[#ffcd39]/30 disabled:opacity-60"
-                      />
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#1A2A22] py-2.5 pl-7 pr-2.5 text-base text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#1A2A22] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
-                    >
+                  {/* Progress */}
+                  <div className="flex items-center gap-3">
+                    <div className="flex flex-1 gap-1.5" aria-hidden="true">
+                      <span className={`h-1 flex-1 rounded-full ${goldBg}`} />
                       <span
-                        aria-hidden="true"
-                        className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100"
+                        className={`h-1 flex-1 rounded-full transition-colors ${
+                          step === 2 ? goldBg : "bg-[#1a2a22]/10"
+                        }`}
                       />
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/3 -translate-x-full -skew-x-[20deg] bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-0 transition-all duration-700 ease-out group-hover:translate-x-[450%] group-hover:opacity-100"
-                      />
-                      <span className="relative z-10 text-nowrap">
-                        {loading ? "Sending..." : "Request Callback"}
-                      </span>
-                      <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#F5D77A] to-[#B8902F] text-[#1A2A22] transition-all duration-500 group-hover:bg-none group-hover:bg-[#1A2A22] group-hover:text-[#F5D77A]">
-                        {loading ? (
-                          <CgSpinner size={20} className="animate-spin" aria-hidden="true" />
-                        ) : (
-                          <FiArrowRight
-                            size={16}
-                            className="transition-transform duration-500 group-hover:-rotate-45"
-                            aria-hidden="true"
+                    </div>
+                    <span className="text-xs text-[#52685B]">Step {step} of 2</span>
+                  </div>
+
+                  {step === 1 ? (
+                    <>
+                      <h3 className={`${serif} mt-6 text-2xl text-[#1a2a22] sm:text-3xl`}>
+                        Request a Callback
+                      </h3>
+                      <p className="mt-2 text-sm text-[#52685B]">
+                        Share your name and number, then tell us what you need.
+                      </p>
+
+                      <form onSubmit={handleStep1} className="mt-7 space-y-5">
+                        <div>
+                          <label htmlFor="cta-name" className={labelClass}>
+                            Full name
+                          </label>
+                          <div className="relative">
+                            <FiUser size={17} className={fieldIcon} aria-hidden="true" />
+                            <input
+                              id="cta-name"
+                              name="name"
+                              type="text"
+                              required
+                              autoComplete="name"
+                              value={form.name}
+                              onChange={handleChange}
+                              disabled={loading}
+                              placeholder="Your full name"
+                              className={fieldClass}
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label htmlFor="cta-phone" className={labelClass}>
+                            Phone number
+                          </label>
+                          <div className="relative">
+                            <FiPhone size={17} className={fieldIcon} aria-hidden="true" />
+                            <input
+                              id="cta-phone"
+                              name="phone"
+                              type="tel"
+                              required
+                              autoComplete="tel"
+                              inputMode="tel"
+                              pattern="[0-9+\-\s]{10,15}"
+                              title="Enter a valid phone number"
+                              value={form.phone}
+                              onChange={handleChange}
+                              disabled={loading}
+                              placeholder="+91 00000 00000"
+                              className={fieldClass}
+                            />
+                          </div>
+                        </div>
+
+                        <button type="submit" className={primaryBtn}>
+                          <BtnInner label="Continue" loading={false} />
+                        </button>
+
+                        <p className="flex items-center justify-center gap-2 text-xs text-[#52685B]">
+                          <FiLock size={13} aria-hidden="true" />
+                          Your details stay private. We never share your number.
+                        </p>
+                      </form>
+                    </>
+                  ) : (
+                    <>
+                      <h3 className={`${serif} mt-6 text-2xl text-[#1a2a22] sm:text-3xl`}>
+                        What are you looking for?
+                      </h3>
+                      <p className="mt-2 text-sm text-[#52685B]">
+                        We have your number. These details help us prepare
+                        better options before we call.
+                      </p>
+
+                      <form onSubmit={handleStep2} className="mt-7 space-y-5">
+                        <ChipGroup
+                          legend="I want to"
+                          name="intent"
+                          options={INTENTS}
+                          value={form.intent}
+                          onChange={handleChange}
+                          disabled={loading}
+                        />
+
+                        <ChipGroup
+                          legend="Property type"
+                          name="propertyType"
+                          options={PROPERTY_TYPES}
+                          value={form.propertyType}
+                          onChange={handleChange}
+                          disabled={loading}
+                        />
+
+                        {showBhk && (
+                          <ChipGroup
+                            legend="Configuration"
+                            name="bhk"
+                            options={BHK_OPTIONS}
+                            value={form.bhk}
+                            onChange={handleChange}
+                            disabled={loading}
                           />
                         )}
-                      </span>
-                    </button>
 
-                    <p className="flex items-center justify-center gap-2 text-xs text-[#52685B]">
-                      <FiLock size={13} aria-hidden="true" />
-                      Your details stay private. We never share your number.
-                    </p>
+                        <div className="grid gap-5 sm:grid-cols-2">
+                          <div>
+                            <label htmlFor="cta-budget" className={labelClass}>
+                              {isRent ? "Monthly budget" : "Budget"}
+                            </label>
+                            <div className="relative">
+                              <span
+                                aria-hidden="true"
+                                className={`${fieldIcon} text-base leading-none`}
+                              >
+                                ₹
+                              </span>
+                              <select
+                                id="cta-budget"
+                                name="budget"
+                                value={form.budget}
+                                onChange={handleChange}
+                                disabled={loading}
+                                className={selectClass}
+                              >
+                                <option value="">Select a range</option>
+                                {budgetOptions.map((b) => (
+                                  <option key={b} value={b}>
+                                    {b}
+                                  </option>
+                                ))}
+                              </select>
+                              <FiChevronDown
+                                size={17}
+                                aria-hidden="true"
+                                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#52685B]"
+                              />
+                            </div>
+                          </div>
 
-                    <div aria-live="polite">
-                      {status === "error" && (
-                        <p
-                          role="alert"
-                          className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
-                        >
-                          <FiAlertCircle
-                            size={18}
-                            className="mt-0.5 shrink-0"
-                            aria-hidden="true"
+                          <div>
+                            <label htmlFor="cta-location" className={labelClass}>
+                              Preferred location
+                            </label>
+                            <div className="relative">
+                              <FiMapPin size={17} className={fieldIcon} aria-hidden="true" />
+                              <input
+                                id="cta-location"
+                                name="location"
+                                type="text"
+                                value={form.location}
+                                onChange={handleChange}
+                                disabled={loading}
+                                placeholder="Area or city"
+                                className={fieldClass}
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <ChipGroup
+                          legend="Best time to call"
+                          name="callTime"
+                          options={CALL_TIMES}
+                          value={form.callTime}
+                          onChange={handleChange}
+                          disabled={loading}
+                        />
+
+                        <div>
+                          <label htmlFor="cta-notes" className={labelClass}>
+                            Anything else we should know?
+                          </label>
+                          <textarea
+                            id="cta-notes"
+                            name="notes"
+                            rows={2}
+                            maxLength={500}
+                            value={form.notes}
+                            onChange={handleChange}
+                            disabled={loading}
+                            placeholder="Possession timeline, parking, near a metro, loan needed..."
+                            className="w-full resize-none rounded-xl border border-[#1a2a22]/15 bg-[#f3f0E8]/60 px-4 py-3.5 text-base text-[#1a2a22] placeholder:text-[#52685B]/70 transition focus:border-[#D4AF37] focus:bg-[#faf9f6] focus:outline-none focus:ring-4 focus:ring-[#ffcd39]/30 disabled:opacity-60"
                           />
-                          {errorMsg}
-                        </p>
-                      )}
-                    </div>
-                  </form>
+                        </div>
+
+                        <button type="submit" disabled={loading} className={primaryBtn}>
+                          <BtnInner
+                            label={loading ? "Sending..." : "Request Callback"}
+                            loading={loading}
+                          />
+                        </button>
+
+                        <div className="flex items-center justify-between text-sm">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setStep(1);
+                              setStatus("idle");
+                              setErrorMsg("");
+                            }}
+                            disabled={loading}
+                            className="inline-flex items-center gap-1.5 text-[#52685B] transition hover:text-[#1a2a22] disabled:opacity-60"
+                          >
+                            <FiArrowLeft size={14} aria-hidden="true" />
+                            Back
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleSkip}
+                            disabled={loading}
+                            className="text-[#52685B] underline underline-offset-4 transition hover:text-[#1a2a22] disabled:opacity-60"
+                          >
+                            Skip, just call me
+                          </button>
+                        </div>
+                      </form>
+                    </>
+                  )}
+
+                  <div aria-live="polite" className="mt-4 empty:hidden">
+                    {status === "error" && (
+                      <p
+                        role="alert"
+                        className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+                      >
+                        <FiAlertCircle
+                          size={18}
+                          className="mt-0.5 shrink-0"
+                          aria-hidden="true"
+                        />
+                        {errorMsg}
+                      </p>
+                    )}
+                  </div>
                 </>
               )}
             </div>

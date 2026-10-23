@@ -45,9 +45,10 @@ export default function HomePage() {
     <>
       <HomeHero />
       <AboutSection />
+       <WhatWeDo/>
       <FeaturedProperties />
       {/* <Propertyguidance /> */}
-      <WhatWeDo/>
+     
       <HowWeHelp />
       <Testimonial />
       <CTASection />

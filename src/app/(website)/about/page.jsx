@@ -4,7 +4,7 @@ import { Marcellus } from "next/font/google";
 import {
   ArrowRight,
   Building2,
-    Briefcase,
+  Briefcase,
   Eye,
   Handshake,
   Home,
@@ -197,15 +197,15 @@ const partners = [
   { name: "M3M India", logo: "/partners/m3m.jpg" },
   { name: "Migsun", logo: "/partners/migsun.jpg" },
   { name: "Hero Homes", logo: "/partners/hero-homes.jpg" },
-  { name: "Max Estates", logo: "/partners/max-estates.webp" },
+  { name: "Max Estates", logo: "/partners/max-estates.jpg" },
   { name: "L&T Realty", logo: "/partners/l-and-t-realty.jpg" },
   { name: "ACE Group", logo: "/partners/ace-group.jpg" },
   { name: "ATS", logo: "/partners/ats.jpg" },
   { name: "Jacob & Co.", logo: "/partners/jacob-and-co.jpg" },
-  { name: "Trump Towers", logo: "/partners/trump-towers.webp" },
-  { name: "Purvanchal Projects", logo: "/partners/purvanchal.jpg" },
+  { name: "Trump Towers", logo: "/partners/trump-towers.jpg" },
+  { name: "Purvanchal Projects", logo: "/partners/purvanchal.webp" },
   { name: "Kalpataru", logo: "/partners/kalpataru.jpg" },
-  { name: "Prateek Group", logo: "/partners/prateek-group.webp" },
+  { name: "Prateek Group", logo: "/partners/prateek-group.jpg" },
   { name: "County Group", logo: "/partners/county-group.webp" },
 ];
 
@@ -542,7 +542,7 @@ export default function AboutPage() {
           </div>
 
           {/* Text */}
-         
+
           <div>
             <Eyebrow>Experience</Eyebrow>
 
@@ -613,7 +613,8 @@ export default function AboutPage() {
               More Than a Realtor.
               <br />
               <span className="text-[#52685B] ">
-we are your complete Real Estate Partner              </span>
+                we are your complete Real Estate Partner{" "}
+              </span>
             </h2>
 
             <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#52685B] sm:text-[15px]">
@@ -701,23 +702,13 @@ we are your complete Real Estate Partner              </span>
       </section>
 
       {/* ============ FOUNDER + TEAM ============ */}
-{/* <TeamSection
+      {/* <TeamSection
   founder={founder}
   teamMembers={teamMembers}
   TeamPhoto={TeamPhoto}
 /> */}
 
 {/* ============ FOUNDER + TEAM ============ */}
-<FounderSection
-  founder={{
-    name: "Ritesh Bhasin",
-    role: "Founder and Head of sales",
-    photo: "/founder/ritesh.png",
-    bio: ["With 18 years of corporate experience, Ritesh brings strong leadership, strategic thinking, and a results-driven approach to Bringo. As Head of Sales, he focuses on driving business growth, strengthening sales performance, improving operational efficiency, and building a high-performing team.", "An IIM-C alumnus and Six Sigma Black Belt, he combines strategic vision with a structured approach to achieving business goals and creating long-term value for the organisation."], // string or array
-    quote: "I believe sustainable growth comes from strong teams, disciplined execution, and a clear focus on delivering value to customers.",
- 
-  }}
-/>
 <TeamSection founder={founder} teamMembers={teamMembers} />
       {/* ============ PARTNERS ============ */}
       <section

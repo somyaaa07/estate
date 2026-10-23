@@ -4,9 +4,7 @@ export const metadata = {
   title: "Sell Your Property in Greater Noida | Bringo Real Estate",
   description:
     "Looking to sell your property in Greater Noida? List your residential, commercial or plot property with Bringo Real Estate and connect with potential buyers.",
-  alternates: {
-    canonical: "/properties/sell",
-  },
+  alternates: { canonical: "/properties/sell" },
   openGraph: {
     title: "Sell Your Property in Greater Noida | Bringo Real Estate",
     description:
@@ -16,13 +14,11 @@ export const metadata = {
   },
 };
 
+/* No padding / max-width wrapper here, so the hero photo can run edge to edge */
 export default function SellPage() {
   return (
-    <main className="min-h-screen bg-[#FAF9F6] px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        
-        <SellPropertyForm />
-      </div>
+    <main className="min-h-screen bg-[#F6F3EC]">
+      <SellPropertyForm />
     </main>
   );
 }

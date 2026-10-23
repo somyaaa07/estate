@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 
 import FaqAccordion from "@/component/about/FaqAccordion";
-import TeamSection from "@/component/TeamSection";
+import TeamSection,{ FounderSection } from "@/component/TeamSection";
 
 const marcellus = Marcellus({
   subsets: ["latin"],
@@ -37,8 +37,8 @@ const marcellus = Marcellus({
 
 const founder = {
   name: "Ritesh Bhasin",
-  role: "Founder & Head of Sales",
-  photo: null, // e.g. "/image/team/ritesh.webp"
+  role: "Founder and Head of sales",
+  photo: "/founder/ritesh.png", // e.g. "/image/team/ritesh.webp"
   bio: "Ritesh leads Bringo with 18 years of corporate experience behind him, before he took up business full time. His current focus is strengthening every segment of our real estate business and bringing the team together around our Annual Operating Plan.",
   experience: [
     "Genpact",
@@ -52,11 +52,12 @@ const founder = {
 };
 
 const teamMembers = [
-  { name: "Mehak Bhasin", role: "Head of New Channel Engagement", photo: null },
-  { name: "Chetna Bhasin", role: "Partner", photo: null },
-  { name: "Rohit Bhasin", role: "Partner", photo: null },
-  { name: "Uday Prakash", role: "Partner", photo: null },
-  { name: "Geetanjali Dayal Prakash", role: "Partner", photo: null },
+    { name: "Rohit Bhasin", role: "Chief Operating Officer", photo: "/founder/rohit.jpeg" },
+
+  { name: "Mehak Bhasin", role: "Head of New Channel Engagement", photo:"/founder/mehak.jpeg" },
+  { name: "Chetna Bhasin", role: "GM Operations", photo: "/founder/chetna.jpeg" },
+  { name: "Uday Prakash", role: "Operational Channel Head – Unitech", photo: "/founder/uday.jpeg" },
+  { name: "Geetanjali Dayal Prakash", role: " GM – Unitech", photo: "/founder/geetanjali.jpeg" },
 ];
 /* ---------------------------------------------------------------
    COLORS
@@ -707,8 +708,8 @@ export default function AboutPage() {
   TeamPhoto={TeamPhoto}
 /> */}
 
-      {/* ============ FOUNDER + TEAM ============ */}
-      <TeamSection founder={founder} teamMembers={teamMembers} />
+{/* ============ FOUNDER + TEAM ============ */}
+<TeamSection founder={founder} teamMembers={teamMembers} />
       {/* ============ PARTNERS ============ */}
       <section
         aria-labelledby="partners-title"

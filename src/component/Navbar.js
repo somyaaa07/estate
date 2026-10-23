@@ -59,7 +59,7 @@ function Logo({ small }) {
         src="/uploads/logo.png"
         alt="Estate"
         className={`w-auto object-contain transition-all duration-300 ${
-          small ? "h-10 lg:h-35" : "h-35 lg:h-35"
+          small ? "h-35 lg:h-35" : "h-35 lg:h-35"
         }`}
       />
     </Link>

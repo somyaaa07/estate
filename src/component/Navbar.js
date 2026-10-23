@@ -1,11 +1,20 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Jost } from "next/font/google";
-import { FiMenu, FiX, FiLogOut, FiChevronDown, FiArrowRight } from "react-icons/fi";
+import {
+  FiMenu,
+  FiX,
+  FiLogOut,
+  FiChevronDown,
+  FiArrowRight,
+  FiHome,
+  FiKey,
+  FiTag,
+} from "react-icons/fi";
 import EnquiryModal from "@/component/EnquiryModal";
 
 const jost = Jost({
@@ -14,16 +23,16 @@ const jost = Jost({
   display: "swap",
 });
 
-/* Colours: white = active, #f1ede2 = inactive (high contrast), #e0c07a = gold accent */
+/* Colours: white = active, #f1ede2 = inactive (high contrast), #E2A10D = gold accent */
 const links = [
   { label: "Home", href: "/" },
   {
     label: "All Properties",
     href: "/properties",
     children: [
-      { label: "Buy", desc: "Homes & plots for sale", href: "/properties?type=buy" },
-      { label: "Rent", desc: "Properties available to rent", href: "/properties?type=rent" },
-      { label: "Sell", desc: "List your property with us", href: "/properties/sell" },
+      { label: "Buy", desc: "Homes & plots for sale", href: "/properties?type=buy", icon: FiHome },
+      { label: "Rent", desc: "Properties available to rent", href: "/properties?type=rent", icon: FiKey },
+      { label: "Sell", desc: "List your property with us", href: "/properties/sell", icon: FiTag },
     ],
   },
   { label: "About", href: "/about" },
@@ -31,7 +40,17 @@ const links = [
 ];
 
 const ring =
-  "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e0c07a] focus-visible:ring-offset-2 focus-visible:ring-offset-black";
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E2A10D] focus-visible:ring-offset-2 focus-visible:ring-offset-black";
+
+/* Shared motion variants for staggered dropdown items */
+const listVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.055, delayChildren: 0.06 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, x: -10 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } },
+};
 
 function Logo({ small }) {
   return (
@@ -47,10 +66,180 @@ function Logo({ small }) {
   );
 }
 
+/* ───────────────────────── Desktop dropdown ───────────────────────── */
+function DesktopDropdown({ label, href, active, items, isActive, linkClass, underline }) {
+  const pathname = usePathname();
+  const reduce = useReducedMotion();
+  const [show, setShow] = useState(false);
+  const [hovered, setHovered] = useState(null);
+  const timer = useRef(null);
+
+  const openNow = () => {
+    clearTimeout(timer.current);
+    setShow(true);
+  };
+  // Small close delay = forgiving hover (no flicker when the cursor crosses the gap)
+  const closeSoon = () => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      setShow(false);
+      setHovered(null);
+    }, 140);
+  };
+
+  useEffect(() => () => clearTimeout(timer.current), []);
+  useEffect(() => setShow(false), [pathname]);
+
+  return (
+    <li
+      className="relative"
+      onMouseEnter={openNow}
+      onMouseLeave={closeSoon}
+      onFocus={openNow}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) closeSoon();
+      }}
+      onKeyDown={(e) => e.key === "Escape" && setShow(false)}
+    >
+      <Link
+        href={href}
+        aria-current={active ? "page" : undefined}
+        aria-haspopup="true"
+        aria-expanded={show}
+        className={linkClass}
+      >
+        {label}
+        <motion.span
+          aria-hidden="true"
+          animate={{ rotate: show ? 180 : 0 }}
+          transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 26 }}
+          className={`inline-flex ${show ? "text-[#E2A10D]" : ""}`}
+        >
+          <FiChevronDown size={16} />
+        </motion.span>
+        {active && underline}
+      </Link>
+
+      <AnimatePresence>
+        {show && (
+          <motion.div
+            style={{ x: "-50%", transformOrigin: "top center" }}
+            initial={reduce ? false : { opacity: 0, y: -12, scale: 0.94, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={
+              reduce
+                ? { opacity: 0 }
+                : { opacity: 0, y: -8, scale: 0.97, filter: "blur(4px)", transition: { duration: 0.16 } }
+            }
+            transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 30, mass: 0.8 }}
+            className="absolute left-1/2 top-full z-50 pt-4"
+          >
+            <div className="relative w-[320px] rounded-2xl border border-white/15 bg-neutral-950/95 p-2 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9),0_0_0_1px_rgba(224,192,122,0.08)] backdrop-blur-xl">
+              {/* caret notch pointing at the trigger */}
+              <span
+                aria-hidden="true"
+                className="absolute -top-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-l border-t border-white/15 bg-neutral-950"
+              />
+              {/* gold hairline along the top edge */}
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#E2A10D] to-transparent"
+              />
+
+              <motion.ul
+                variants={listVariants}
+                initial={reduce ? false : "hidden"}
+                animate="show"
+                className="relative space-y-0.5"
+                onMouseLeave={() => setHovered(null)}
+              >
+                {items.map((c) => {
+                  const ca = isActive(c.href);
+                  const hot = hovered === c.href;
+                  const Icon = c.icon;
+                  return (
+                    <motion.li key={c.href} variants={itemVariants} className="relative">
+                      {/* sliding hover highlight shared between rows */}
+                      {hot && (
+                        <motion.span
+                          layoutId="dd-hover"
+                          aria-hidden="true"
+                          className="absolute inset-0 rounded-xl bg-gradient-to-r from-white/15 to-white/5"
+                          transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 38 }}
+                        />
+                      )}
+                      <Link
+                        href={c.href}
+                        aria-current={ca ? "page" : undefined}
+                        onMouseEnter={() => setHovered(c.href)}
+                        onFocus={() => setHovered(c.href)}
+                        className={`relative z-10 flex items-center gap-3.5 rounded-xl px-3 py-3 ${ring}`}
+                      >
+                        <span
+                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-colors duration-200 ${
+                            hot || ca
+                              ? "border-white/15 bg-white/5 text-[#E2A10D]"
+                              : "border-white/15 bg-white/5 text-[#E2A10D]"
+                          }`}
+                        >
+                          <Icon size={19} aria-hidden="true" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span
+                            className={`block text-base leading-tight ${
+                              ca ? "font-extrabold text-[#E2A10D]" : "font-bold text-white"
+                            }`}
+                          >
+                            {c.label}
+                          </span>
+                          <span className="mt-0.5 block text-sm font-medium text-[#d9d4c4]">{c.desc}</span>
+                        </span>
+                        <motion.span
+                          aria-hidden="true"
+                          animate={{ x: hot ? 0 : -6, opacity: hot ? 1 : 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="shrink-0 text-[#E2A10D]"
+                        >
+                          <FiArrowRight size={18} />
+                        </motion.span>
+                      </Link>
+                    </motion.li>
+                  );
+                })}
+              </motion.ul>
+
+              {/* footer link */}
+              <motion.div
+                initial={reduce ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.25, duration: 0.3 }}
+                className="mt-2 border-t border-white/10 px-1 pt-2"
+              >
+                <Link
+                  href={href}
+                  className={`group/all flex items-center justify-between rounded-lg px-3 py-2 text-sm font-bold text-[#f1ede2] transition-colors hover:text-[#E2A10D] ${ring}`}
+                >
+                  Browse all properties
+                  <FiArrowRight
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover/all:translate-x-1"
+                  />
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </li>
+  );
+}
+
+/* ───────────────────────── Navbar ───────────────────────── */
 function NavbarInner() {
   const { data: session } = useSession();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [subOpen, setSubOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -101,20 +290,20 @@ function NavbarInner() {
 
   const desktopLink = (active) =>
     `relative inline-flex items-center gap-1.5 py-2 text-base tracking-wide transition-colors ${ring} ${
-      active ? "font-bold text-white" : "font-semibold text-[#f1ede2] hover:text-[#e0c07a]"
+      active ? "font-bold text-white" : "font-semibold text-[#f1ede2] hover:text-[#E2A10D]"
     }`;
 
   const underline = (
     <motion.span
       layoutId="nav-underline"
-      className="absolute inset-x-0 -bottom-0.5 h-[3px] rounded-full bg-[#e0c07a]"
+      className="absolute inset-x-0 -bottom-0.5 h-[3px] rounded-full bg-[#E2A10D]"
       transition={{ type: "spring", stiffness: 500, damping: 40 }}
     />
   );
 
   const mobileRow = (active) =>
     `flex min-h-[56px] items-center justify-between rounded-xl px-4 text-xl transition ${ring} ${
-      active ? "bg-[#e0c07a] font-extrabold text-black" : "font-bold text-white hover:bg-white/10"
+      active ? "bg-[#E2A10D] font-extrabold text-black" : "font-bold text-white hover:bg-white/10"
     }`;
 
   const logoutBtn = (extra = "") => (
@@ -132,7 +321,7 @@ function NavbarInner() {
       href={isAdmin ? "/admin" : "/dashboard"}
       className={`inline-flex items-center gap-2 rounded-lg bg-white/15 px-3.5 py-2 text-sm font-bold text-white transition hover:bg-white/25 ${ring} ${extra}`}
     >
-      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#e0c07a] text-xs font-extrabold text-black">
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#E2A10D] text-xs font-extrabold text-black">
         {initial}
       </span>
       <span className="truncate">{firstName}</span>
@@ -143,7 +332,7 @@ function NavbarInner() {
     <button
       type="button"
       onClick={onClick}
-      className={`group inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] font-extrabold tracking-wide text-black shadow-lg shadow-[#e0c07a]/20 transition hover:bg-white active:scale-[0.98] ${ring} ${extra}`}
+      className={`group inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] font-extrabold tracking-wide text-black shadow-lg shadow-[#E2A10D]/20 transition hover:bg-white active:scale-[0.98] ${ring} ${extra}`}
     >
       Enquiry Now
       <FiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
@@ -170,49 +359,16 @@ function NavbarInner() {
             const active = children ? isParentActive(href) : isActive(href);
             if (children) {
               return (
-                <li key={href} className="group relative">
-                  <Link
-                    href={href}
-                    aria-current={active ? "page" : undefined}
-                    aria-haspopup="true"
-                    className={desktopLink(active)}
-                  >
-                    {label}
-                    <FiChevronDown
-                      size={16}
-                      aria-hidden="true"
-                      className="transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
-                    />
-                    {active && underline}
-                  </Link>
-
-                  <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                    <ul className="w-[280px] overflow-hidden rounded-2xl border border-white/25 bg-black p-2 shadow-2xl">
-                      {children.map((c) => {
-                        const ca = isActive(c.href);
-                        return (
-                          <li key={c.href}>
-                            <Link
-                              href={c.href}
-                              aria-current={ca ? "page" : undefined}
-                              className={`flex items-center justify-between gap-3 rounded-xl px-4 py-3 transition-colors ${ring} ${
-                                ca ? "bg-white/15" : "hover:bg-white/10"
-                              }`}
-                            >
-                              <span>
-                                <span className={`block text-base ${ca ? "font-extrabold text-[#e0c07a]" : "font-bold text-white"}`}>
-                                  {c.label}
-                                </span>
-                                <span className="block text-sm font-medium text-[#d9d4c4]">{c.desc}</span>
-                              </span>
-                              <FiArrowRight className="shrink-0 text-[#e0c07a]" aria-hidden="true" />
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                </li>
+                <DesktopDropdown
+                  key={href}
+                  label={label}
+                  href={href}
+                  active={active}
+                  items={children}
+                  isActive={isActive}
+                  linkClass={desktopLink(active)}
+                  underline={underline}
+                />
               );
             }
             return (
@@ -246,7 +402,18 @@ function NavbarInner() {
           aria-label={open ? "Close menu" : "Open menu"}
           className={`flex h-12 w-12 items-center justify-center rounded-xl border-2 border-white/50 text-white transition hover:bg-white/10 lg:hidden ${ring}`}
         >
-          {open ? <FiX size={26} aria-hidden="true" /> : <FiMenu size={26} aria-hidden="true" />}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={open ? "x" : "menu"}
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.16 }}
+              className="flex"
+            >
+              {open ? <FiX size={26} aria-hidden="true" /> : <FiMenu size={26} aria-hidden="true" />}
+            </motion.span>
+          </AnimatePresence>
         </button>
       </nav>
 
@@ -255,18 +422,23 @@ function NavbarInner() {
         {open && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-x-0 bottom-0 top-16 flex flex-col bg-black lg:hidden"
           >
-            <ul className="flex-1 space-y-1.5 overflow-y-auto px-4 pb-4 pt-5 sm:px-6">
+            <motion.ul
+              variants={listVariants}
+              initial={reduce ? false : "hidden"}
+              animate="show"
+              className="flex-1 space-y-1.5 overflow-y-auto px-4 pb-4 pt-5 sm:px-6"
+            >
               {allLinks.map(({ label, href, children }) => {
                 if (children) {
                   const active = isParentActive(href);
                   return (
-                    <li key={href}>
+                    <motion.li key={href} variants={itemVariants}>
                       <div className="flex items-stretch gap-1.5">
                         <Link href={href} aria-current={active ? "page" : undefined} className={`flex-1 ${mobileRow(active)}`}>
                           {label}
@@ -276,49 +448,102 @@ function NavbarInner() {
                           onClick={() => setSubOpen((s) => !s)}
                           aria-expanded={subOpen}
                           aria-label={subOpen ? "Collapse property types" : "Expand property types"}
-                          className={`flex w-14 items-center justify-center rounded-xl border-2 border-white/40 text-white ${ring}`}
+                          className={`flex w-14 items-center justify-center rounded-xl border-2 text-white transition-colors ${
+                            subOpen ? "border-[#E2A10D] text-[#E2A10D]" : "border-white/40"
+                          } ${ring}`}
                         >
-                          <FiChevronDown size={22} aria-hidden="true" className={`transition-transform duration-200 ${subOpen ? "rotate-180" : ""}`} />
+                          <motion.span
+                            animate={{ rotate: subOpen ? 180 : 0 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 26 }}
+                            className="flex"
+                          >
+                            <FiChevronDown size={22} aria-hidden="true" />
+                          </motion.span>
                         </button>
                       </div>
                       <AnimatePresence initial={false}>
                         {subOpen && (
                           <motion.ul
                             initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="ml-3 mt-1.5 space-y-1.5 overflow-hidden border-l-[3px] border-[#e0c07a] pl-3"
+                            animate={{
+                              height: "auto",
+                              opacity: 1,
+                              transition: {
+                                height: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+                                opacity: { duration: 0.2 },
+                                staggerChildren: 0.06,
+                                delayChildren: 0.05,
+                              },
+                            }}
+                            exit={{
+                              height: 0,
+                              opacity: 0,
+                              transition: { duration: 0.22, ease: [0.4, 0, 1, 1] },
+                            }}
+                            className="ml-3 mt-1.5 space-y-1.5 overflow-hidden border-l-[3px] border-[#E2A10D] pl-3"
                           >
                             {children.map((c) => {
                               const ca = isActive(c.href);
+                              const Icon = c.icon;
                               return (
-                                <li key={c.href}>
-                                  <Link href={c.href} aria-current={ca ? "page" : undefined} className={mobileRow(ca).replace("text-xl", "text-lg")}>
-                                    <span>
-                                      {c.label}
-                                      <span className={`block text-sm font-medium ${ca ? "text-black/80" : "text-[#d9d4c4]"}`}>{c.desc}</span>
+                                <motion.li
+                                  key={c.href}
+                                  variants={{
+                                    hidden: { opacity: 0, x: -14 },
+                                    show: { opacity: 1, x: 0 },
+                                  }}
+                                  initial="hidden"
+                                  animate="show"
+                                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                                >
+                                  <Link
+                                    href={c.href}
+                                    aria-current={ca ? "page" : undefined}
+                                    className={mobileRow(ca).replace("text-xl", "text-lg")}
+                                  >
+                                    <span className="flex items-center gap-3">
+                                      <span
+                                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
+                                          ca ? "bg-black/15 text-black" : "bg-white/10 text-[#E2A10D]"
+                                        }`}
+                                      >
+                                        <Icon size={18} aria-hidden="true" />
+                                      </span>
+                                      <span>
+                                        {c.label}
+                                        <span
+                                          className={`block text-sm font-medium ${
+                                            ca ? "text-black/80" : "text-[#d9d4c4]"
+                                          }`}
+                                        >
+                                          {c.desc}
+                                        </span>
+                                      </span>
                                     </span>
+                                    <FiArrowRight
+                                      aria-hidden="true"
+                                      className={ca ? "text-black" : "text-[#E2A10D]"}
+                                    />
                                   </Link>
-                                </li>
+                                </motion.li>
                               );
                             })}
                           </motion.ul>
                         )}
                       </AnimatePresence>
-                    </li>
+                    </motion.li>
                   );
                 }
                 const active = isActive(href);
                 return (
-                  <li key={href}>
+                  <motion.li key={href} variants={itemVariants}>
                     <Link href={href} aria-current={active ? "page" : undefined} className={mobileRow(active)}>
                       {label}
                     </Link>
-                  </li>
+                  </motion.li>
                 );
               })}
-            </ul>
+            </motion.ul>
 
             <div className="space-y-3 border-t border-white/20 bg-black px-4 pb-6 pt-4 sm:px-6">
               {session && (

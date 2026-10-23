@@ -42,7 +42,6 @@ const links = [
 const ring =
   "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E2A10D] focus-visible:ring-offset-2 focus-visible:ring-offset-black";
 
-/* Shared motion variants for staggered dropdown items */
 const listVariants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.055, delayChildren: 0.06 } },
@@ -52,14 +51,18 @@ const itemVariants = {
   show: { opacity: 1, x: 0, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } },
 };
 
+/* Logo scales with the screen: 320px phones -> 4K monitors.
+   Tweak the heights below if your logo file needs more/less room. */
 function Logo({ small }) {
   return (
     <Link href="/" aria-label="Estate – Home" className={`shrink-0 rounded-lg ${ring}`}>
       <img
         src="/uploads/logo.png"
         alt="Estate"
-        className={`w-auto object-contain transition-all duration-300 ${
-          small ? "h-35 lg:h-35" : "h-35 lg:h-35"
+        className={`w-auto max-w-[44vw] object-contain transition-all duration-300 sm:max-w-none ${
+          small
+            ? "h-30 sm:h-30 lg:h-30 xl:h-30"
+            : "h-30 sm:h-30 lg:h-30 xl:h-30"
         }`}
       />
     </Link>
@@ -73,12 +76,12 @@ function DesktopDropdown({ label, href, active, items, isActive, linkClass, unde
   const [show, setShow] = useState(false);
   const [hovered, setHovered] = useState(null);
   const timer = useRef(null);
+  const wrapRef = useRef(null);
 
   const openNow = () => {
     clearTimeout(timer.current);
     setShow(true);
   };
-  // Small close delay = forgiving hover (no flicker when the cursor crosses the gap)
   const closeSoon = () => {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
@@ -90,35 +93,53 @@ function DesktopDropdown({ label, href, active, items, isActive, linkClass, unde
   useEffect(() => () => clearTimeout(timer.current), []);
   useEffect(() => setShow(false), [pathname]);
 
+  // Touch devices (iPad landscape, touch laptops): tap outside closes the dropdown
+  useEffect(() => {
+    if (!show) return;
+    const onDown = (e) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target)) setShow(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [show]);
+
   return (
     <li
-      className="relative"
-      onMouseEnter={openNow}
-      onMouseLeave={closeSoon}
-      onFocus={openNow}
+      ref={wrapRef}
+      className="relative flex items-center"
+      // Hover only for real mouse pointers; touch uses the chevron button below
+      onPointerEnter={(e) => e.pointerType === "mouse" && openNow()}
+      onPointerLeave={(e) => e.pointerType === "mouse" && closeSoon()}
+      onFocus={(e) => e.target.matches(":focus-visible") && openNow()}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget)) closeSoon();
       }}
       onKeyDown={(e) => e.key === "Escape" && setShow(false)}
     >
-      <Link
-        href={href}
-        aria-current={active ? "page" : undefined}
+      <Link href={href} aria-current={active ? "page" : undefined} className={linkClass}>
+        {label}
+        {active && underline}
+      </Link>
+
+      <button
+        type="button"
+        onClick={() => setShow((s) => !s)}
         aria-haspopup="true"
         aria-expanded={show}
-        className={linkClass}
+        aria-label={`${show ? "Close" : "Open"} ${label} menu`}
+        className={`-mr-1 ml-0.5 inline-flex h-9 w-9 items-center justify-center rounded-lg text-[#f1ede2] transition-colors hover:text-[#E2A10D] ${ring} ${
+          show ? "text-[#E2A10D]" : ""
+        }`}
       >
-        {label}
         <motion.span
           aria-hidden="true"
           animate={{ rotate: show ? 180 : 0 }}
           transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 26 }}
-          className={`inline-flex ${show ? "text-[#E2A10D]" : ""}`}
+          className="inline-flex"
         >
           <FiChevronDown size={16} />
         </motion.span>
-        {active && underline}
-      </Link>
+      </button>
 
       <AnimatePresence>
         {show && (
@@ -134,13 +155,11 @@ function DesktopDropdown({ label, href, active, items, isActive, linkClass, unde
             transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 30, mass: 0.8 }}
             className="absolute left-1/2 top-full z-50 pt-4"
           >
-            <div className="relative w-[320px] rounded-2xl border border-white/15 bg-neutral-950/95 p-2 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9),0_0_0_1px_rgba(224,192,122,0.08)] backdrop-blur-xl">
-              {/* caret notch pointing at the trigger */}
+            <div className="relative w-[min(320px,calc(100vw-2rem))] rounded-2xl border border-white/15 bg-neutral-950/95 p-2 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9),0_0_0_1px_rgba(224,192,122,0.08)] backdrop-blur-xl">
               <span
                 aria-hidden="true"
                 className="absolute -top-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-l border-t border-white/15 bg-neutral-950"
               />
-              {/* gold hairline along the top edge */}
               <span
                 aria-hidden="true"
                 className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#E2A10D] to-transparent"
@@ -159,7 +178,6 @@ function DesktopDropdown({ label, href, active, items, isActive, linkClass, unde
                   const Icon = c.icon;
                   return (
                     <motion.li key={c.href} variants={itemVariants} className="relative">
-                      {/* sliding hover highlight shared between rows */}
                       {hot && (
                         <motion.span
                           layoutId="dd-hover"
@@ -175,13 +193,7 @@ function DesktopDropdown({ label, href, active, items, isActive, linkClass, unde
                         onFocus={() => setHovered(c.href)}
                         className={`relative z-10 flex items-center gap-3.5 rounded-xl px-3 py-3 ${ring}`}
                       >
-                        <span
-                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-colors duration-200 ${
-                            hot || ca
-                              ? "border-white/15 bg-white/5 text-[#E2A10D]"
-                              : "border-white/15 bg-white/5 text-[#E2A10D]"
-                          }`}
-                        >
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-[#E2A10D]">
                           <Icon size={19} aria-hidden="true" />
                         </span>
                         <span className="min-w-0 flex-1">
@@ -208,7 +220,6 @@ function DesktopDropdown({ label, href, active, items, isActive, linkClass, unde
                 })}
               </motion.ul>
 
-              {/* footer link */}
               <motion.div
                 initial={reduce ? false : { opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -262,7 +273,6 @@ function NavbarInner() {
   };
   const isParentActive = (href) => pathname.startsWith(href);
 
-  // Close on navigation, auto-expand submenu on property pages
   useEffect(() => {
     setOpen(false);
     setSubOpen(pathname.startsWith("/properties"));
@@ -288,8 +298,9 @@ function NavbarInner() {
     };
   }, [open]);
 
+  /* Desktop link: tighter text at 1024px, roomier on wide screens */
   const desktopLink = (active) =>
-    `relative inline-flex items-center gap-1.5 py-2 text-base tracking-wide transition-colors ${ring} ${
+    `relative inline-flex items-center gap-1.5 whitespace-nowrap py-2 text-[15px] tracking-wide transition-colors xl:text-base ${ring} ${
       active ? "font-bold text-white" : "font-semibold text-[#f1ede2] hover:text-[#E2A10D]"
     }`;
 
@@ -301,30 +312,39 @@ function NavbarInner() {
     />
   );
 
+  /* Mobile rows: 48px min touch target on small phones, 56px from sm up */
   const mobileRow = (active) =>
-    `flex min-h-[56px] items-center justify-between rounded-xl px-4 text-xl transition ${ring} ${
-      active ? "bg-[#E2A10D] font-extrabold text-black" : "font-bold text-white hover:bg-white/10"
+    `flex min-h-[52px] items-center justify-between rounded-xl px-4 text-lg transition sm:min-h-[56px] sm:text-xl ${ring} ${
+      active ? "bg-[#E2A10D] font-semibold text-black" : "font-semibold text-white hover:bg-white/10"
     }`;
 
-  const logoutBtn = (extra = "") => (
+  /* Below xl the label is hidden (icon only) so the action row never overflows */
+  const logoutBtn = (extra = "", compact = false) => ( 
     <button
       type="button"
       onClick={() => signOut({ callbackUrl: "/" })}
-      className={`inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/50 px-4 py-2.5 text-sm font-bold text-white transition hover:border-red-400 hover:bg-red-500/20 hover:text-red-200 ${ring} ${extra}`}
+      aria-label="Logout"
+      className={`inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/50 text-sm font-semibold text-white transition lg:font-bold hover:border-red-400 hover:bg-red-500/20 hover:text-red-200 ${ring} ${
+        compact ? "h-10 w-10 xl:h-auto xl:w-auto xl:px-4 xl:py-2.5" : "px-4 py-2.5"
+      } ${extra}`}
     >
-      <FiLogOut size={16} aria-hidden="true" /> Logout
+      <FiLogOut size={16} aria-hidden="true" />
+      <span className={compact ? "hidden xl:inline" : ""}>Logout</span>
     </button>
   );
 
-  const dashboardChip = (extra = "") => (
+  const dashboardChip = (extra = "", compact = false) => (
     <Link
       href={isAdmin ? "/admin" : "/dashboard"}
-      className={`inline-flex items-center gap-2 rounded-lg bg-white/15 px-3.5 py-2 text-sm font-bold text-white transition hover:bg-white/25 ${ring} ${extra}`}
+      aria-label="Dashboard"
+      className={`inline-flex items-center gap-2 rounded-lg bg-white/15 text-sm font-semibold text-white transition lg:font-bold hover:bg-white/25 ${ring} ${
+        compact ? "p-1.5 xl:px-3.5 xl:py-2" : "px-3.5 py-2"
+      } ${extra}`}
     >
       <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#E2A10D] text-xs font-extrabold text-black">
         {initial}
       </span>
-      <span className="truncate">{firstName}</span>
+      <span className={`truncate ${compact ? "hidden xl:inline" : ""}`}>{firstName}</span>
     </Link>
   );
 
@@ -332,7 +352,7 @@ function NavbarInner() {
     <button
       type="button"
       onClick={onClick}
-      className={`group inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] font-extrabold tracking-wide text-black shadow-lg shadow-[#E2A10D]/20 transition hover:bg-white active:scale-[0.98] ${ring} ${extra}`}
+      className={`group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] font-semibold tracking-wide text-black shadow-lg shadow-[#E2A10D]/20 transition lg:font-extrabold hover:bg-white active:scale-[0.98] ${ring} ${extra}`}
     >
       Enquiry Now
       <FiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
@@ -340,84 +360,93 @@ function NavbarInner() {
   );
 
   return (
-    <header
-      className={`${jost.className} sticky top-0 z-50 border-b border-white/20 bg-black/95 backdrop-blur transition-shadow ${
-        scrolled ? "shadow-[0_8px_28px_-10px_rgba(0,0,0,0.9)]" : ""
-      }`}
-    >
-      <nav
-        aria-label="Main navigation"
-        className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 transition-all duration-300 sm:px-6 lg:px-8 ${
-          scrolled ? "h-16" : "h-16 lg:h-20"
+    <>
+      <header
+        className={`${jost.className} sticky top-0 z-50 border-b border-white/20 bg-black/95 pt-[env(safe-area-inset-top)] backdrop-blur transition-shadow ${
+          scrolled ? "shadow-[0_8px_28px_-10px_rgba(0,0,0,0.9)]" : ""
         }`}
       >
-        <Logo small={scrolled} />
-
-        {/* Desktop links */}
-        <ul className="hidden items-center gap-9 lg:flex xl:gap-11">
-          {allLinks.map(({ label, href, children }) => {
-            const active = children ? isParentActive(href) : isActive(href);
-            if (children) {
-              return (
-                <DesktopDropdown
-                  key={href}
-                  label={label}
-                  href={href}
-                  active={active}
-                  items={children}
-                  isActive={isActive}
-                  linkClass={desktopLink(active)}
-                  underline={underline}
-                />
-              );
-            }
-            return (
-              <li key={href}>
-                <Link href={href} aria-current={active ? "page" : undefined} className={desktopLink(active)}>
-                  {label}
-                  {active && underline}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-
-        {/* Desktop actions */}
-        <div className="hidden items-center gap-3 lg:flex">
-          {enquiryBtn("px-6 py-3 text-sm")}
-          {session && (
-            <>
-              {!isAdmin && dashboardChip("max-w-[170px]")}
-              {logoutBtn()}
-            </>
-          )}
-        </div>
-
-        {/* Mobile toggle */}
-        <button
-          type="button"
-          onClick={() => setOpen((o) => !o)}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Close menu" : "Open menu"}
-          className={`flex h-12 w-12 items-center justify-center rounded-xl border-2 border-white/50 text-white transition hover:bg-white/10 lg:hidden ${ring}`}
+        <nav
+          aria-label="Main navigation"
+          className={`mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 transition-all duration-300 min-[400px]:px-4 sm:gap-4 sm:px-6 lg:gap-5 lg:px-8 2xl:max-w-[1440px] ${
+            scrolled ? "h-16" : "h-16 lg:h-20"
+          }`}
         >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.span
-              key={open ? "x" : "menu"}
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.16 }}
-              className="flex"
-            >
-              {open ? <FiX size={26} aria-hidden="true" /> : <FiMenu size={26} aria-hidden="true" />}
-            </motion.span>
-          </AnimatePresence>
-        </button>
-      </nav>
+          <Logo small={scrolled} />
 
-      {/* Mobile menu: full-height panel, Enquiry button pinned at the bottom */}
+          {/* Desktop links (lg+). Gaps grow with the screen so 1024px never overflows */}
+          <ul className="hidden items-center gap-4 lg:flex lg:gap-5 xl:gap-9 2xl:gap-11">
+            {allLinks.map(({ label, href, children }) => {
+              const active = children ? isParentActive(href) : isActive(href);
+              if (children) {
+                return (
+                  <DesktopDropdown
+                    key={href}
+                    label={label}
+                    href={href}
+                    active={active}
+                    items={children}
+                    isActive={isActive}
+                    linkClass={desktopLink(active)}
+                    underline={underline}
+                  />
+                );
+              }
+              return (
+                <li key={href}>
+                  <Link href={href} aria-current={active ? "page" : undefined} className={desktopLink(active)}>
+                    {label}
+                    {active && underline}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+
+          {/* Right side: tablet shows a compact Enquiry button next to the burger */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="hidden items-center gap-2 lg:flex xl:gap-3">
+              {enquiryBtn("px-4 py-2.5 text-sm xl:px-6 xl:py-3")}
+              {session && (
+                <>
+                  {!isAdmin && dashboardChip("max-w-[170px]", true)}
+                  {logoutBtn("", true)}
+                </>
+              )}
+            </div>
+
+            {/* Tablet only (sm → lg): quick Enquiry access without opening the menu */}
+            <div className="hidden sm:block lg:hidden">
+              {enquiryBtn("px-4 py-2.5 text-sm")}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setOpen((o) => !o)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border-2 border-white/50 text-white transition hover:bg-white/10 sm:h-12 sm:w-12 lg:hidden ${ring}`}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={open ? "x" : "menu"}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.16 }}
+                  className="flex"
+                >
+                  {open ? <FiX size={24} aria-hidden="true" /> : <FiMenu size={24} aria-hidden="true" />}
+                </motion.span>
+              </AnimatePresence>
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      {/* Mobile menu lives OUTSIDE the header on purpose: the header's backdrop-blur
+          creates a containing block that would break `position: fixed` children. */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -425,14 +454,14 @@ function NavbarInner() {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-0 bottom-0 top-16 flex flex-col bg-black lg:hidden"
+            transition={reduce ? { duration: 0 } : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            className={`${jost.className} fixed inset-x-0 bottom-0 top-[calc(4rem+env(safe-area-inset-top))] z-40 flex flex-col bg-black lg:hidden`}
           >
             <motion.ul
               variants={listVariants}
               initial={reduce ? false : "hidden"}
               animate="show"
-              className="flex-1 space-y-1.5 overflow-y-auto px-4 pb-4 pt-5 sm:px-6"
+              className="mx-auto w-full max-w-2xl flex-1 space-y-1.5 overflow-y-auto overscroll-contain px-4 pb-4 pt-4 sm:px-6 sm:pt-5"
             >
               {allLinks.map(({ label, href, children }) => {
                 if (children) {
@@ -448,7 +477,7 @@ function NavbarInner() {
                           onClick={() => setSubOpen((s) => !s)}
                           aria-expanded={subOpen}
                           aria-label={subOpen ? "Collapse property types" : "Expand property types"}
-                          className={`flex w-14 items-center justify-center rounded-xl border-2 text-white transition-colors ${
+                          className={`flex w-12 items-center justify-center rounded-xl border-2 text-white transition-colors sm:w-2 ${
                             subOpen ? "border-[#E2A10D] text-[#E2A10D]" : "border-white/40"
                           } ${ring}`}
                         >
@@ -480,7 +509,7 @@ function NavbarInner() {
                               opacity: 0,
                               transition: { duration: 0.22, ease: [0.4, 0, 1, 1] },
                             }}
-                            className="ml-3 mt-1.5 space-y-1.5 overflow-hidden border-l-[3px] border-[#E2A10D] pl-3"
+                            className="ml-2 mt-1.5 space-y-1.5 overflow-hidden border-l-[3px] border-[#E2A10D] pl-2.5 sm:ml-3 sm:pl-3"
                           >
                             {children.map((c) => {
                               const ca = isActive(c.href);
@@ -499,20 +528,20 @@ function NavbarInner() {
                                   <Link
                                     href={c.href}
                                     aria-current={ca ? "page" : undefined}
-                                    className={mobileRow(ca).replace("text-xl", "text-lg")}
+                                    className={`${mobileRow(ca)} !text-base sm:!text-lg`}
                                   >
-                                    <span className="flex items-center gap-3">
+                                    <span className="flex min-w-0 items-center gap-3">
                                       <span
-                                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
+                                        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg sm:h-10 sm:w-10 ${
                                           ca ? "bg-black/15 text-black" : "bg-white/10 text-[#E2A10D]"
                                         }`}
                                       >
                                         <Icon size={18} aria-hidden="true" />
                                       </span>
-                                      <span>
+                                      <span className="min-w-0">
                                         {c.label}
                                         <span
-                                          className={`block text-sm font-medium ${
+                                          className={`block truncate text-[13px] font-medium sm:text-sm ${
                                             ca ? "text-black/80" : "text-[#d9d4c4]"
                                           }`}
                                         >
@@ -522,7 +551,7 @@ function NavbarInner() {
                                     </span>
                                     <FiArrowRight
                                       aria-hidden="true"
-                                      className={ca ? "text-black" : "text-[#E2A10D]"}
+                                      className={`ml-2 shrink-0 ${ca ? "text-black" : "text-[#E2A10D]"}`}
                                     />
                                   </Link>
                                 </motion.li>
@@ -545,24 +574,27 @@ function NavbarInner() {
               })}
             </motion.ul>
 
-            <div className="space-y-3 border-t border-white/20 bg-black px-4 pb-6 pt-4 sm:px-6">
-              {session && (
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  {!isAdmin && dashboardChip("flex-1 justify-center py-3")}
-                  {logoutBtn("flex-1 py-3")}
-                </div>
-              )}
-              {enquiryBtn("w-full px-5 py-4 text-lg", () => {
-                setOpen(false);
-                setEnquiry(true);
-              })}
+            {/* Pinned footer: respects iPhone home-indicator safe area */}
+            <div className="border-t border-white/20 bg-black px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 sm:px-6 sm:pt-4">
+              <div className="mx-auto w-full max-w-2xl space-y-3">
+                {session && (
+                  <div className="flex flex-col gap-3 min-[420px]:flex-row">
+                    {!isAdmin && dashboardChip("flex-1 justify-center py-3")}
+                    {logoutBtn("flex-1 py-3")}
+                  </div>
+                )}
+                {enquiryBtn("w-full px-5 py-3.5 text-base sm:py-4 sm:text-lg", () => {
+                  setOpen(false);
+                  setEnquiry(true);
+                })}
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
       <EnquiryModal open={enquiry} onClose={() => setEnquiry(false)} />
-    </header>
+    </>
   );
 }
 

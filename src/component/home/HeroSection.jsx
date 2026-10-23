@@ -139,7 +139,7 @@ export default function HomeHero() {
           transition={{ duration: 2.5, ease: "easeOut" }}
           className="absolute inset-0 hidden h-full w-full object-cover object-center md:block"
         >
-          <source src="/banner/video3.mp4" type="video/mp4" />
+          <source src="/banner/video4.mp4" type="video/mp4" />
         </motion.video>
 
         {/* Mobile Background Video */}
@@ -154,7 +154,7 @@ export default function HomeHero() {
           transition={{ duration: 2.5, ease: "easeOut" }}
           className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
         >
-          <source src="/banner/video3.mp4" type="video/mp4" />
+          <source src="/banner/video4.mp4" type="video/mp4" />
         </motion.video>
 
         {/* Mobile/tablet: even overlay for readability */}

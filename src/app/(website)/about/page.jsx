@@ -216,16 +216,16 @@ const partners = [
   { name: "Gaurs", logo: "/partners/gaurs.webp" },
   { name: "M3M India", logo: "/partners/m3m.jpg" },
   { name: "Migsun", logo: "/partners/migsun.jpg" },
-  { name: "Hero Homes", logo: "/partners/hero-homes.jpg" , scale:2.18},
-  { name: "Max Estates", logo: "/partners/max-estates.jpg" , scale:2.18 },
+  { name: "Hero Homes", logo: "/partners/hero-homes.jpg", scale: 2.18 },
+  { name: "Max Estates", logo: "/partners/max-estates.jpg", scale: 2.18 },
   { name: "L&T Realty", logo: "/partners/l-and-t-realty.jpg", scale: 2.18 },
-  { name: "ACE Group", logo: "/partners/ace-group.jpg", scale:2.18 },
+  { name: "ACE Group", logo: "/partners/ace-group.jpg", scale: 2.18 },
   { name: "ATS", logo: "/partners/ats.jpg" },
   { name: "Jacob & Co.", logo: "/partners/jacob-and-co.jpg" },
   { name: "Trump Towers", logo: "/partners/trump-towers.jpg" },
-  { name: "Purvanchal Projects", logo: "/partners/purvanchal.webp" },
-  { name: "Kalpataru", logo: "/partners/kalpataru.jpg", scale:1.08 },
-  { name: "Prateek Group", logo: "/partners/prateek-group.jpg" },
+  { name: "Purvanchal Projects", logo: "/partners/purvanchal.jpg" , scale: 1.90 },
+  { name: "Kalpataru", logo: "/partners/kalpataru.jpg", scale: 1.08 },
+  { name: "Prateek Group", logo: "/partners/prateek-group.jpg",  },
   { name: "County Group", logo: "/partners/county-group.webp" },
 ];
 
@@ -749,7 +749,6 @@ export default function AboutPage() {
 
         {/* Partner Logo Marquee */}
         <div className="relative mt-10 w-full overflow-hidden">
-
           <div className="partner-marquee flex w-max">
             {/* FIRST SET */}
             <div className="flex shrink-0 items-center gap-10 pr-10">
@@ -800,7 +799,6 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-        
         </div>
       </section>
 

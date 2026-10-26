@@ -33,27 +33,27 @@ const mainVerticals = [
   {
     icon: Home,
     title: "Residential Properties",
-    text: "Buy, sell or rent homes in Noida, Greater Noida and the Yamuna Expressway.",
+    text: "Buy, Sell, or Rent Residential Properties in Noida, Greater Noida, Gurugram, and Along the Yamuna Expressway.",
   },
   {
     icon: Factory,
-    title: "Industry Sales",
-    text: "Industrial properties, factories, plots and warehouses to buy, sell or lease in the same areas.",
+    title: "Industrial Sales",
+    text: "Buy, Sell, or Lease Industrial Properties, Factories, Plots, and Warehouses in Noida, Greater Noida ,Gurugram , and Along the Yamuna Expressway.",
   },
   {
     icon: Building2,
     title: "Commercial Co-Leasing",
-    text: "Commercial buildings you can share and lease with other businesses.",
+    text: "Explore Commercial Properties with Flexible Co-Leasing Options for Businesses and Enterprises.",
   },
   {
     icon: Wrench,
     title: "Construction & Interiors",
-    text: "Building, interior and renovation work for homes, offices and plants.",
+    text: "Professional Construction, Interior Design, and Renovation Services for Homes, Offices, and Industrial Facilities.",
   },
   {
     icon: Landmark,
-    title: "Loan Facility Services",
-    text: "Home, property and business loan assistance to help you finance your purchase or project.",
+    title: "Loan Assistance Services",
+    text: "Get Expert Assistance with Home Loans, Property Loans, and Business Loans to Finance Your Purchase or Project.",
   },
 ];
 
@@ -65,17 +65,17 @@ const supportServices = [
   {
     icon: Handshake,
     title: "Builder Liaisoning",
-    text: "We handle all builder paperwork for new and existing deals.",
+    text: "We Handle All Builder Paperwork for New and Existing Deals.",
   },
   {
     icon: Landmark,
     title: "Government Liaisoning",
-    text: "We manage approvals and paperwork with state and central authorities.",
+    text: "We Manage Approvals and Paperwork with State and Central Authorities.",
   },
   {
     icon: BriefcaseBusiness,
     title: "Corporate Solutions",
-    text: "A dedicated team for leading industries, covering land, new buildings, approvals and staff accommodation.",
+    text: "A Dedicated Team for Leading Industries, Covering Land, New Buildings, Approvals, and Staff Accommodation.",
   },
 ];
 
@@ -98,7 +98,7 @@ export default function WhatWeDo() {
     <section
       id="what-we-do"
       aria-labelledby="what-we-do-title"
-      className="bg-[#FAF9F6] py-20 sm:py-24 lg:py-28"
+      className="bg-[#f3f0E8] py-20 sm:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
 
@@ -167,13 +167,13 @@ export default function WhatWeDo() {
                   </span>
 
                   {/* Icon */}
-                  <div className="flex h-12 w-12 items-center rounded-md justify-center  text-[#E2A10D] transition-colors duration-300 group-hover:bg-[#FFCD39] group-hover:text-[#000000]">
+                  <div className="flex h-12 w-12 items-center rounded-md justify-center  text-[#E2A10D] transition-colors duration-300  group-hover:text-[#000000]">
                     <Icon size={22} strokeWidth={1.6} />
                   </div>
 
                   {/* Title */}
                   <h4
-                    className={`${marcellus.className} mt-7 text-xl font-normal text-[#000000]`}
+                    className={`${marcellus.className} mt-3 text-xl font-normal text-[#000000]`}
                   >
                     {item.title}
                   </h4>
@@ -225,7 +225,7 @@ export default function WhatWeDo() {
                   className="group flex gap-1 border border-[#000000]/10 rounded-3xl bg-[#F3F0E8] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4AF37]/50 hover:shadow-lg"
                 >
                   {/* Icon */}  
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center  rounded-md text-[#E2A10D] transition-colors duration-300 group-hover:bg-[#FFCD39] group-hover:text-[#000000]">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center  rounded-md text-[#E2A10D] transition-colors duration-300  group-hover:text-[#000000]">
                     <Icon size={20} strokeWidth={1.2} />
                   </div>
 

@@ -708,7 +708,7 @@ export default function AboutPage() {
       </section> */}
 
       {/* ============ CTA + CONTACT ============ */}
-      <section
+      {/* <section
         aria-labelledby="cta-title"
         className="mx-auto max-w-7xl px-5 pb-16 pt-6 sm:px-8"
       >
@@ -783,7 +783,7 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }

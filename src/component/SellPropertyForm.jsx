@@ -811,10 +811,9 @@ export default function SellPropertyForm() {
               variants={riseV}
               className="mt-6 max-w-3xl font-[family-name:var(--font-display)] text-[2.5rem] leading-[1.08] sm:text-6xl"
             >
-              Sell your property without the{" "}
-              <span className="bg-gradient-to-r from-[#E2A10D] via-[#FFE08A] to-[#E2A10D] bg-clip-text text-transparent">
-                broker runaround
-              </span>
+Sell Your Property the{" "}             
+ <span className="bg-gradient-to-r from-[#E2A10D] via-[#FFE08A] to-[#E2A10D] bg-clip-text text-transparent">
+Hassle-Free Way              </span>
             </motion.h1>
             <motion.p
               variants={riseV}
@@ -829,8 +828,8 @@ export default function SellPropertyForm() {
             >
               {[
                 { i: ShieldCheck, t: "Free to list" },
-                { i: Clock, t: "Takes about 5 minutes" },
-                { i: PhoneCall, t: "We call you after review" },
+                { i: Clock, t: "Sell less than 5mins" },
+                { i: PhoneCall, t: "Get a quick response " },
               ].map(({ i: I, t }) => (
                 <motion.li
                   key={t}

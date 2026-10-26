@@ -107,7 +107,7 @@ function Card({ property, index, reduce }) {
         {/* Body */}
         <div className="flex flex-1 flex-col px-3.5 pb-3 pt-5">
           <h3
-            className={`${marcellus.className} line-clamp-1 text-[22px] leading-snug text-[#000000]`}
+            className={`${marcellus.className} line-clamp-1 text-[32px] leading-snug text-[#000000] text-bold`}
           >
             {property.title}
           </h3>

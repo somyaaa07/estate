@@ -30,8 +30,6 @@ const marcellus = Marcellus({
   display: "swap",
 });
 
-
-
 const teamMembers = [
   {
     name: "Rohit Bhasin",
@@ -316,216 +314,47 @@ export default function AboutPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
       {/* ============ HERO ============ */}
-      <section aria-labelledby="about-hero" className="relative">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 pb-24 pt-10 sm:px-8 lg:grid-cols-2 lg:pb-32 lg:pt-16">
-          <div className="relative z-10">
-            <Eyebrow line>About Us</Eyebrow>
+
+      <section
+        aria-labelledby="about-hero"
+        className="relative flex min-h-[480px] items-center overflow-hidden bg-[#080808] lg:min-h-[550px]"
+      >
+        {/* Background Image */}
+        <Image
+          src="/image/about.png"
+          alt="Luxury real estate property"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[65%_center] md:object-[70%_center]"
+        />
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/75 to-black/10" />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
+
+        {/* Left Content */}
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 py-14 sm:px-8 lg:py-16">
+          <div className="max-w-2xl text-white">
+         
+
             <h1
               id="about-hero"
-              className="mt-5 text-5xl font-normal leading-[1.05] sm:text-6xl lg:text-[64px]"
+              className="mt-5 text-4xl font-normal leading-[1.08] sm:text-5xl lg:text-6xl"
             >
-              More Than Properties, We Build Futures
+              About
+              <span className="text-[#D4AF70] ">Us</span>
             </h1>
-            <p className="mt-6 max-w-md text-[15px] leading-relaxed text-[#52685B]">
-              At Bringo Real Estates, we believe real estate is not just about
-              buildings, it&apos;s about people, dreams and a better tomorrow.
-              From our office in Greater Noida, we help families, businesses and
-              investors find modern, sustainable and high-value spaces.
-            </p>
 
-            <div className="mt-7">
-              <BtnDark href="#our-story">Our Story</BtnDark>
-            </div>
-
-            <div className="mt-6 flex items-center gap-8">
-              <div>
-                <p className="text-5xl font-normal">3+</p>
-                <p className="text-xs text-[#52685B]">Years of Experience</p>
-              </div>
-              <span className="hidden h-14 w-px bg-[#52685B]/25 sm:block" />
-              <p className="text-2xl leading-tight text-[#52685B]">
-                Spaces
-                <br />
-                That Inspire Life
-              </p>
-            </div>
-          </div>
-
-          {/* Hero image */}
-          <div className="relative">
-            <div className="relative aspect-[4/4.2] w-full overflow-hidden rounded-3xl lg:rounded-tl-[220px] lg:rounded-br-[80px]">
-              <Image
-                src="/image/hero.webp"
-                alt="Modern sustainable villa with glass balconies surrounded by greenery"
-                fill
-                priority
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-
-            <div className="absolute -bottom-8 left-4 right-4 flex items-center gap-4 rounded-2xl bg-[#FAF9F6] p-3 shadow-[0_20px_50px_rgba(26,42,34,0.15)] sm:left-0 sm:right-auto sm:w-[340px] lg:-left-10">
-              <div className="relative h-25 w-24 shrink-0 overflow-hidden rounded-xl">
-                <Image
-                  src="/image/heroo.webp"
-                  alt="Sustainable community project"
-                  fill
-                  sizes="96px"
-                  className="object-contain"
-                />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm">Creating</p>
-                <p className="text-sm text-[#52685B]">
-                  Sustainable Communities
-                </p>
-              </div>
-              <Link
-                href="/projects"
-                aria-label="View our projects"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#000000] text-[#FAF9F6] transition hover:bg-[#52685B]"
-              >
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ STATS BAR ============ */}
-      {/* <section
-        aria-label="Bringo Real Estates in numbers"
-        className="relative z-10 mx-auto -mt-10 max-w-7xl px-5 sm:px-8 lg:-mt-16"
-      >
-        <dl className="grid grid-cols-2 gap-y-8 rounded-3xl bg-[#F3F0E8] px-4 py-8 shadow-[0_10px_40px_rgba(26,42,34,0.08)] lg:grid-cols-4 lg:py-7">
-          {stats.map(({ icon: Icon, value, label }, i) => (
-            <div
-              key={label}
-              className={`flex flex-col items-center text-center ${
-                i !== 0 ? "lg:border-l lg:border-[#52685B]/25" : ""
-              } ${i % 2 === 1 ? "border-l border-[#52685B]/25" : ""}`}
-            >
-              <Icon className="text-[#D4A62A]" size={28} strokeWidth={1.5} />
-              <dd className="mt-2 text-2xl">{value}</dd>
-              <dt className="text-xs text-[#52685B]">{label}</dt>
-            </div>
-          ))}
-        </dl>
-      </section> */}
-
-      {/* Behind the Numbers */}
-      <div className="mx-auto mt-8 max-w-3xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D4AF37]">
-          Behind the Numbers
-        </p>
-
-        <p className="mt-3 text-sm leading-7 text-[#52685B] sm:text-base">
-          Behind every number is a family finding its home or an investor
-          securing their future. Clients come first at Bringo, with honest
-          advice, transparent processes and a team that cares.
-        </p>
-      </div>
-
-      {/* ============ OUR STORY ============ */}
-      <section
-        id="our-story"
-        aria-labelledby="story-title"
-        className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28"
-      >
-        <div className="grid items-center gap-14 lg:grid-cols-2">
-          {/* Image collage */}
-          <div className="relative mx-auto h-[420px] w-full max-w-[560px] sm:h-[480px]">
-            <div className="absolute left-0 top-0 h-[80%] w-[68%] overflow-hidden rounded-t-[200px] rounded-b-2xl">
-              <Image
-                src="/image/about.webp"
-                alt="Contemporary home exterior with large windows"
-                fill
-                sizes="(min-width: 1024px) 380px, 60vw"
-                className="object-cover"
-              />
-            </div>
-            <div className="absolute bottom-0 right-0 h-[46%] w-[58%] overflow-hidden rounded-2xl border-4 border-[#FAF9F6] shadow-xl">
-              <Image
-                src="/image/about1.webp"
-                alt="Bright living room with sofa and indoor plants"
-                fill
-                sizes="(min-width: 1024px) 320px, 50vw"
-                className="object-cover"
-              />
-            </div>
-            <div className="absolute bottom-6 left-0 w-[46%] rounded-xl bg-[#000000] p-4 text-sm text-[#FAF9F6] shadow-lg sm:bottom-2">
-              <p className="flex items-center justify-between gap-2">
-                Modern Spaces <ArrowRight size={14} />
-              </p>
-              <p>Stronger</p>
-              <p className="flex items-center gap-3">
-                Communities <span className="h-px flex-1 bg-[#FAF9F6]/50" />
-              </p>
-            </div>
-
-            {/* Circular text badge */}
-            <div className="absolute right-0 top-2 flex h-28 w-28 items-center justify-center rounded-full bg-[#F3F0E8] sm:right-4">
-              <svg
-                viewBox="0 0 120 120"
-                className="absolute inset-0 h-full w-full"
-                aria-hidden="true"
-              >
-                <defs>
-                  <path
-                    id="circlePath"
-                    d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"
-                  />
-                </defs>
-                <text className="fill-[#D4A62A] text-[9px] uppercase tracking-[0.28em]">
-                  <textPath href="#circlePath">
-                    Sustainable • Modern Living •
-                  </textPath>
-                </text>
-              </svg>
-              <Leaf className="text-[#D4A62A]" size={28} strokeWidth={1.5} />
-            </div>
-          </div>
-
-          {/* Text */}
-          <div>
-            <Eyebrow>Experience</Eyebrow>
-
-            <h2
-              id="story-title"
-              className="mt-4 text-4xl font-normal sm:text-5xl"
-            >
-              Growing the Bringo Way
-            </h2>
-
-            <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-[#52685B]">
+            <p className="mt-5  max-w-[200px] sm:max-w-[190px] md:max-w-[300px] lg:max-w-md text-sm leading-6 text-white/80 sm:text-base sm:leading-7">
               We're a team of 20+ people with one goal: doing real estate
               differently. Every year we sell 150+ properties, and we grow the
               Bringo way, one client, one sale, one relationship at a time.
             </p>
-
-            <div className="mt-7">
-              <BtnDark href="/contact">Know More</BtnDark>
-            </div>
           </div>
         </div>
-
-        {/* Values */}
-        <ul className="mt-16 grid gap-8 sm:grid-cols-3">
-          {values.map(({ icon: Icon, title, text }, i) => (
-            <li
-              key={title}
-              className={`flex flex-col items-center text-center ${
-                i !== 0 ? "sm:border-l sm:border-[#52685B]/25" : ""
-              }`}
-            >
-              <Icon className="text-[#D4A62A]" size={34} strokeWidth={1.4} />
-              <h3 className="mt-3 text-sm text-[#000000]">{title}</h3>
-              <p className="mt-1 text-xs text-[#52685B]">{text}</p>
-            </li>
-          ))}
-        </ul>
       </section>
 
       {/* ============ WHY CHOOSE ============ */}
@@ -645,7 +474,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
       {/* ============ FOUNDER + TEAM ============ */}
       {/* <TeamSection
   founder={founder}
@@ -669,16 +497,12 @@ export default function AboutPage() {
           ],
         }}
       />
-
       {/* ============ FOUNDER + TEAM ============ */}
-      <TeamSection  teamMembers={teamMembers} />
-
+      <TeamSection teamMembers={teamMembers} />
       {/* ============ PARTNERS (separate file) ============ */}
       {/* <PartnersSection /> */}
-
       {/* ============ OUR PEOPLE + VISION/MISSION (separate file) ============ */}
       {/* <VisionMissionSection /> */}
-
       {/* ============ FAQ ============ */}
       {/* <section
         aria-labelledby="faq-title"
@@ -706,7 +530,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section> */}
-
       {/* ============ CTA + CONTACT ============ */}
       <section
         aria-labelledby="cta-title"

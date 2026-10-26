@@ -523,19 +523,8 @@ function PriceCard({ property, price, perSqft, propertyId, as: Heading = 'h2', c
         </p>
       )}
 
-      <span aria-hidden="true" className="relative mt-5 block h-px w-full bg-gradient-to-r from-[#D4AF37]/60 via-[#D4AF37]/20 to-transparent" />
+      {/* <span aria-hidden="true" className="relative mt-5 block h-px w-full bg-gradient-to-r from-[#D4AF37]/60 via-[#D4AF37]/20 to-transparent" /> */}
 
-      <div className="relative mt-5 flex items-center gap-3">
-        <button
-          type="button"
-          onClick={scrollToInquiry}
-          className={`group inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full px-5 font-sans text-sm text-[#000000] shadow-[0_10px_26px_-10px_rgba(255,205,57,0.7)] transition hover:brightness-105 ${goldBg} ${focusRing}`}
-        >
-          Send inquiry
-          <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
-        </button>
-        {/* <SaveButton propertyId={propertyId} dark iconOnly /> */}
-      </div>
     </div>
   );
 }

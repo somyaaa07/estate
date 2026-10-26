@@ -189,7 +189,7 @@ function PropertyCard({ p }) {
 
       {/* Content */}
       <div className="flex flex-1 flex-col px-3.5 pb-3 pt-5">
-        <h3 className="line-clamp-1 text-[22px] leading-snug text-[#000000]">
+        <h3 className="line-clamp-1 text-[22px] leading-snug text-[#000000] text-bold">
           {p.title}
         </h3>
         <p className="mt-1.5 flex items-center gap-1.5 text-sm text-[#52685B]">

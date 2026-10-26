@@ -240,7 +240,7 @@ export default function HomeHero() {
                 <BtnDark href="/properties">Explore Properties</BtnDark>
               </motion.div>
 
-              <motion.div
+              {/* <motion.div
                 variants={fadeIn}
                 initial="hidden"
                 whileInView="visible"
@@ -248,7 +248,7 @@ export default function HomeHero() {
                 custom={3}
               >
                 <BtnDark href="/contact">Talk to an Expert</BtnDark>
-              </motion.div>
+              </motion.div> */}
             </div>
 
             {/* Stats — staggered glide-in + smooth count-up */}

@@ -57,11 +57,7 @@ export default function Testimonials() {
       className="relative overflow-hidden bg-[#faf9f6] py-16 sm:py-20 lg:py-28"
       aria-labelledby="testimonials-heading"
     >
-      {/* soft ambient glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-24 top-1/3 h-72 w-72 rounded-full bg-[#ffcd39]/10 blur-3xl"
-      />
+      
 
       <div className="relative mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.3fr] lg:gap-x-16 lg:gap-y-0 lg:px-8">
         {/* ===== Heading + intro ===== */}
@@ -240,18 +236,18 @@ export default function Testimonials() {
             </p>
           </div>
 
-          <p className="mt-6 border-t border-[#000000]/10 pt-5 text-center text-sm leading-relaxed text-[#52685B] lg:text-left">
-            For exploring more reviews, visit our{" "}
-            <a
-              href={GOOGLE_REVIEW_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-[#000000] underline decoration-[#e2a10d] decoration-2 underline-offset-4 transition-colors duration-300 hover:text-[#e2a10d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf9f6]"
-            >
-              Google Review
-            </a>
-            .
-          </p>
+       <p className="mt-6 border-t border-[#000000]/10 pt-5 text-center text-sm leading-relaxed text-[#52685B] lg:text-left">
+  Rated 4.8/5 by Our Customers. More Reviews on Our {" "}
+  <a
+    href={GOOGLE_REVIEW_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="font-medium text-[#000000] underline decoration-[#e2a10d] decoration-2 underline-offset-4 transition-colors duration-300 hover:text-[#e2a10d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf9f6]"
+  >
+    Google Reviews
+  </a>
+  .
+</p>
         </motion.div>
       </div>
     </section>

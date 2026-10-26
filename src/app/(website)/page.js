@@ -54,9 +54,9 @@ export default function HomePage() {
         <VisionMissionSection/>
          <WhatWeDo/>
      
-      <HowWeHelp />
+      {/* <HowWeHelp /> */}
       <Testimonial />
-      <CTASection />
+      {/* <CTASection /> */}
     </>
   );
 }

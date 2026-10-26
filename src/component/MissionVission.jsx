@@ -50,7 +50,7 @@ export default function VisionMissionSection({
           <p className="flex items-center gap-3">
             <Eye size={22} strokeWidth={1.5} /> Vision
           </p>
-          <p className="mt-2 text-xs leading-relaxed text-[#FAF9F6]/80">
+          <p className="mt-2 text-sm leading-relaxed text-[#FAF9F6]/80">
             {vision}
           </p>
         </div>
@@ -61,7 +61,7 @@ export default function VisionMissionSection({
           <p className="flex items-center gap-3">
             <Target size={22} strokeWidth={1.5} /> Mission
           </p>
-          <p className="mt-2 text-xs leading-relaxed text-[#FAF9F6]/80">
+          <p className="mt-2 text-sm leading-relaxed text-[#FAF9F6]/80">
             {mission}
           </p>
         </div>
@@ -85,7 +85,7 @@ export default function VisionMissionSection({
 
               <h2
                 id="vision-mission-title"
-                className="mt-4 text-4xl font-normal leading-tight"
+                className="mt-4 text-5xl font-normal leading-tight text-bold"
               >
                 {headingLines.map((line, i) => (
                   <span key={line}>
@@ -94,10 +94,10 @@ export default function VisionMissionSection({
                   </span>
                 ))}
               </h2>
-
+{/* 
               <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#52685B]">
                 {description}
-              </p>
+              </p> */}
             </div>
 
             {card}

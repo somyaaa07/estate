@@ -135,7 +135,7 @@ export default function AboutSection() {
               id="about-heading"
               className={`${serif} text-[clamp(2.2rem,5vw,3.6rem)] leading-[1.1] tracking-tight text-[#000000]`}
             >
-              Why Choose to Bringo
+              Why to Choose Bringo
             </h2>
             <span
               aria-hidden="true"

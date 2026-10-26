@@ -1,4 +1,3 @@
-
 "use client";
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -49,6 +48,18 @@ const getPageList = (total, current) => {
     out.push(n);
   });
   return out;
+};
+
+/* Price in words (Indian system):
+   12500000 -> "1.25 Crore", 4500000 -> "45 Lakh", 25000 -> "25 Thousand" */
+const formatPriceShort = (value) => {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return String(value ?? "");
+  const trim = (x) => Number(x.toFixed(2)).toString();
+  if (n >= 1e7) return `${trim(n / 1e7)} Crore`;
+  if (n >= 1e5) return `${trim(n / 1e5)} Lakh`;
+  if (n >= 1e3) return `${trim(n / 1e3)} Thousand`;
+  return String(n);
 };
 
 const EMPTY_FILTERS = {
@@ -204,7 +215,7 @@ function PropertyCard({ p }) {
 
         <div className="mt-auto flex items-end justify-between pt-5">
           <p className="text-2xl leading-none text-[#000000]">
-            ₹{Number(p.price).toLocaleString("en-IN")}
+            ₹{formatPriceShort(p.price)}
             {p.type === "rent" && (
               <span className="ml-1 font-sans text-sm text-[#52685B]">/mo</span>
             )}
@@ -346,6 +357,15 @@ function FilterFields({
             onKeyDown={applyOnEnter}
           />
         </div>
+
+        {/* Live preview of typed price in words */}
+        {(filters.minPrice || filters.maxPrice) && (
+          <p className="mt-2 text-[12px] text-[#52685B]">
+            {filters.minPrice ? `₹${formatPriceShort(filters.minPrice)}` : "Any"}
+            {" – "}
+            {filters.maxPrice ? `₹${formatPriceShort(filters.maxPrice)}` : "Any"}
+          </p>
+        )}
       </div>
 
       <div>
@@ -532,11 +552,11 @@ function PropertiesContent() {
     },
     filters.minPrice && {
       key: "minPrice",
-      label: `Min ₹${Number(filters.minPrice).toLocaleString("en-IN")}`,
+      label: `Min ₹${formatPriceShort(filters.minPrice)}`,
     },
     filters.maxPrice && {
       key: "maxPrice",
-      label: `Max ₹${Number(filters.maxPrice).toLocaleString("en-IN")}`,
+      label: `Max ₹${formatPriceShort(filters.maxPrice)}`,
     },
     filters.minBeds && { key: "minBeds", label: `${filters.minBeds}+ beds` },
   ].filter(Boolean);
@@ -594,29 +614,29 @@ function PropertiesContent() {
             aria-label="Listing type"
             className="mt-8 inline-flex rounded-full border border-[#FAF9F6]/15 bg-[#FAF9F6]/5 p-1.5 backdrop-blur"
           >
-           {["", "buy", "sell", "rent"].map((t) => {
-  const active = filters.type === t;
-  return (
-    <button
-      key={t}
-      onClick={() => {
-        if (t === "sell") {
-          router.push("/properties/sell"); // alag route pe jao
-        } else {
-          updateFilter("type", t); // baaki tabs pehle jaise
-        }
-      }}
-      aria-pressed={active}
-      className={`rounded-full px-5 py-2 text-[13px] capitalize transition duration-300 sm:px-7 ${
-        active
-          ? "bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] text-[#000000] shadow-md"
-          : "text-[#FAF9F6]/80 hover:text-[#F5D77A]"
-      }`}
-    >
-      {t === "" ? "All" : t}
-    </button>
-  );
-})}
+            {["", "buy", "sell", "rent"].map((t) => {
+              const active = filters.type === t;
+              return (
+                <button
+                  key={t}
+                  onClick={() => {
+                    if (t === "sell") {
+                      router.push("/properties/sell"); // alag route pe jao
+                    } else {
+                      updateFilter("type", t); // baaki tabs pehle jaise
+                    }
+                  }}
+                  aria-pressed={active}
+                  className={`rounded-full px-5 py-2 text-[13px] capitalize transition duration-300 sm:px-7 ${
+                    active
+                      ? "bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] text-[#000000] shadow-md"
+                      : "text-[#FAF9F6]/80 hover:text-[#F5D77A]"
+                  }`}
+                >
+                  {t === "" ? "All" : t}
+                </button>
+              );
+            })}
           </div>
 
           {/* Search bar */}

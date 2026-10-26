@@ -28,10 +28,20 @@ const TYPE_BADGE = {
   rent: 'bg-[#FAF9F6] text-[#000000]',
 };
 
+/* Price in words (Indian system):
+   12500000 -> "1.25 Crore", 4500000 -> "45 Lakh", 25000 -> "25 Thousand" */
+const formatPriceShort = (n) => {
+  const trim = (x) => Number(x.toFixed(2)).toString();
+  if (n >= 1e7) return `${trim(n / 1e7)} Crore`;
+  if (n >= 1e5) return `${trim(n / 1e5)} Lakh`;
+  if (n >= 1e3) return `${trim(n / 1e3)} Thousand`;
+  return String(n);
+};
+
 const formatPrice = (price) => {
   const n = Number(price);
   return Number.isFinite(n) && price !== '' && price !== null
-    ? `₹${n.toLocaleString('en-IN')}`
+    ? `₹${formatPriceShort(n)}`
     : price;
 };
 
@@ -46,7 +56,7 @@ function Card({ property, index, reduce }) {
     property.area && { icon: Ruler, text: `${property.area} sqft` },
   ].filter(Boolean);
 
-  return (
+  return  (
     <motion.li
       initial={reduce ? false : { opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -159,9 +169,9 @@ const SkeletonCard = () => (
 ---------------------------------------------------------------- */
 export default function PropertiesList({
   type,
- heading = 'Exclusive Projects',
-subheading = 'Explore premium residential and commercial projects offering exceptional locations, modern living, and great investment opportunities.',
-limit = 4,
+  heading = 'Exclusive Projects',
+  subheading = 'Explore premium residential and commercial projects offering exceptional locations, modern living, and great investment opportunities.',
+  limit = 4,
   viewAllHref,
 }) {
   const reduce = useReducedMotion();
@@ -234,7 +244,7 @@ limit = 4,
             href={href}
             className="group inline-flex w-fit items-center gap-3 rounded-full border border-[#000000]/20 bg-[#faf9f6] py-2 pl-5 pr-2 text-sm text-[#000000] transition hover:border-[#D4AF37] hover:shadow-[0_8px_24px_rgba(212,175,55,0.3)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
           >
-            View all properties   
+            View all properties
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#000000] text-[#FFCD39] transition group-hover:bg-gradient-to-br group-hover:from-[#E2A10D] group-hover:to-[#FFCD39] group-hover:text-[#000000]">
               <ArrowRight size={14} className="transition-transform duration-300 group-hover:-rotate-45" />
             </span>

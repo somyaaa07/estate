@@ -33,10 +33,11 @@ const Property = sequelize.define('Property', {
   area:          { type: DataTypes.DECIMAL(10, 2) },
   bedrooms:      { type: DataTypes.INTEGER },
   bathrooms:     { type: DataTypes.INTEGER },
-  user_id:       { type: DataTypes.INTEGER },        // admin jisne list kiya
-  contact_email: { type: DataTypes.STRING(100) },    // admin ka email
+  user_id:       { type: DataTypes.INTEGER },        
+  contact_email: { type: DataTypes.STRING(100) },   
 
-  // ── Naye specifications ──
+
+
   nearby_landmarks:    listField('nearby_landmarks'),
   amenities:           listField('amenities'),
   property_highlights: listField('property_highlights'),

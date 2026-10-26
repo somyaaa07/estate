@@ -45,7 +45,7 @@ export async function POST(req) {
 
   if (!data.title || !data.price || !data.city || !data.type || !data.property_type || !data.location) {
     return NextResponse.json(
-      { error: 'Title, price, type, property type, location aur city required hai' },
+      { error: 'Title, price, type, property type, location and city are required' },
       { status: 400 }
     );
   }

@@ -286,28 +286,15 @@ export default function TeamSection({ founder, teamMembers = [], leadership }) {
       className={`${marcellus.variable} bg-[#FAF9F6] px-4 py-14 sm:px-6 lg:py-20`}
     >
       <div className="mx-auto max-w-[1200px]">
-        {/* ============ PEOPLE BEHIND BRINGO ============ */}
-        <motion.div {...revealTitle(0, 1)} className="text-center">
-          <h2
-            id="team-title"
-            className="font-[family-name:var(--font-marcellus)] text-[32px] font-normal leading-tight text-[#000000] sm:text-[42px] lg:text-[48px]"
-          >
-            The People Behind Bringo
-          </h2>
-          <span
-            aria-hidden="true"
-            className="mx-auto mt-4 block h-[3px] w-14 rounded-full bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D]"
-          />
-        </motion.div>
 
+{/* 
         <div className="relative mt-10 lg:mt-12">
-          {/* Gold bracket (desktop only) */}
+   
           <div
             aria-hidden="true"
             className="pointer-events-none absolute bottom-[10px] left-[6.3%] right-[6.3%] top-[70px] z-0 hidden rounded-t-[40px] border-2 border-[#D4AF37] lg:block"
           />
 
-          {/* Founder */}
           {founder && (
             <motion.article
               {...revealFounder(0, 1)}
@@ -331,13 +318,13 @@ export default function TeamSection({ founder, teamMembers = [], leadership }) {
             </motion.article>
           )}
 
-          {/* One shared grid: both columns stay aligned */}
+         
           <ul className="mt-6 grid grid-cols-1 gap-5 lg:mt-8 lg:grid-cols-2 lg:gap-x-[20%] lg:gap-y-8">
             {teamMembers.map((member, i) => (
               <MemberCard key={member.name} member={member} index={i} />
             ))}
           </ul>
-        </div>
+        </div> */}
 
         {/* ============ LEADERSHIP TEAM (bottom of team) ============ */}
         <div

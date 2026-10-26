@@ -26,12 +26,14 @@ import {
   Layers,
   Loader2,
   MapPin,
+  Maximize2,
   Repeat,
   Ruler,
   Sofa,
   Sparkles,
   Tag,
   SearchX,
+  X,
 } from 'lucide-react';
 
 const marcellus = Marcellus({
@@ -42,24 +44,152 @@ const marcellus = Marcellus({
 });
 
 const goldBg = 'bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D]';
+const focusRing =
+  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]';
 
 const fieldBase =
   'w-full rounded-xl border border-[#000000]/15 bg-[#F3F0E8]/60 px-4 py-3 font-sans text-sm text-[#000000] outline-none transition placeholder:text-[#52685B]/60 hover:border-[#000000]/30 focus:border-[#D4AF37] focus:bg-white focus:ring-4 focus:ring-[#FFCD39]/30 disabled:opacity-60';
 const labelBase = 'mb-1.5 block text-sm text-[#000000]';
-const card = 'rounded-3xl border border-[#000000]/10 bg-white';
+const card =
+  'rounded-3xl border border-[#000000]/10 bg-white shadow-[0_18px_45px_-30px_rgba(0,0,0,0.35)]';
+
+const scrollToInquiry = () => {
+  const el = document.getElementById('inquiry');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+/* ---------- Price in words (Indian system) ---------- */
+const ONES = [
+  'Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
+  'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen',
+];
+const TENS = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+const belowHundred = (n) =>
+  n < 20 ? ONES[n] : `${TENS[Math.floor(n / 10)]}${n % 10 ? ` ${ONES[n % 10]}` : ''}`;
+
+// 4500000 -> "Forty Five Lakh"
+function numberToWords(num) {
+  let n = Math.floor(Number(num));
+  if (!Number.isFinite(n) || n < 0) return '';
+  if (n === 0) return 'Zero';
+
+  const parts = [];
+  const crore = Math.floor(n / 1e7); n %= 1e7;
+  const lakh = Math.floor(n / 1e5); n %= 1e5;
+  const thousand = Math.floor(n / 1e3); n %= 1e3;
+  const hundred = Math.floor(n / 100);
+  const rest = n % 100;
+
+  if (crore) parts.push(`${numberToWords(crore)} Crore`);
+  if (lakh) parts.push(`${belowHundred(lakh)} Lakh`);
+  if (thousand) parts.push(`${belowHundred(thousand)} Thousand`);
+  if (hundred) parts.push(`${ONES[hundred]} Hundred`);
+  if (rest) parts.push(belowHundred(rest));
+  return parts.join(' ');
+}
+
+// 12500000 -> "1.25 Crore", 4500000 -> "45 Lakh", 25000 -> "25 Thousand"
+function formatPriceShort(n) {
+  const trim = (x) => Number(x.toFixed(2)).toString();
+  if (n >= 1e7) return `${trim(n / 1e7)} Crore`;
+  if (n >= 1e5) return `${trim(n / 1e5)} Lakh`;
+  if (n >= 1e3) return `${trim(n / 1e3)} Thousand`;
+  return String(n);
+}
+
+/* ---------------------------------------------------------------
+   LIGHTBOX
+---------------------------------------------------------------- */
+function Lightbox({ images, index, setIndex, onClose, title }) {
+  const total = images.length;
+  const go = useCallback((dir) => setIndex((p) => (p + dir + total) % total), [total, setIndex]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (total > 1 && e.key === 'ArrowLeft') go(-1);
+      if (total > 1 && e.key === 'ArrowRight') go(1);
+    };
+    document.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [go, onClose, total]);
+
+  const nav =
+    'absolute top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[#FAF9F6]/10 text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 backdrop-blur transition hover:bg-[#F5D77A] hover:text-[#000000] ' +
+    focusRing;
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Property image viewer"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#000000]/95 p-4 sm:p-10"
+      onClick={onClose}
+    >
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close viewer"
+        className={`absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#FAF9F6]/10 text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition hover:bg-[#F5D77A] hover:text-[#000000] ${focusRing}`}
+      >
+        <X size={20} aria-hidden="true" />
+      </button>
+
+      <img
+        src={images[index].url}
+        alt={`${title || 'Property'} – image ${index + 1}`}
+        onClick={(e) => e.stopPropagation()}
+        className="max-h-full max-w-full rounded-2xl object-contain shadow-2xl"
+      />
+
+      {total > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); go(-1); }}
+            aria-label="Previous image"
+            className={`${nav} left-3 sm:left-6`}
+          >
+            <ChevronLeft size={22} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); go(1); }}
+            aria-label="Next image"
+            className={`${nav} right-3 sm:right-6`}
+          >
+            <ChevronRight size={22} aria-hidden="true" />
+          </button>
+          <span className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-[#000000]/70 px-4 py-1.5 font-sans text-xs text-[#FAF9F6] ring-1 ring-[#D4AF37]/30">
+            {index + 1} / {total}
+          </span>
+        </>
+      )}
+    </div>
+  );
+}
 
 /* ---------------------------------------------------------------
    IMAGE GALLERY
 ---------------------------------------------------------------- */
-function ImageGallery({ images = [], title }) {
+function ImageGallery({ images = [], title, overlay }) {
   const [current, setCurrent] = useState(0);
+  const [open, setOpen] = useState(false);
   const total = images.length;
 
   const go = useCallback((dir) => setCurrent((p) => (p + dir + total) % total), [total]);
+  const close = useCallback(() => setOpen(false), []);
 
   if (!total) {
     return (
-      <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 rounded-3xl border border-[#000000]/10 bg-white text-[#52685B]">
+      <div className="relative flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 rounded-3xl border border-[#000000]/10 bg-white text-[#52685B]">
+        {overlay && <div className="absolute left-4 top-5 flex flex-wrap gap-2">{overlay}</div>}
         <ImageOff size={32} strokeWidth={1.4} aria-hidden="true" />
         <span className="font-sans text-sm">No images available</span>
       </div>
@@ -67,7 +197,8 @@ function ImageGallery({ images = [], title }) {
   }
 
   const arrow =
-    'absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#FAF9F6]/90 text-[#000000] shadow-md backdrop-blur transition hover:bg-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]';
+    'absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#FAF9F6]/90 text-[#000000] shadow-md backdrop-blur transition hover:bg-[#F5D77A] sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100 ' +
+    focusRing;
 
   return (
     <div
@@ -80,16 +211,31 @@ function ImageGallery({ images = [], title }) {
         if (e.key === 'ArrowRight') go(1);
       }}
     >
-      <div className="group relative aspect-[16/10] overflow-hidden rounded-3xl bg-[#000000] shadow-[0_24px_60px_-28px_rgba(26,42,34,0.55)] ring-1 ring-[#000000]/10">
+      <div className="group relative aspect-[16/10] overflow-hidden rounded-3xl bg-[#000000] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.6)] ring-1 ring-[#D4AF37]/30">
         <img
           key={current}
           src={images[current].url}
           alt={`${title || 'Property'} – image ${current + 1}`}
-          className="h-full w-full animate-[fadeIn_0.4s_ease-out] object-cover"
+          className="h-full w-full animate-[fadeIn_0.4s_ease-out] object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
         />
         <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#000000]/55 to-transparent" />
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#000000]/60 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-[#000000]/35 to-transparent" />
         <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
+
+        {/* Badges overlay */}
+        {overlay && <div className="absolute left-4 top-5 flex flex-wrap items-center gap-2 sm:left-5">{overlay}</div>}
+
+        {/* Expand */}
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label="View image full screen"
+          className={`absolute right-4 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-[#FAF9F6]/90 text-[#000000] shadow-md backdrop-blur transition hover:bg-[#F5D77A] sm:right-5 ${focusRing}`}
+        >
+          <Maximize2 size={16} aria-hidden="true" />
+        </button>
 
         {total > 1 && (
           <>
@@ -99,7 +245,7 @@ function ImageGallery({ images = [], title }) {
             <button type="button" onClick={() => go(1)} aria-label="Next image" className={`${arrow} right-4`}>
               <ChevronRight size={20} aria-hidden="true" />
             </button>
-            <span className="absolute bottom-4 right-4 rounded-full bg-[#000000]/70 px-3 py-1 font-sans text-xs text-[#FAF9F6] backdrop-blur">
+            <span className="absolute bottom-4 right-4 rounded-full bg-[#000000]/70 px-3 py-1 font-sans text-xs text-[#FAF9F6] ring-1 ring-[#D4AF37]/30 backdrop-blur">
               {current + 1} / {total}
             </span>
           </>
@@ -115,8 +261,10 @@ function ImageGallery({ images = [], title }) {
               onClick={() => setCurrent(i)}
               aria-label={`Show image ${i + 1}`}
               aria-current={i === current}
-              className={`h-16 w-24 shrink-0 overflow-hidden rounded-xl border-2 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] ${
-                i === current ? 'border-[#D4AF37] opacity-100' : 'border-transparent opacity-60 hover:opacity-100'
+              className={`h-16 w-24 shrink-0 overflow-hidden rounded-xl border-2 transition ${focusRing} ${
+                i === current
+                  ? 'border-[#D4AF37] opacity-100 shadow-[0_6px_16px_-6px_rgba(212,175,55,0.7)]'
+                  : 'border-transparent opacity-60 hover:opacity-100'
               }`}
             >
               <img src={img.url} alt="" className="h-full w-full object-cover" />
@@ -124,6 +272,8 @@ function ImageGallery({ images = [], title }) {
           ))}
         </div>
       )}
+
+      {open && <Lightbox images={images} index={current} setIndex={setCurrent} onClose={close} title={title} />}
     </div>
   );
 }
@@ -131,7 +281,7 @@ function ImageGallery({ images = [], title }) {
 /* ---------------------------------------------------------------
    SAVE BUTTON
 ---------------------------------------------------------------- */
-function SaveButton({ propertyId, dark = false }) {
+function SaveButton({ propertyId, dark = false, iconOnly = false }) {
   const { data: session } = useSession();
   const router = useRouter();
   const [saved, setSaved] = useState(false);
@@ -175,12 +325,13 @@ function SaveButton({ propertyId, dark = false }) {
       onClick={toggle}
       disabled={loading}
       aria-pressed={saved}
-      className={`inline-flex items-center justify-center gap-2 rounded-full border px-5 py-2.5 font-sans text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-60 ${
-        saved ? 'border-red-300 bg-red-50 text-red-500' : idle
-      }`}
+      aria-label={saved ? 'Remove from saved' : 'Save property'}
+      className={`inline-flex items-center justify-center gap-2 rounded-full border font-sans text-sm transition ${focusRing} disabled:cursor-not-allowed disabled:opacity-60 ${
+        iconOnly ? 'h-11 w-11 shrink-0' : 'px-5 py-3'
+      } ${saved ? 'border-red-300 bg-red-50 text-red-500' : idle}`}
     >
       <Heart size={16} className={saved ? 'fill-red-500' : ''} aria-hidden="true" />
-      {saved ? 'Saved' : 'Save'}
+      {!iconOnly && (saved ? 'Saved' : 'Save')}
     </button>
   );
 }
@@ -255,7 +406,7 @@ function InquiryForm({ propertyId }) {
         <button
           type="button"
           onClick={() => setStatus('idle')}
-          className="mt-5 font-sans text-sm text-[#52685B] underline underline-offset-4 transition hover:text-[#000000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D4AF37]"
+          className={`mt-5 font-sans text-sm text-[#52685B] underline underline-offset-4 transition hover:text-[#000000] ${focusRing}`}
         >
           Send another inquiry
         </button>
@@ -269,7 +420,8 @@ function InquiryForm({ propertyId }) {
     <div className={`${card} relative overflow-hidden p-6 sm:p-7`}>
       <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
       <h2 className="text-2xl text-[#000000]">Send an inquiry</h2>
-      <p className="mt-1 font-sans text-sm text-[#52685B]">We usually reply within a day.</p>
+      <span aria-hidden="true" className={`mt-3 block h-[3px] w-12 rounded-full ${goldBg}`} />
+      <p className="mt-3 font-sans text-sm text-[#52685B]">We usually reply within a day.</p>
 
       <form onSubmit={handleSubmit} noValidate className="mt-5 space-y-4">
         <div>
@@ -307,7 +459,7 @@ function InquiryForm({ propertyId }) {
         <button
           type="submit"
           disabled={loading}
-          className="group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#000000] py-2.5 pl-6 pr-2.5 text-[15px] text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37] disabled:cursor-not-allowed disabled:opacity-70"
+          className={`group relative inline-flex w-full items-center justify-between overflow-hidden rounded-full bg-[#000000] py-2.5 pl-6 pr-2.5 text-[15px] text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition-all duration-500 hover:text-[#000000] hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:ring-[#F5D77A] ${focusRing} disabled:cursor-not-allowed disabled:opacity-70`}
         >
           <span aria-hidden="true" className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#D4AF37] via-[#F5D77A] to-[#D4AF37] transition-transform duration-500 ease-out group-hover:scale-x-100" />
           <span className="relative z-10">{loading ? 'Sending…' : 'Send inquiry'}</span>
@@ -327,33 +479,62 @@ function InquiryForm({ propertyId }) {
 /* ---------------------------------------------------------------
    SMALL PIECES
 ---------------------------------------------------------------- */
+// Badges sit on top of the gallery image, so they need to stay readable on photos
 const TYPE_BADGE = {
-  buy: 'bg-[#000000] text-[#F5D77A]',
-  sell: `${goldBg} text-[#000000]`,
-  rent: 'bg-white text-[#000000] ring-1 ring-[#000000]/15',
+  buy: 'bg-[#000000]/85 text-[#F5D77A] ring-1 ring-[#D4AF37]/50 backdrop-blur',
+  sell: `${goldBg} text-[#000000] shadow-md`,
+  rent: 'bg-white/95 text-[#000000] shadow-md',
 };
 
-function PriceCard({ property, price, perSqft, propertyId, className = '' }) {
+function PriceCard({ property, price, perSqft, propertyId, as: Heading = 'h2', className = '' }) {
+  const priceWords = numberToWords(property.price);
   return (
-    <div className={`relative overflow-hidden rounded-3xl bg-[#000000] p-6 text-[#FAF9F6] sm:p-7 ${className}`}>
+    <div
+      className={`relative overflow-hidden rounded-3xl bg-[#000000] p-6 text-[#FAF9F6] shadow-[0_28px_60px_-28px_rgba(0,0,0,0.7)] ring-1 ring-[#D4AF37]/30 sm:p-7 ${className}`}
+    >
       <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${goldBg}`} />
-      <div aria-hidden="true" className="pointer-events-none absolute -bottom-20 -right-16 h-52 w-52 rounded-full bg-[#D4AF37]/10 blur-3xl" />
-      <p className="relative font-sans text-sm text-[#FAF9F6]/60">
+      <div aria-hidden="true" className="pointer-events-none absolute -bottom-20 -right-16 h-56 w-56 rounded-full bg-[#D4AF37]/15 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -left-16 -top-24 h-48 w-48 rounded-full bg-[#F5D77A]/10 blur-3xl" />
+
+      <Heading className="relative text-2xl leading-tight sm:text-3xl">{property.title}</Heading>
+      <span aria-hidden="true" className={`relative mt-4 block h-[3px] w-14 rounded-full ${goldBg}`} />
+
+      <p className="relative mt-5 font-sans text-sm text-[#FAF9F6]/60">
         {property.type === 'rent' ? 'Monthly rent' : 'Price'}
       </p>
-      <p className="relative mt-1 text-4xl leading-tight text-[#F5D77A]">
+
+      <p className="relative mt-1 bg-gradient-to-r from-[#F5D77A] via-[#FFCD39] to-[#F5D77A] bg-clip-text text-4xl leading-tight text-transparent sm:text-5xl">
         ₹{price}
-        {property.type === 'rent' && <span className="font-sans text-base text-[#FAF9F6]/60"> /mo</span>}
+        {property.type === 'rent' && (
+          <span className="font-sans text-base text-[#FAF9F6]/60"> /mo</span>
+        )}
       </p>
-      {perSqft && <p className="relative mt-1 font-sans text-sm text-[#FAF9F6]/60">₹{perSqft} / sq ft</p>}
-      <div className="relative mt-5 flex flex-wrap items-center gap-3">
-        <a
-          href="#inquiry"
-          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] px-5 py-2.5 font-sans text-sm text-[#000000] transition hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
+
+      {priceWords && (
+        <p className="relative mt-2 font-sans text-[13px] leading-snug text-[#FAF9F6]/70">
+          {priceWords} Rupees{property.type === 'rent' ? ' per month' : ' only'}
+        </p>
+      )}
+
+      {perSqft && (
+        <p className="relative mt-2 inline-flex items-center gap-1.5 rounded-full bg-[#FAF9F6]/10 px-3 py-1 font-sans text-xs text-[#FAF9F6]/80">
+          <Ruler size={12} className="text-[#F5D77A]" aria-hidden="true" />
+          ₹{perSqft} / sq ft
+        </p>
+      )}
+
+      <span aria-hidden="true" className="relative mt-5 block h-px w-full bg-gradient-to-r from-[#D4AF37]/60 via-[#D4AF37]/20 to-transparent" />
+
+      <div className="relative mt-5 flex items-center gap-3">
+        <button
+          type="button"
+          onClick={scrollToInquiry}
+          className={`group inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full px-5 font-sans text-sm text-[#000000] shadow-[0_10px_26px_-10px_rgba(255,205,57,0.7)] transition hover:brightness-105 ${goldBg} ${focusRing}`}
         >
-          Inquire now <ArrowRight size={15} aria-hidden="true" />
-        </a>
-        {/* <SaveButton propertyId={propertyId} dark /> */}
+          Send inquiry
+          <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+        </button>
+        {/* <SaveButton propertyId={propertyId} dark iconOnly /> */}
       </div>
     </div>
   );
@@ -376,9 +557,11 @@ function TagSection({ title, icon: Icon, items }) {
         {items.map((item) => (
           <li
             key={item}
-            className="inline-flex items-center gap-2 rounded-full border border-[#000000]/10 bg-[#F3F0E8]/60 px-4 py-2 font-sans text-sm text-[#000000]"
+            className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/30 bg-[#F3F0E8]/70 px-4 py-2 font-sans text-sm text-[#000000] transition hover:border-[#D4AF37] hover:bg-[#F5D77A]/25"
           >
-            <Icon size={14} className="text-[#B8902F]" aria-hidden="true" />
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#000000] text-[#F5D77A]">
+              <Icon size={11} aria-hidden="true" />
+            </span>
             {item}
           </li>
         ))}
@@ -421,7 +604,7 @@ function NotFound() {
       </p>
       <Link
         href="/properties"
-        className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#000000] px-6 py-3 font-sans text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition hover:bg-[#52685B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"
+        className={`mt-7 inline-flex items-center gap-2 rounded-full bg-[#000000] px-6 py-3 font-sans text-sm text-[#FAF9F6] ring-1 ring-[#D4AF37]/40 transition hover:bg-[#52685B] ${focusRing}`}
       >
         <ChevronLeft size={16} aria-hidden="true" /> Back to properties
       </Link>
@@ -473,7 +656,7 @@ export default function PropertyDetailPage() {
   if (notFound || !property) return <div className={shell}><NotFound /></div>;
 
   const priceNum = Number(property.price);
-  const price = Number.isFinite(priceNum) ? priceNum.toLocaleString('en-IN') : property.price;
+  const price = Number.isFinite(priceNum) ? formatPriceShort(priceNum) : property.price;
   const perSqft =
     property.area && Number.isFinite(priceNum)
       ? Math.round(priceNum / Number(property.area)).toLocaleString('en-IN')
@@ -509,6 +692,27 @@ export default function PropertyDetailPage() {
   const amenities = property.amenities || [];
   const landmarks = property.nearby_landmarks || [];
 
+  // Badges that sit on top of the main image
+  const badges = (
+    <>
+      {property.type && (
+        <span className={`rounded-full px-3.5 py-1.5 text-xs capitalize ${TYPE_BADGE[property.type] || TYPE_BADGE.rent}`}>
+          For {property.type}
+        </span>
+      )}
+      {property.status && (
+        <span
+          className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs capitalize shadow-md ${
+            isActive ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
+          }`}
+        >
+          <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-green-600' : 'bg-red-500'}`} />
+          {isActive ? 'Available' : property.status}
+        </span>
+      )}
+    </>
+  );
+
   return (
     <div className={shell}>
       <motion.div
@@ -529,33 +733,16 @@ export default function PropertyDetailPage() {
         <div className="grid items-start gap-8 lg:grid-cols-[1fr_380px]">
           {/* ===== LEFT ===== */}
           <div className="min-w-0">
-            <ImageGallery images={images} title={property.title} />
+            <ImageGallery images={images} title={property.title} overlay={badges} />
 
             {/* Title block */}
             <div className="mt-8">
-              <div className="flex flex-wrap items-center gap-2">
-                {property.type && (
-                  <span className={`rounded-full px-3.5 py-1 text-xs capitalize ${TYPE_BADGE[property.type] || TYPE_BADGE.rent}`}>
-                    For {property.type}
-                  </span>
-                )}
-                {property.status && (
-                  <span
-                    className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs capitalize ${
-                      isActive ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
-                    }`}
-                  >
-                    <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-green-600' : 'bg-red-500'}`} />
-                    {isActive ? 'Available' : property.status}
-                  </span>
-                )}
-              </div>
-              <h1 className="mt-4 text-3xl leading-tight sm:text-4xl lg:text-5xl">{property.title}</h1>
-              <span aria-hidden="true" className={`mt-4 block h-[3px] w-14 rounded-full ${goldBg}`} />
-              <p className="mt-4 flex items-start gap-1.5 font-sans text-[15px] text-[#52685B]">
+              <p className="inline-flex items-start gap-2 rounded-full border border-[#D4AF37]/30 bg-white px-4 py-2 font-sans text-[15px] text-[#52685B]">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-[#B8902F]" aria-hidden="true" />
-                {property.location}
-                {property.city ? `, ${property.city}` : ''}
+                <span>
+                  {property.location}
+                  {property.city ? `, ${property.city}` : ''}
+                </span>
               </p>
             </div>
 
@@ -570,14 +757,17 @@ export default function PropertyDetailPage() {
 
             {/* Key stats */}
             {keyStats.length > 0 && (
-              <ul className={`${card} mt-6 grid divide-x divide-[#000000]/10 overflow-hidden`} style={{ gridTemplateColumns: `repeat(${keyStats.length}, minmax(0, 1fr))` }}>
+              <ul
+                className={`${card} mt-6 grid divide-x divide-[#000000]/10 overflow-hidden`}
+                style={{ gridTemplateColumns: `repeat(${keyStats.length}, minmax(0, 1fr))` }}
+              >
                 {keyStats.map(({ icon: Icon, label: l, value }) => (
-                  <li key={l} className="flex flex-col items-center gap-1 px-2 py-5 text-center sm:flex-row sm:justify-center sm:gap-3 sm:text-left">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#000000] text-[#F5D77A]">
-                      <Icon size={20} strokeWidth={1.6} aria-hidden="true" />
+                  <li key={l} className="flex flex-col items-center gap-2 px-2 py-6 text-center sm:flex-row sm:justify-center sm:gap-4 sm:text-left">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#000000] text-[#F5D77A] ring-1 ring-[#D4AF37]/50">
+                      <Icon size={21} strokeWidth={1.6} aria-hidden="true" />
                     </span>
                     <span>
-                      <span className="block text-xl leading-tight">{value}</span>
+                      <span className="block text-2xl leading-tight">{value}</span>
                       <span className="block font-sans text-xs text-[#52685B]">{l}</span>
                     </span>
                   </li>
@@ -588,10 +778,15 @@ export default function PropertyDetailPage() {
             {/* Overview */}
             {facts.length > 0 && (
               <Section title="Overview" className="mt-6">
-                <dl className="grid gap-x-10 sm:grid-cols-2">
+                <dl className="grid gap-3 sm:grid-cols-2">
                   {facts.map(({ icon: Icon, label: l, value }) => (
-                    <div key={l} className="flex items-center gap-3 border-b border-[#000000]/10 py-3.5">
-                      <Icon size={18} strokeWidth={1.6} className="shrink-0 text-[#B8902F]" aria-hidden="true" />
+                    <div
+                      key={l}
+                      className="flex items-center gap-3 rounded-2xl border border-[#000000]/5 bg-[#F3F0E8]/60 px-4 py-3.5 transition hover:border-[#D4AF37]/50 hover:bg-[#F3F0E8]"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#B8902F] ring-1 ring-[#D4AF37]/30">
+                        <Icon size={17} strokeWidth={1.6} aria-hidden="true" />
+                      </span>
                       <dt className="flex-1 font-sans text-sm text-[#52685B]">{l}</dt>
                       <dd className="text-right text-[15px] capitalize">{value}</dd>
                     </div>
@@ -603,7 +798,7 @@ export default function PropertyDetailPage() {
             {/* Description */}
             {property.description && (
               <Section title="About this property" className="mt-6">
-                <p className="whitespace-pre-line font-sans text-[15px] leading-[1.8] text-[#000000]/85">
+                <p className="max-w-[72ch] whitespace-pre-line font-sans text-[15px] leading-[1.85] text-[#000000]/85">
                   {property.description}
                 </p>
               </Section>
@@ -621,6 +816,7 @@ export default function PropertyDetailPage() {
               price={price}
               perSqft={perSqft}
               propertyId={id}
+              as="h1"
               className="hidden lg:block"
             />
             {!isActive && (
@@ -641,17 +837,21 @@ export default function PropertyDetailPage() {
 
       {/* Mobile sticky bar */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#D4AF37]/30 bg-[#000000]/95 px-5 py-3 backdrop-blur lg:hidden">
-        <div className="mx-auto flex max-w-xl items-center justify-between gap-4">
+        <div className="mx-auto flex max-w-xl items-center justify-between gap-3">
           <p className="text-2xl leading-tight text-[#F5D77A]">
             ₹{price}
             {property.type === 'rent' && <span className="font-sans text-xs text-[#FAF9F6]/60"> /mo</span>}
           </p>
-          <a
-            href="#inquiry"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#F5D77A] via-[#D4AF37] to-[#A67C1E] px-5 py-2.5 font-sans text-sm text-[#000000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5D77A]"
-          >
-            Send inquiry <ArrowRight size={15} aria-hidden="true" />
-          </a>
+          <div className="flex items-center gap-2.5">
+            {/* <SaveButton propertyId={id} dark iconOnly /> */}
+            <button
+              type="button"
+              onClick={scrollToInquiry}
+              className={`inline-flex h-11 items-center gap-2 rounded-full px-5 font-sans text-sm text-[#000000] ${goldBg} ${focusRing}`}
+            >
+              Send inquiry <ArrowRight size={15} aria-hidden="true" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

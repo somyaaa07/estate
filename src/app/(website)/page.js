@@ -6,6 +6,8 @@ import Propertyguidance from "@/component/home/Propertyguidance";
 import HowWeHelp from "@/component/home/HowWeHelp";
 import AboutSection from "@/component/home/AboutSection";
 import WhatWeDo from "@/component/home/WhatWeDo";
+import PartnersSection from "@/component/TrustedPartners";
+import VisionMissionSection from "@/component/MissionVission";
 
 export const metadata = {
   title: "Bringo Real Estates | Premium Properties in Greater Noida",
@@ -44,10 +46,13 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <AboutSection />
-       <WhatWeDo/>
+   
+        {/* <AboutSection /> */}
+        <PartnersSection/>
       <FeaturedProperties />
       {/* <Propertyguidance /> */}
+        <VisionMissionSection/>
+         <WhatWeDo/>
      
       <HowWeHelp />
       <Testimonial />

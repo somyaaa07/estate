@@ -56,6 +56,30 @@ const fadeIn = {
   }),
 };
 
+/* ---------- Stats animation ----------
+   Container staggers its children; each stat glides up + fades in.
+   The count-up in AnimatedStat uses the same delay so the number starts
+   counting exactly when its stat becomes visible. */
+const STATS_START = 0.7; // seconds after page load
+const STATS_STAGGER = 0.16; // gap between each stat
+const SMOOTH = [0.16, 1, 0.3, 1]; // easeOutExpo
+
+const statsContainer = {
+  hidden: {},
+  show: {
+    transition: { delayChildren: STATS_START, staggerChildren: STATS_STAGGER },
+  },
+};
+
+const statItem = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.9, ease: SMOOTH },
+  },
+};
+
 // Gold gradient: #E2A10D on left & right edges, #FFCD39 in the center
 const goldBg = "bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D]";
 
@@ -103,7 +127,7 @@ const BtnDark = ({ href, children }) => (
 
 export default function HomeHero() {
   return (
-    <section className="relative bg-[#faf9f6] pb-12 sm:pb-16">
+    <section className="relative bg-[#faf9f6] pb-12 sm:pb-16 -mt-8">
       {/* ================= HERO ================= */}
       <div className="relative min-h-[640px] overflow-hidden bg-[#000000] lg:min-h-[760px]">
         {/* Background image */}
@@ -227,27 +251,32 @@ export default function HomeHero() {
               </motion.div>
             </div>
 
+            {/* Stats — staggered glide-in + smooth count-up */}
             <motion.dl
-              variants={fadeUp}
+              variants={statsContainer}
               initial="hidden"
               animate="show"
-              custom={4}
               className="mt-12 grid max-w-lg grid-cols-4 divide-x divide-[#faf9f6]/20"
             >
               {stats.map((s, i) => (
-                <div
+                <motion.div
                   key={s.label}
+                  variants={statItem}
                   className={i === 0 ? "pr-4 sm:pr-6" : "px-4 sm:px-6"}
                 >
                   <dd
-                    className={`${marcellus.className} inline-block text-2xl font-normal sm:text-3xl ${goldText}`}
+                    className={`${marcellus.className} inline-block text-2xl font-normal sm:text-3xl`}
                   >
-                    <AnimatedStat value={s.value} />
+                    <AnimatedStat
+                      value={s.value}
+                      delay={STATS_START + i * STATS_STAGGER}
+                      duration={2.2}
+                    />
                   </dd>
                   <dt className="mt-1 text-[11px]  leading-snug text-[#faf9f6]/65 sm:text-sm">
                     {s.label}
                   </dt>
-                </div>
+                </motion.div>
               ))}
             </motion.dl>
           </div>

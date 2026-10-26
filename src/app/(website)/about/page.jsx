@@ -4,28 +4,23 @@ import { Marcellus } from "next/font/google";
 import {
   ArrowRight,
   Building2,
-  Briefcase,
-  Eye,
   Handshake,
-  Home,
   Leaf,
   Mail,
   MapPin,
   Phone,
   Settings,
   ShieldCheck,
-  Star,
-  Target,
   Users,
   MapPinned,
   FileCheck2,
   HandCoins,
   Smartphone,
-  Landmark,
-  BriefcaseBusiness,
 } from "lucide-react";
 
 import FaqAccordion from "@/component/about/FaqAccordion";
+// import PartnersSection from "@/component/about/PartnersSection";
+// import VisionMissionSection from "@/component/about/VisionMissionSection";
 import TeamSection, { FounderSection } from "@/component/TeamSection";
 
 const marcellus = Marcellus({
@@ -35,21 +30,7 @@ const marcellus = Marcellus({
   display: "swap",
 });
 
-const founder = {
-  name: "Ritesh Bhasin",
-  role: "Founder and Head of sales",
-  photo: "/founder/ritesh.png", // e.g. "/image/team/ritesh.webp"
-  bio: "Ritesh leads Bringo with 18 years of corporate experience behind him, before he took up business full time. His current focus is strengthening every segment of our real estate business and bringing the team together around our Annual Operating Plan.",
-  experience: [
-    "Genpact",
-    "Accenture",
-    "Airtel",
-    "CEVA Logistics",
-    "Cars24",
-    "Investors Clinic",
-    "ABL Workspaces",
-  ],
-};
+
 
 const teamMembers = [
   {
@@ -57,7 +38,6 @@ const teamMembers = [
     role: "Chief Operating Officer",
     photo: "/founder/rohit.jpeg",
   },
-
   {
     name: "Mehak Bhasin",
     role: "Head of New Channel Engagement",
@@ -148,7 +128,6 @@ export const metadata = {
 
 /* ---------------------------------------------------------------
    CONTENT
-   NOTE: stats 
 ---------------------------------------------------------------- */
 // const stats = [
 //   { icon: Home, value: "300+", label: "Properties Sold Every Year" },
@@ -207,26 +186,6 @@ const reasons = [
     title: "Prop-Tech Experience",
     text: "We are building it around every step of the process, so you can follow your deal with ease.",
   },
-];
-
-// partners
-const partners = [
-  { name: "Jaypee Greens", logo: "/partners/jaypee-greens.webp" },
-  { name: "Godrej Properties", logo: "/partners/godrej-properties.webp" },
-  { name: "Gaurs", logo: "/partners/gaurs.webp" },
-  { name: "M3M India", logo: "/partners/m3m.jpg" },
-  { name: "Migsun", logo: "/partners/migsun.jpg" },
-  { name: "Hero Homes", logo: "/partners/hero-homes.jpg", scale: 2.18 },
-  { name: "Max Estates", logo: "/partners/max-estates.jpg", scale: 2.18 },
-  { name: "L&T Realty", logo: "/partners/l-and-t-realty.jpg", scale: 2.18 },
-  { name: "ACE Group", logo: "/partners/ace-group.jpg", scale: 2.18 },
-  { name: "ATS", logo: "/partners/ats.jpg" },
-  { name: "Jacob & Co.", logo: "/partners/jacob-and-co.jpg" },
-  { name: "Trump Towers", logo: "/partners/trump-towers.jpg" },
-  { name: "Purvanchal Projects", logo: "/partners/purvanchal.jpg" , scale: 1.90 },
-  { name: "Kalpataru", logo: "/partners/kalpataru.jpg", scale: 1.08 },
-  { name: "Prateek Group", logo: "/partners/prateek-group.jpg",  },
-  { name: "County Group", logo: "/partners/county-group.webp" },
 ];
 
 const faqs = [
@@ -344,39 +303,7 @@ const Avatars = () => (
     ))}
   </div>
 );
-// const getInitials = (name) =>
-//   name
-//     .split(" ")
-//     .filter(Boolean)
-//     .slice(0, 2)
-//     .map((w) => w[0])
-//     .join("")
-//     .toUpperCase();
 
-// const TeamPhoto = ({ name, photo, sizes, className = "" }) => (
-//   <div
-//     className={`relative overflow-hidden bg-[#F3F0E8] ${className}`}
-//   >
-//     {photo ? (
-//       <Image
-//         src={photo}
-//         alt={`${name}, Bringo Real Estates`}
-//         fill
-//         sizes={sizes}
-//         className="object-cover"
-//       />
-//     ) : (
-//       <div
-//         aria-hidden="true"
-//         className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#52685B] to-[#000000]"
-//       >
-//         <span className="text-5xl tracking-widest text-[#D4A62A]">
-//           {getInitials(name)}
-//         </span>
-//       </div>
-//     )}
-//   </div>
-// );
 /* ---------------------------------------------------------------
    PAGE
 ---------------------------------------------------------------- */
@@ -562,7 +489,6 @@ export default function AboutPage() {
           </div>
 
           {/* Text */}
-
           <div>
             <Eyebrow>Experience</Eyebrow>
 
@@ -575,7 +501,7 @@ export default function AboutPage() {
 
             <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-[#52685B]">
               We're a team of 20+ people with one goal: doing real estate
-              differently. Every year we sell 300+ properties, and we grow the
+              differently. Every year we sell 150+ properties, and we grow the
               Bringo way, one client, one sale, one relationship at a time.
             </p>
 
@@ -603,7 +529,6 @@ export default function AboutPage() {
       </section>
 
       {/* ============ WHY CHOOSE ============ */}
-
       <section
         aria-labelledby="why-title"
         className="relative overflow-hidden bg-[#F3F0E8]"
@@ -645,7 +570,7 @@ export default function AboutPage() {
 
           {/* Reasons grid */}
           <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {reasons.map(({ icon: Icon, number, title, text }, i) => (
+            {reasons.map(({ icon: Icon, number, title, text }) => (
               <li
                 key={title}
                 className="group relative overflow-hidden rounded-3xl border border-[#000000]/8 bg-[#FAF9F6] p-7 shadow-[0_10px_35px_rgba(26,42,34,0.06)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(26,42,34,0.12)]"
@@ -727,144 +652,35 @@ export default function AboutPage() {
   teamMembers={teamMembers}
   TeamPhoto={TeamPhoto}
 /> */}
+      <FounderSection
+        founder={{
+          name: "Ritesh Bhasin",
+          role: "Founder and Head of sales",
+          photo: "/founder/ritesh.png",
+          bio: [
+            "With 18 years of corporate experience, Ritesh brings strong leadership, strategic thinking, and a results-driven approach to Bringo. As Head of Sales, he focuses on driving business growth, strengthening sales performance, improving operational efficiency, and building a high-performing team.",
+            "An IIM-C alumnus and Six Sigma Black Belt, he combines strategic vision with a structured approach to achieving business goals and creating long-term value for the organisation.",
+          ], // string or array
+          quote:
+            "I believe sustainable growth comes from strong teams, disciplined execution, and a clear focus on delivering value to customers.",
+          socials: [
+            { label: "LinkedIn", href: "https://linkedin.com/in/..." },
+            { label: "Instagram", href: "https://instagram.com/..." },
+          ],
+        }}
+      />
 
       {/* ============ FOUNDER + TEAM ============ */}
-      <TeamSection founder={founder} teamMembers={teamMembers} />
-      {/* ============ PARTNERS ============ */}
-      <section
-        aria-labelledby="partners-title"
-        className="mx-auto max-w-7xl px-5 py-14 text-center sm:px-8"
-      >
-        <div className="flex justify-center">
-          <Eyebrow>Our Partners</Eyebrow>
-        </div>
+      <TeamSection  teamMembers={teamMembers} />
 
-        <h2
-          id="partners-title"
-          className="mt-3 text-3xl font-normal sm:text-4xl"
-          style={{ fontFamily: "Marcellus, serif" }}
-        >
-          Trusted by Leading Brands
-        </h2>
+      {/* ============ PARTNERS (separate file) ============ */}
+      {/* <PartnersSection /> */}
 
-        {/* Partner Logo Marquee */}
-        <div className="relative mt-10 w-full overflow-hidden">
-          <div className="partner-marquee flex w-max">
-            {/* FIRST SET */}
-            <div className="flex shrink-0 items-center gap-10 pr-10">
-              {partners.map((partner) => (
-                <div
-                  key={`first-${partner.name}`}
-                  className="flex h-28 w-48 shrink-0 items-center justify-center
-                   rounded-lg bg-white px-4 py-3"
-                >
-                  <Image
-                    src={partner.logo}
-                    alt={`${partner.name} logo`}
-                    width={180}
-                    height={100}
-                    sizes="180px"
-                    className="h-full w-full object-contain"
-                    style={{
-                      transform: `scale(${partner.scale ?? 1})`,
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* DUPLICATE SET */}
-            <div
-              className="flex shrink-0 items-center gap-10 pr-10"
-              aria-hidden="true"
-            >
-              {partners.map((partner) => (
-                <div
-                  key={`second-${partner.name}`}
-                  className="flex h-28 w-48 shrink-0 items-center justify-center
-                   rounded-lg bg-white px-4 py-3"
-                >
-                  <Image
-                    src={partner.logo}
-                    alt=""
-                    width={180}
-                    height={100}
-                    sizes="180px"
-                    className="h-full w-full object-contain"
-                    style={{
-                      transform: `scale(${partner.scale ?? 1})`,
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ OUR PEOPLE + VISION/MISSION ============ */}
-      <section
-        aria-labelledby="people-title"
-        className="mx-auto max-w-7xl px-5 py-14 sm:px-8"
-      >
-        <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.4fr]">
-          <div>
-            <Eyebrow line>Our People</Eyebrow>
-            <h2
-              id="people-title"
-              className="mt-4 text-4xl font-normal leading-tight"
-            >
-              Driven by People.
-              <br />
-              Inspired by Possibilities.
-            </h2>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#52685B]">
-              Our team of real estate experts, designers and strategists work
-              together to create exceptional spaces that enrich lives and
-              communities.
-            </p>
-            {/* <div className="mt-6">
-              <BtnDark href="#"></BtnDark>
-            </div> */}
-          </div>
-
-          <div className="grid overflow-hidden rounded-2xl sm:grid-cols-[1.1fr_1fr]">
-            <div className="relative min-h-[390px]">
-              <Image
-                src="/image/cta.webp"
-                alt="Dining area with large windows and indoor plants"
-                fill
-                sizes="(min-width: 1024px) 300px, 100vw"
-                className="object-cover"
-              />
-            </div>
-            <div className="flex flex-col justify-center gap-6 bg-[#000000] p-7 text-[#FAF9F6]">
-              <div>
-                <p className="flex items-center gap-3">
-                  <Eye size={22} strokeWidth={1.5} /> Vision
-                </p>
-                <p className="mt-2 text-xs leading-relaxed text-[#FAF9F6]/80">
-                  To create sustainable and future-ready communities.
-                </p>
-              </div>
-              <span className="h-px w-full bg-[#FAF9F6]/25" />
-              <div>
-                <p className="flex items-center gap-3">
-                  <Target size={22} strokeWidth={1.5} /> Mission
-                </p>
-                <p className="mt-2 text-xs leading-relaxed text-[#FAF9F6]/80">
-                  Property deals mean heavy paperwork and unclear charges.
-                  Bringo changes that with transparent steps, upfront costs, and
-                  certified experts who keep every document legally sound
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ============ OUR PEOPLE + VISION/MISSION (separate file) ============ */}
+      {/* <VisionMissionSection /> */}
 
       {/* ============ FAQ ============ */}
-      <section
+      {/* <section
         aria-labelledby="faq-title"
         className="mx-auto max-w-7xl px-5 py-14 sm:px-8"
       >
@@ -889,7 +705,7 @@ export default function AboutPage() {
             <FaqAccordion items={faqs} />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ============ CTA + CONTACT ============ */}
       <section

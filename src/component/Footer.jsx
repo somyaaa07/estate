@@ -19,7 +19,7 @@ const goldStroke = { stroke: "url(#footer-gold)" };
 
 const quickLinks = [
   { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
+  { label: "About", href: "/about" },
   { label: "Properties", href: "/properties" },
   // { label: "Services", href: "/services" },
   { label: "Contact", href: "/contact" },
@@ -28,7 +28,7 @@ const quickLinks = [
 const services = [
   { label: "Buy", href: "/properties?type=buy" },
   { label: "Rent", href: "/properties?type=rent" },
-  { label: "Sell", href: "/properties?type=sell" },
+  { label: "Sell", href: "/properties/sell" },
 ];
 
 const socials = [

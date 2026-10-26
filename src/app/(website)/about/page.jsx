@@ -322,7 +322,7 @@ export default function AboutPage() {
       >
         {/* Background Image */}
         <Image
-          src="/image/about.png"
+          src="/image/about-new.png"
           alt="Luxury real estate property"
           fill
           priority
@@ -338,8 +338,6 @@ export default function AboutPage() {
         {/* Left Content */}
         <div className="relative z-10 mx-auto w-full max-w-7xl px-5 py-14 sm:px-8 lg:py-16">
           <div className="max-w-2xl text-white">
-         
-
             <h1
               id="about-hero"
               className="mt-5 text-4xl font-normal leading-[1.08] sm:text-5xl lg:text-6xl"

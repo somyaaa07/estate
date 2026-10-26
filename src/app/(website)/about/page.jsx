@@ -344,8 +344,8 @@ export default function AboutPage() {
               id="about-hero"
               className="mt-5 text-4xl font-normal leading-[1.08] sm:text-5xl lg:text-6xl"
             >
-              About
-              <span className="text-[#D4AF70] ">Us</span>
+              About {" "}
+              <span className="text-[#E2A10D] ">Bringo</span>
             </h1>
 
             <p className="mt-5  max-w-[200px] sm:max-w-[190px] md:max-w-[300px] lg:max-w-md text-sm leading-6 text-white/80 sm:text-base sm:leading-7">

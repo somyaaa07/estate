@@ -175,8 +175,8 @@ const reasons = [
   {
     icon: Handshake,
     number: "05",
-    title: "Home Loans & Sales",
-    text: "We help with your finance along with your purchase.",
+    title: "Loan Assitance Service",
+    text: "We provide all types of financing options along with your purchase.",
   },
   {
     icon: Smartphone,

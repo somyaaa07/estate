@@ -33,12 +33,12 @@ const mainVerticals = [
   {
     icon: Home,
     title: "Residential Properties",
-    text: "Buy, Sell, or Rent Residential Properties in Noida, Greater Noida, Gurugram, and Along the Yamuna Expressway.",
+    text: "Buy, Sell, or Rent Residential Properties in Noida, Greater Noida, Yamuna Expressway and along the Gurugram .",
   },
   {
     icon: Factory,
     title: "Industrial Sales",
-    text: "Buy, Sell, or Lease Industrial Properties, Factories, Plots, and Warehouses in Noida, Greater Noida ,Gurugram , and Along the Yamuna Expressway.",
+    text: "Buy, Sell, or Lease Industrial Properties, Factories, Plots, and Warehouses in Noida, Greater Noida ,Yamuna Expressway and along the Gurugram .",
   },
   {
     icon: Building2,

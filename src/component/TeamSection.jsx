@@ -119,10 +119,10 @@ function MemberCard({ member, index }) {
 function LeaderCard({ person, index }) {
   const reveal = useReveal(32);
   return (
-    <motion.li
-      {...reveal((index % 3) * 0.12)}
-      className="group flex flex-col items-center text-center"
-    >
+  <motion.li
+  {...reveal((index % 3) * 0.12)}
+  className="group flex w-full flex-col items-center text-center sm:w-[calc((100%-2rem)/2)] lg:w-[calc((100%-4rem)/3)]"
+>
       {/*
         Smooth square -> circle:
         - radius goes 12% -> 50% (both percentages, so it interpolates
@@ -345,11 +345,11 @@ export default function TeamSection({ founder, teamMembers = [], leadership }) {
             />
           </motion.div>
 
-          <ul className="mt-10 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
-            {leaders.map((person, i) => (
-              <LeaderCard key={person.name} person={person} index={i} />
-            ))}
-          </ul>
+       <ul className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-12 lg:mt-14">
+  {leaders.map((person, i) => (
+    <LeaderCard key={person.name} person={person} index={i} />
+  ))}
+</ul>
         </div>
       </div>
     </section>

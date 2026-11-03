@@ -146,12 +146,11 @@ export default function Testimonials() {
                     ))}
                   </div>
 
-                  <blockquote
-                    className={`${marcellus.className} mt-5 line-clamp-6 text-[clamp(1.05rem,2.2vw,1.6rem)] font-normal leading-[1.6] text-[#faf9f6] sm:mt-6 sm:line-clamp-5 lg:line-clamp-6`}
-                  >
-                    {current.quote}
-                  </blockquote>
-
+           <blockquote
+  className={`${marcellus.className} mt-5 line-clamp-6 text-[clamp(0.9rem,1.6vw,1.2rem)] font-normal leading-[1.6] text-[#faf9f6] sm:mt-6 sm:line-clamp-5 lg:line-clamp-6`}
+>
+  {current.quote}
+</blockquote>
                   <figcaption className="mt-auto flex items-center gap-3.5 border-t border-[#faf9f6]/10 pt-5 sm:gap-4 sm:pt-6">
                     <span
                       aria-hidden="true"
@@ -165,9 +164,9 @@ export default function Testimonials() {
                       >
                         {current.name}
                       </p>
-                      <p className="truncate text-[13px] text-[#faf9f6]/60 sm:text-sm">
+                      {/* <p className="truncate text-[13px] text-[#faf9f6]/60 sm:text-sm">
                         {current.role}
-                      </p>
+                      </p> */}
                     </div>
                   </figcaption>
                 </motion.figure>

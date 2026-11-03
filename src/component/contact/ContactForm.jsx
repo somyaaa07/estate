@@ -184,18 +184,6 @@ export default function ContactForm() {
     setTouched((t) => ({ ...t, [e.target.name]: true }));
 
   /* ---------- Focus + scroll on step / success change ---------- */
-  useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
-    cardRef.current?.scrollIntoView({
-      behavior: reduce ? "auto" : "smooth",
-      block: "nearest",
-    });
-    headingRef.current?.focus({ preventScroll: true });
-  }, [step, status === "success"]); // eslint-disable-line react-hooks/exhaustive-deps
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((p) => {
@@ -251,19 +239,27 @@ export default function ContactForm() {
   };
 
   /* ---------- Step 1: validate, then go to step 2 (nothing sent yet) ---------- */
-  const handleStep1 = (e) => {
-    e.preventDefault();
-    setTouched({ name: true, phone: true, email: true });
-    const firstBad = ["name", "phone", "email"].find((k) => errors[k]);
-    if (firstBad) {
-      document.getElementById(firstBad)?.focus();
-      return;
-    }
-    setErrorMsg("");
-    setStatus("idle");
-    setStep(2);
-  };
+const handleStep1 = (e) => {
+  e.preventDefault();
 
+  setTouched({ name: true, phone: true, email: true });
+
+  const firstBad = ["name", "phone", "email"].find((k) => errors[k]);
+
+  if (firstBad) {
+    document.getElementById(firstBad)?.focus();
+    return;
+  }
+
+  setErrorMsg("");
+  setStatus("idle");
+  setStep(2);
+
+  cardRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+};
   /* ---------- Step 2: send full requirements ---------- */
   const handleStep2 = (e) => {
     e.preventDefault();

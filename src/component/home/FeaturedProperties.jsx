@@ -170,7 +170,7 @@ const SkeletonCard = () => (
 export default function PropertiesList({
   type,
   heading = 'Exclusive Projects',
-  subheading = 'Explore premium residential and commercial projects offering exceptional locations, modern living, and great investment opportunities.',
+  subheading = 'Premium Properties. Prime Locations. Smart Investments.',
   limit = 4,
   viewAllHref,
 }) {

@@ -2,9 +2,12 @@
 const nextConfig = {
   serverExternalPackages: ['sequelize', 'mysql2'],
   turbopack: {}, // Next 16: `next build` ke liye (webpack config ke saath error nahi aayega)
-    images: {
-    domains: ['localhost'],
-  },
+   // Naya tarika (recommended)
+images: {
+  remotePatterns: [
+    { protocol: 'https', hostname: 'images.unsplash.com' },
+  ],
+},
   webpack: (config) => {
     config.externals.push({
       'pg-hstore':  'pg-hstore',

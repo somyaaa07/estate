@@ -1,23 +1,39 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ['sequelize', 'mysql2'],
-  turbopack: {}, // Next 16: `next build` ke liye (webpack config ke saath error nahi aayega)
-   // Naya tarika (recommended)
-images: {
-  remotePatterns: [
-    { protocol: 'https', hostname: 'images.unsplash.com' },
+  // Keep database packages external
+  serverExternalPackages: [
+    'sequelize',
+    'mysql2',
+    'pg',
+    'pg-hstore',
+    'tedious',
+    'oracledb',
+    'sqlite3',
+    'mariadb',
   ],
-},
-  webpack: (config) => {
-    config.externals.push({
-      'pg-hstore':  'pg-hstore',
-      'pg':         'pg',
-      'tedious':    'tedious',
-      'oracledb':   'oracledb',
-      'sqlite3':    'sqlite3',
-      'mariadb':    'mariadb',
-    });
-    return config;
+
+  // Next.js 16 Turbopack
+  turbopack: {},
+
+  // Remote images
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
+  },
+
+  // API rewrites
+  async rewrites() {
+    return [
+      {
+        source: '/uploads/:path*',
+        destination: '/api/files/:path*',
+      },
+    ];
   },
 };
 

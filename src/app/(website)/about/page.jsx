@@ -346,10 +346,9 @@ export default function AboutPage() {
               <span className="text-[#E2A10D] ">Bringo</span>
             </h1>
 
-            <p className="mt-5  max-w-[200px] sm:max-w-[190px] md:max-w-[300px] lg:max-w-md text-sm leading-6 text-white/80 sm:text-base sm:leading-7">
-              We're a team of 20+ people with one goal: doing real estate
-              differently. Every year we sell 150+ properties, and we grow the
-              Bringo way, one client, one sale, one relationship at a time.
+            <p className="mt-5  max-w-[250px] sm:max-w-[200px] md:max-w-[300px] lg:max-w-md text-sm leading-6 text-white/80 sm:text-base sm:leading-7">
+       Established in 2023, Bringo Real Estate was founded with one goal: to do real estate differently.
+Today, we are a team of 20+ people, helping clients find the right property through trust, transparency, and personalised guidance. Every year, we help sell 150+ properties, building lasting relationships one client, one sale, and one milestone at a time.
             </p>
           </div>
         </div>
@@ -481,8 +480,8 @@ export default function AboutPage() {
       <FounderSection
         founder={{
           name: "Ritesh Bhasin",
-          role: "Founder and Head of sales",
-          photo: "/founder/ritesh.png",
+          role: "Founder and Head of Sales",
+          photo: "/founder/ritesh1.jpeg",
           bio: [
             "With 18 years of corporate experience, Ritesh brings strong leadership, strategic thinking, and a results-driven approach to Bringo. As Head of Sales, he focuses on driving business growth, strengthening sales performance, improving operational efficiency, and building a high-performing team.",
             "An IIM-C alumnus and Six Sigma Black Belt, he combines strategic vision with a structured approach to achieving business goals and creating long-term value for the organisation.",

@@ -413,7 +413,7 @@ function NavbarInner() {
       onClick={onClick}
       className={`group inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] font-extrabold tracking-wide text-black shadow-lg shadow-[#E2A10D]/20 transition hover:bg-white active:scale-[0.98] ${ring} ${extra}`}
     >
-      Enquiry Now
+      Enquire Now
       <FiArrowRight
         className="transition-transform group-hover:translate-x-1"
         aria-hidden="true"

@@ -8,13 +8,15 @@ const marcellus = Marcellus({
 });
 
 export const defaultPartners = [
-  { name: "Jaypee Greens", logo: "/partners/jaypee-greens.webp" },
+
   { name: "Godrej Properties", logo: "/partners/godrej-properties.webp" },
   { name: "Gaurs", logo: "/partners/gaurs.webp" },
   { name: "M3M India", logo: "/partners/m3m.jpg" },
   { name: "Migsun", logo: "/partners/migsun.jpg" },
+   { name: "Jaypee Greens", logo: "/partners/jaypee-greens.webp" },
   { name: "Hero Homes", logo: "/partners/hero-homes.jpg", scale: 2.18 },
   { name: "Max Estates", logo: "/partners/max-estates.jpg", scale: 2.18 },
+   
   { name: "L&T Realty", logo: "/partners/l-and-t-realty.jpg", scale: 2.18 },
   { name: "ACE Group", logo: "/partners/ace-group.jpg", scale: 2.18 },
   { name: "ATS", logo: "/partners/ats.jpg" },

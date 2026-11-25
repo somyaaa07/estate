@@ -73,7 +73,6 @@ const itemVariants = {
   },
 };
 
-/* FIX: the old logo used h-35 (140px) inside a 56px bar. Now sized per breakpoint. */
 function Logo({ small }) {
   return (
     <Link
@@ -308,7 +307,6 @@ function NavbarInner() {
   const searchParams = useSearchParams();
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
-  const [subOpen, setSubOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [enquiry, setEnquiry] = useState(false);
   const panelRef = useRef(null);
@@ -333,9 +331,9 @@ function NavbarInner() {
   };
   const isParentActive = (href) => pathname.startsWith(href);
 
+  /* Close mobile menu on route change (dropdown inside is always open) */
   useEffect(() => {
     setOpen(false);
-    setSubOpen(pathname.startsWith("/properties"));
   }, [pathname, searchParams]);
 
   useEffect(() => {
@@ -481,9 +479,8 @@ function NavbarInner() {
             )}
           </div>
 
-          {/* Mobile / tablet right side: quick Enquire (sm+) + menu toggle */}
+          {/* Mobile / tablet right side: menu toggle */}
           <div className="flex items-center gap-2 lg:hidden">
-        
             <button
               type="button"
               onClick={() => setOpen((o) => !o)}
@@ -559,7 +556,7 @@ function NavbarInner() {
                     const active = isParentActive(href);
                     return (
                       <motion.li key={href} variants={itemVariants}>
-                        <div className="flex items-stretch gap-1.5">
+                        <div className="flex items-stretch">
                           <Link
                             href={href}
                             aria-current={active ? "page" : undefined}
@@ -567,113 +564,48 @@ function NavbarInner() {
                           >
                             <RowLabel active={active}>{label}</RowLabel>
                           </Link>
-                          <button
-                            type="button"
-                            onClick={() => setSubOpen((s) => !s)}
-                            aria-expanded={subOpen}
-                            aria-label={
-                              subOpen
-                                ? "Collapse property types"
-                                : "Expand property types"
-                            }
-                            className={`flex w-12 shrink-0 items-center justify-center rounded-xl border text-white transition-colors ${touch} ${
-                              subOpen
-                                ? "border-[#E2A10D] text-[#E2A10D]"
-                                : "border-white/40"
-                            } ${ring}`}
-                          >
-                            <motion.span
-                              animate={{ rotate: subOpen ? 180 : 0 }}
-                              transition={{
-                                type: "spring",
-                                stiffness: 400,
-                                damping: 26,
-                              }}
-                              className="flex"
-                            >
-                              <FiChevronDown size={20} aria-hidden="true" />
-                            </motion.span>
-                          </button>
                         </div>
-                        <AnimatePresence initial={false}>
-                          {subOpen && (
-                            <motion.ul
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{
-                                height: "auto",
-                                opacity: 1,
-                                transition: {
-                                  height: {
-                                    duration: 0.3,
-                                    ease: [0.22, 1, 0.36, 1],
-                                  },
-                                  opacity: { duration: 0.2 },
-                                  staggerChildren: 0.06,
-                                  delayChildren: 0.05,
-                                },
-                              }}
-                              exit={{
-                                height: 0,
-                                opacity: 0,
-                                transition: {
-                                  duration: 0.22,
-                                  ease: [0.4, 0, 1, 1],
-                                },
-                              }}
-                              className="ml-3 mt-1.5 space-y-1 overflow-hidden border-l-[3px] border-[#E2A10D] pl-2.5"
-                            >
-                              {children.map((c) => {
-                                const ca = isActive(c.href);
-                                const Icon = c.icon;
-                                return (
-                                  <motion.li
-                                    key={c.href}
-                                    variants={{
-                                      hidden: { opacity: 0, x: -14 },
-                                      show: { opacity: 1, x: 0 },
-                                    }}
-                                    initial="hidden"
-                                    animate="show"
-                                    transition={{
-                                      duration: 0.25,
-                                      ease: [0.22, 1, 0.36, 1],
-                                    }}
-                                  >
-                                    <Link
-                                      href={c.href}
-                                      aria-current={ca ? "page" : undefined}
-                                      className={`${mobileRow(ca, "text-[15px]")} py-2`}
+
+                        {/* Sub-menu: always open on mobile */}
+                        <ul className="ml-3 mt-1.5 space-y-1 border-l-[3px] border-[#E2A10D] pl-2.5">
+                          {children.map((c) => {
+                            const ca = isActive(c.href);
+                            const Icon = c.icon;
+                            return (
+                              <li key={c.href}>
+                                <Link
+                                  href={c.href}
+                                  aria-current={ca ? "page" : undefined}
+                                  className={`${mobileRow(ca, "text-[15px]")} py-2`}
+                                >
+                                  <span className="flex min-w-0 items-center gap-3">
+                                    <span
+                                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
+                                        ca
+                                          ? "bg-[#E2A10D]/15 text-[#E2A10D]"
+                                          : "bg-white/10 text-[#E2A10D]"
+                                      }`}
                                     >
-                                      <span className="flex min-w-0 items-center gap-3">
-                                        <span
-                                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
-                                            ca
-                                              ? "bg-[#E2A10D]/15 text-[#E2A10D]"
-                                              : "bg-white/10 text-[#E2A10D]"
-                                          }`}
-                                        >
-                                          <Icon size={16} aria-hidden="true" />
-                                        </span>
-                                        <span className="min-w-0">
-                                          {c.label}
-                                          <span
-                                            className={`block text-xs font-medium leading-snug ${
-                                              ca
-                                                ? "text-[#E2A10D]/80"
-                                                : "text-[#d9d4c4]"
-                                            }`}
-                                          >
-                                            {c.desc}
-                                          </span>
-                                        </span>
+                                      <Icon size={16} aria-hidden="true" />
+                                    </span>
+                                    <span className="min-w-0">
+                                      {c.label}
+                                      <span
+                                        className={`block text-xs font-medium leading-snug ${
+                                          ca
+                                            ? "text-[#E2A10D]/80"
+                                            : "text-[#d9d4c4]"
+                                        }`}
+                                      >
+                                        {c.desc}
                                       </span>
-                                    </Link>
-                                  </motion.li>
-                                );
-                              })}
-                            </motion.ul>
-                          )}
-                        </AnimatePresence>
+                                    </span>
+                                  </span>
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
                       </motion.li>
                     );
                   }
@@ -714,7 +646,7 @@ function NavbarInner() {
         </AnimatePresence>
       </header>
 
-      {/* FIX: modal lives outside <header>. The header's backdrop-blur creates a
+      {/* Modal lives outside <header>: the header's backdrop-blur creates a
           containing block that would trap any position:fixed modal inside the bar. */}
       <EnquiryModal open={enquiry} onClose={() => setEnquiry(false)} />
     </>

@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import {
   AlertCircle,
+  ArrowLeft,
   Building2,
   Check,
   CheckCircle2,
@@ -149,15 +150,28 @@ const REQUIRED = [
   },
 ];
 
-/* Shared input look: tall, soft, clear focus */
+/* Mobile steps (one section per step). Desktop still shows everything. */
+const STEPS = [
+  { id: "contact", label: "Contact" },
+  { id: "basic", label: "Property" },
+  { id: "location", label: "Location" },
+  { id: "specs", label: "Details" },
+  { id: "photos", label: "Photos" },
+];
+const LAST_STEP = STEPS.length - 1;
+
+/* Shared input look: tall, soft, clear focus.
+   text-base on mobile stops iOS Safari from zooming in when an input is focused. */
 const inputBase =
-  "w-full rounded-xl border bg-white px-4 py-3.5 text-[15px] text-[#0A0A0A] placeholder:text-[#5F5F5F]/60 outline-none transition-[border-color,box-shadow] duration-150 hover:border-[#5F5F5F]/50 focus:border-black focus:shadow-[0_0_0_4px_rgba(212,175,55,0.25)] disabled:cursor-wait disabled:bg-[#F6F3EC] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none";
+  "w-full rounded-xl border bg-white px-4 py-3.5 text-base lg:text-[15px] text-[#0A0A0A] placeholder:text-[#5F5F5F]/60 outline-none transition-[border-color,box-shadow] duration-150 hover:border-[#5F5F5F]/50 focus:border-black focus:shadow-[0_0_0_4px_rgba(212,175,55,0.25)] disabled:cursor-wait disabled:bg-[#F6F3EC] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none";
 
 const focusRing =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]";
 
 const cardShadow =
   "shadow-[0_1px_2px_rgba(0,0,0,0.05),0_12px_32px_-16px_rgba(0,0,0,0.25)] ring-1 ring-black/[0.07]";
+
+const touch = "touch-manipulation [-webkit-tap-highlight-color:transparent]";
 
 /* ───────────── UI pieces ───────────── */
 function Item({ label, required, hint, error, span, children, htmlFor }) {
@@ -249,7 +263,7 @@ function TypeTiles({ value, onChange }) {
     <div
       role="radiogroup"
       aria-label="Property type"
-      className="grid grid-cols-2 gap-3 sm:grid-cols-5"
+      className="grid grid-cols-3 gap-2.5 sm:grid-cols-5 sm:gap-3"
     >
       {TYPES.map(({ value: v, label, icon: Icon }) => {
         const on = value === v;
@@ -263,7 +277,7 @@ function TypeTiles({ value, onChange }) {
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
-            className={`relative flex flex-col items-center gap-2.5 rounded-2xl border px-2 py-5 text-sm transition-colors ${focusRing} ${
+            className={`relative flex min-h-[88px] flex-col items-center justify-center gap-2 rounded-2xl border px-1.5 py-4 text-[13px] transition-colors sm:gap-2.5 sm:px-2 sm:py-5 sm:text-sm ${touch} ${focusRing} ${
               on
                 ? "border-black text-[#FAF9F6] shadow-[0_10px_24px_-10px_rgba(0,0,0,0.7)]"
                 : "border-[#5F5F5F]/20 bg-white text-[#5F5F5F] hover:border-black/60 hover:text-black"
@@ -308,7 +322,7 @@ function TypeTiles({ value, onChange }) {
 
 function Stepper({ value, onChange, max = 20 }) {
   const n = value === "" ? 0 : Number(value);
-  const btn = `flex h-10 w-10 items-center justify-center rounded-full bg-[#F1EDE3] text-[#0A0A0A] transition-colors hover:bg-black hover:text-[#FAF9F6] disabled:opacity-30 disabled:hover:bg-[#F1EDE3] disabled:hover:text-[#0A0A0A] ${focusRing}`;
+  const btn = `flex h-11 w-11 items-center justify-center rounded-full bg-[#F1EDE3] text-[#0A0A0A] transition-colors hover:bg-black hover:text-[#FAF9F6] disabled:opacity-30 disabled:hover:bg-[#F1EDE3] disabled:hover:text-[#0A0A0A] lg:h-10 lg:w-10 ${touch} ${focusRing}`;
   return (
     <div className="flex items-center justify-between rounded-xl border border-[#5F5F5F]/25 bg-white px-2 py-1.5 transition hover:border-[#5F5F5F]/50">
       <motion.button
@@ -376,7 +390,7 @@ function TagInput({ value = [], onChange, suggestions = [], placeholder }) {
     (v) => !suggestions.some((s) => s.toLowerCase() === v.toLowerCase()),
   );
   const chip = (on) =>
-    `inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] font-medium ring-1 transition-colors ${focusRing} ${
+    `inline-flex min-h-[40px] items-center gap-1.5 rounded-full px-4 py-2 text-[13px] font-medium ring-1 transition-colors ${touch} ${focusRing} ${
       on
         ? "bg-black text-[#FAF9F6] ring-black"
         : "bg-white text-[#5F5F5F] ring-[#5F5F5F]/25 hover:text-black hover:ring-black/60"
@@ -403,6 +417,7 @@ function TagInput({ value = [], onChange, suggestions = [], placeholder }) {
         <Field
           value={text}
           placeholder={placeholder}
+          enterKeyHint="done"
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === ",") {
@@ -416,7 +431,7 @@ function TagInput({ value = [], onChange, suggestions = [], placeholder }) {
           type="button"
           onClick={commit}
           disabled={!text.trim()}
-          className={`shrink-0 rounded-xl bg-black px-6 text-sm font-semibold text-[#FAF9F6] transition-colors hover:bg-[#262626] disabled:opacity-35 ${focusRing}`}
+          className={`shrink-0 rounded-xl bg-black px-6 text-sm font-semibold text-[#FAF9F6] transition-colors hover:bg-[#262626] disabled:opacity-35 ${touch} ${focusRing}`}
         >
           Add
         </motion.button>
@@ -438,9 +453,9 @@ function TagInput({ value = [], onChange, suggestions = [], placeholder }) {
                 type="button"
                 aria-label={`Remove ${v}`}
                 onClick={() => remove(v)}
-                className="rounded-full hover:text-[#F5D77A]"
+                className="rounded-full p-0.5 hover:text-[#F5D77A]"
               >
-                <X size={13} />
+                <X size={14} />
               </button>
             </motion.span>
           ))}
@@ -450,8 +465,17 @@ function TagInput({ value = [], onChange, suggestions = [], placeholder }) {
   );
 }
 
-/* Each section is its own card; fades up as it scrolls into view */
-function Section({ id, icon: Icon, title, subtitle, dense, children }) {
+/* Each section is its own card; fades up as it scrolls into view.
+   On mobile only the current step is visible (mobileHidden); on desktop all show. */
+function Section({
+  id,
+  icon: Icon,
+  title,
+  subtitle,
+  dense,
+  mobileHidden,
+  children,
+}) {
   return (
     <motion.section
       id={id}
@@ -459,28 +483,74 @@ function Section({ id, icon: Icon, title, subtitle, dense, children }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, ease }}
-      className={`scroll-mt-24 rounded-3xl bg-white p-6 sm:p-8 ${cardShadow}`}
+      className={`scroll-mt-24 rounded-3xl bg-white p-5 sm:p-8 ${cardShadow} ${
+        mobileHidden ? "max-lg:hidden" : ""
+      }`}
     >
-      <div className="mb-7 flex items-center gap-4 border-b border-black/10 pb-6">
+      <div className="mb-5 flex items-center gap-3.5 border-b border-black/10 pb-5 sm:mb-7 sm:gap-4 sm:pb-6">
         <motion.span
           whileHover={{ rotate: -8, scale: 1.08 }}
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-black shadow-[inset_0_0_0_1px_rgba(212,175,55,0.5)]"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-black shadow-[inset_0_0_0_1px_rgba(212,175,55,0.5)] sm:h-12 sm:w-12"
         >
           <Icon className="text-[#F5D77A]" size={20} strokeWidth={1.6} />
         </motion.span>
         <div className="min-w-0">
-          <h2 className="font-[family-name:var(--font-display)] text-[1.65rem] leading-tight">
+          <h2 className="font-[family-name:var(--font-display)] text-2xl leading-tight sm:text-[1.65rem]">
             {title}
           </h2>
           <p className="mt-0.5 text-sm text-[#5F5F5F]">{subtitle}</p>
         </div>
       </div>
       <div
-        className={`grid gap-x-5 gap-y-6 ${dense ? "grid-cols-2" : "sm:grid-cols-2"}`}
+        className={`grid gap-x-5 gap-y-5 sm:gap-y-6 ${dense ? "grid-cols-2" : "sm:grid-cols-2"}`}
       >
         {children}
       </div>
     </motion.section>
+  );
+}
+
+/* Mobile only: step progress at the top of the form */
+function MobileStepper({ step, onJump }) {
+  return (
+    <div className={`rounded-2xl bg-white p-4 ${cardShadow} lg:hidden`}>
+      <div className="mb-3 flex items-baseline justify-between gap-3">
+        <p className="font-[family-name:var(--font-display)] text-lg leading-tight">
+          {STEPS[step].label}
+        </p>
+        <p className="text-xs font-semibold tabular-nums text-[#5F5F5F]">
+          Step {step + 1} of {STEPS.length}
+        </p>
+      </div>
+      <div className="flex gap-1.5" role="list">
+        {STEPS.map((s, i) => {
+          const past = i < step;
+          const now = i === step;
+          return (
+            <button
+              key={s.id}
+              type="button"
+              role="listitem"
+              disabled={!past}
+              onClick={() => onJump(i)}
+              aria-label={`${s.label}${past ? " (completed, tap to edit)" : now ? " (current)" : ""}`}
+              aria-current={now ? "step" : undefined}
+              className={`group flex h-6 flex-1 items-center ${touch} ${focusRing}`}
+            >
+              <span
+                className={`h-1.5 w-full rounded-full transition-colors duration-300 ${
+                  past
+                    ? "bg-[#D4AF37]"
+                    : now
+                      ? "bg-black"
+                      : "bg-black/10"
+                }`}
+              />
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
@@ -607,8 +677,12 @@ export default function SellPropertyForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [imgOk, setImgOk] = useState(true);
+  const [step, setStep] = useState(0); // mobile step
   const baseline = useRef(JSON.stringify(EMPTY_FORM));
   const heroRef = useRef(null);
+  const topRef = useRef(null);
+  const firstRender = useRef(true);
+  const skipScroll = useRef(false);
 
   // Hero image parallax
   const { scrollYProgress } = useScroll({
@@ -638,6 +712,21 @@ export default function SellPropertyForm() {
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty, loading, success]);
 
+  /* Mobile: when the step changes, bring the top of the form into view */
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    if (skipScroll.current) {
+      skipScroll.current = false;
+      return;
+    }
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [step]);
+
   const update = (key, val) => {
     setForm((f) => ({ ...f, [key]: val }));
     if (errors[key]) setErrors((er) => ({ ...er, [key]: undefined }));
@@ -664,6 +753,29 @@ export default function SellPropertyForm() {
       .getElementById(id)
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
 
+  const scrollToFirstError = () =>
+    setTimeout(
+      () =>
+        document
+          .querySelector('[data-error="true"]')
+          ?.scrollIntoView({ behavior: "smooth", block: "center" }),
+      90,
+    );
+
+  /* Mobile: validate only the current step before moving on */
+  const handleNext = () => {
+    const next = {};
+    REQUIRED.filter((r) => r.sec === STEPS[step].id).forEach((r) => {
+      if (!checks[r.key]) next[r.key] = r.msg;
+    });
+    if (Object.keys(next).length) {
+      setErrors((e) => ({ ...e, ...next }));
+      scrollToFirstError();
+      return;
+    }
+    setStep((s) => Math.min(s + 1, LAST_STEP));
+  };
+
   const handleSubmit = async () => {
     const next = {};
     REQUIRED.forEach((r) => {
@@ -671,11 +783,14 @@ export default function SellPropertyForm() {
     });
     setErrors(next);
     if (Object.keys(next).length) {
-      requestAnimationFrame(() =>
-        document
-          .querySelector('[data-error="true"]')
-          ?.scrollIntoView({ behavior: "smooth", block: "center" }),
-      );
+      /* Jump to the step that holds the first problem (mobile) */
+      const firstBad = REQUIRED.find((r) => next[r.key]);
+      const idx = STEPS.findIndex((s) => s.id === firstBad.sec);
+      if (idx !== -1 && idx !== step) {
+        skipScroll.current = true;
+        setStep(idx);
+      }
+      scrollToFirstError();
       return;
     }
     setSubmitError("");
@@ -690,6 +805,7 @@ export default function SellPropertyForm() {
       if (res.ok) {
         setSuccess(true);
         setForm(EMPTY_FORM);
+        setStep(0);
         baseline.current = JSON.stringify(EMPTY_FORM);
       } else {
         setSubmitError(data.error || "Something went wrong. Please try again.");
@@ -714,6 +830,9 @@ export default function SellPropertyForm() {
 
   const shownError = submitError || optsError;
   const descMax = 1000;
+  const goldBtn =
+    "group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] px-7 py-3.5 text-sm font-extrabold tracking-wide text-black shadow-[0_10px_24px_-8px_rgba(226,161,13,0.8)] transition-[filter] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70";
+
   const submitBtn = (
     <motion.button
       type="button"
@@ -722,7 +841,7 @@ export default function SellPropertyForm() {
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: "spring", stiffness: 400, damping: 18 }}
-      className={`group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#E2A10D] via-[#FFCD39] to-[#E2A10D] px-7 py-3.5 text-sm font-extrabold tracking-wide text-black shadow-[0_10px_24px_-8px_rgba(226,161,13,0.8)] transition-[filter] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70 ${focusRing}`}
+      className={`${goldBtn} min-h-[48px] ${touch} ${focusRing}`}
     >
       {!loading && (
         <motion.span
@@ -751,6 +870,20 @@ export default function SellPropertyForm() {
     </motion.button>
   );
 
+  const nextBtn = (
+    <motion.button
+      type="button"
+      onClick={handleNext}
+      whileTap={{ scale: 0.97 }}
+      className={`${goldBtn} min-h-[48px] ${touch} ${focusRing}`}
+    >
+      <span className="relative">
+        {step === 3 ? "Continue (optional step)" : "Continue"}
+      </span>
+      <ArrowRight size={16} className="relative" />
+    </motion.button>
+  );
+
   return (
     <MotionConfig reducedMotion="user">
       <div
@@ -759,7 +892,7 @@ export default function SellPropertyForm() {
         {/* ───── Hero: photo + black overlay ───── */}
         <header
           ref={heroRef}
-          className="relative isolate overflow-hidden bg-black px-4 pb-24 pt-16 text-[#FAF9F6] sm:px-6 sm:pb-28 sm:pt-24 lg:px-8 lg:pb-32 lg:pt-28"
+          className="relative isolate overflow-hidden bg-black px-4 pb-20 pt-10 text-[#FAF9F6] sm:px-6 sm:pb-28 sm:pt-24 lg:px-8 lg:pb-32 lg:pt-28"
         >
           {imgOk && (
             <motion.div
@@ -799,7 +932,7 @@ export default function SellPropertyForm() {
           >
             <motion.span
               variants={riseV}
-              className="inline-flex items-center gap-2.5 rounded-full border border-[#D4AF37]/50 bg-black/50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-[#F5D77A] backdrop-blur"
+              className="inline-flex items-center gap-2.5 rounded-full border border-[#D4AF37]/50 bg-black/50 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#F5D77A] backdrop-blur sm:px-4 sm:text-xs"
             >
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D4AF37] opacity-75" />
@@ -809,22 +942,23 @@ export default function SellPropertyForm() {
             </motion.span>
             <motion.h1
               variants={riseV}
-              className="mt-6 max-w-3xl font-[family-name:var(--font-display)] text-[2.5rem] leading-[1.08] sm:text-6xl"
+              className="mt-5 max-w-3xl font-[family-name:var(--font-display)] text-[2.1rem] leading-[1.1] sm:mt-6 sm:text-6xl sm:leading-[1.08]"
             >
-Sell Your Property the{" "}             
- <span className="bg-gradient-to-r from-[#E2A10D] via-[#FFE08A] to-[#E2A10D] bg-clip-text text-transparent">
-Hassle-Free Way              </span>
+              Sell Your Property the{" "}
+              <span className="bg-gradient-to-r from-[#E2A10D] via-[#FFE08A] to-[#E2A10D] bg-clip-text text-transparent">
+                Hassle-Free Way
+              </span>
             </motion.h1>
             <motion.p
               variants={riseV}
-              className="mt-5 max-w-xl text-base leading-relaxed text-[#FAF9F6]/85 sm:text-lg"
+              className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#FAF9F6]/85 sm:mt-5 sm:text-lg"
             >
               Tell us about your home and add a few photos. Our team calls you
               back once we&rsquo;ve reviewed it.
             </motion.p>
             <motion.ul
               variants={heroV}
-              className="mt-8 flex flex-wrap gap-3 text-sm font-medium text-[#FAF9F6]"
+              className="mt-6 flex flex-wrap gap-2 text-[13px] font-medium text-[#FAF9F6] sm:mt-8 sm:gap-3 sm:text-sm"
             >
               {[
                 { i: ShieldCheck, t: "Free to list" },
@@ -835,9 +969,9 @@ Hassle-Free Way              </span>
                   key={t}
                   variants={riseV}
                   whileHover={{ y: -3, borderColor: "rgba(212,175,55,0.7)" }}
-                  className="flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 backdrop-blur-md"
+                  className="flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1.5 backdrop-blur-md sm:px-4 sm:py-2"
                 >
-                  <I size={17} strokeWidth={1.8} className="text-[#F5D77A]" />{" "}
+                  <I size={16} strokeWidth={1.8} className="text-[#F5D77A]" />{" "}
                   {t}
                 </motion.li>
               ))}
@@ -853,7 +987,7 @@ Hassle-Free Way              </span>
           />
         </header>
 
-        <div className="relative z-10 mx-auto -mt-12 max-w-7xl px-4 pb-32 sm:px-6 lg:px-8 lg:pb-20">
+        <div className="relative z-10 mx-auto -mt-10 max-w-7xl px-4 pb-32 sm:-mt-12 sm:px-6 lg:px-8 lg:pb-20">
           <AnimatePresence mode="wait">
             {success ? (
               <motion.div
@@ -862,7 +996,7 @@ Hassle-Free Way              </span>
                 initial={{ opacity: 0, y: 24, scale: 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.5, ease }}
-                className="mx-auto mt-6 max-w-xl rounded-3xl bg-white p-10 text-center shadow-[0_24px_60px_-28px_rgba(0,0,0,0.5)] ring-1 ring-black/10 sm:p-12"
+                className="mx-auto mt-6 max-w-xl rounded-3xl bg-white p-8 text-center shadow-[0_24px_60px_-28px_rgba(0,0,0,0.5)] ring-1 ring-black/10 sm:p-12"
               >
                 <span className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#D4AF37]/15">
                   <motion.span
@@ -900,8 +1034,11 @@ Hassle-Free Way              </span>
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.96 }}
                   type="button"
-                  onClick={() => setSuccess(false)}
-                  className={`mt-8 rounded-full bg-black px-8 py-3 text-sm font-semibold text-[#FAF9F6] transition-colors hover:bg-[#262626] ${focusRing}`}
+                  onClick={() => {
+                    setSuccess(false);
+                    setStep(0);
+                  }}
+                  className={`mt-8 min-h-[48px] rounded-full bg-black px-8 py-3 text-sm font-semibold text-[#FAF9F6] transition-colors hover:bg-[#262626] ${touch} ${focusRing}`}
                 >
                   Add another property
                 </motion.button>
@@ -913,7 +1050,15 @@ Hassle-Free Way              </span>
                 animate={{ opacity: 1 }}
                 className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-10"
               >
-                <div className="space-y-6">
+                <div className="space-y-5 lg:space-y-6">
+                  {/* Mobile: step progress */}
+                  <div ref={topRef} className="scroll-mt-16 lg:hidden">
+                    <MobileStepper
+                      step={step}
+                      onJump={(i) => i < step && setStep(i)}
+                    />
+                  </div>
+
                   <AnimatePresence>
                     {shownError && (
                       <motion.div
@@ -946,6 +1091,7 @@ Hassle-Free Way              </span>
                     icon={User}
                     title="Your contact details"
                     subtitle="Where should we call you?"
+                    mobileHidden={step !== 0}
                   >
                     <Item required label="Full name" error={errors.name}>
                       <Field
@@ -954,6 +1100,7 @@ Hassle-Free Way              </span>
                         onChange={set("name")}
                         error={errors.name}
                         autoComplete="name"
+                        enterKeyHint="next"
                       />
                     </Item>
                     <Item required label="Phone" error={errors.phone}>
@@ -966,17 +1113,20 @@ Hassle-Free Way              </span>
                         onChange={set("phone")}
                         error={errors.phone}
                         autoComplete="tel"
+                        enterKeyHint="next"
                         className="!pl-14"
                       />
                     </Item>
                     <Item span required label="Email" error={errors.email}>
                       <Field
                         type="email"
+                        inputMode="email"
                         placeholder="you@example.com"
                         value={form.email}
                         onChange={set("email")}
                         error={errors.email}
                         autoComplete="email"
+                        enterKeyHint="done"
                       />
                     </Item>
                   </Section>
@@ -986,6 +1136,7 @@ Hassle-Free Way              </span>
                     icon={Building2}
                     title="About the property"
                     subtitle="This is what buyers see first."
+                    mobileHidden={step !== 1}
                   >
                     <Item span label="Property type">
                       <TypeTiles
@@ -999,6 +1150,7 @@ Hassle-Free Way              </span>
                         value={form.title}
                         onChange={set("title")}
                         error={errors.title}
+                        enterKeyHint="next"
                       />
                     </Item>
                     <Item
@@ -1039,6 +1191,7 @@ Hassle-Free Way              </span>
                     icon={MapPin}
                     title="Location"
                     subtitle="Help buyers find the exact spot."
+                    mobileHidden={step !== 2}
                   >
                     <Item
                       span
@@ -1051,6 +1204,8 @@ Hassle-Free Way              </span>
                         value={form.location}
                         onChange={set("location")}
                         error={errors.location}
+                        autoComplete="street-address"
+                        enterKeyHint="next"
                       />
                     </Item>
                     <Item required label="City" error={errors.city}>
@@ -1059,6 +1214,8 @@ Hassle-Free Way              </span>
                         value={form.city}
                         onChange={set("city")}
                         error={errors.city}
+                        autoComplete="address-level2"
+                        enterKeyHint="next"
                       />
                     </Item>
                     <Item label="Area">
@@ -1092,6 +1249,7 @@ Hassle-Free Way              </span>
                     title="Property details"
                     subtitle="Optional, but detailed listings get more enquiries."
                     dense
+                    mobileHidden={step !== 3}
                   >
                     <Item label="Bedrooms">
                       <Stepper
@@ -1141,6 +1299,7 @@ Hassle-Free Way              </span>
                     icon={ImageIcon}
                     title="Photos"
                     subtitle="The first photo becomes the cover image."
+                    mobileHidden={step !== 4}
                   >
                     <div
                       className="col-span-full"
@@ -1160,6 +1319,27 @@ Hassle-Free Way              </span>
                       )}
                     </div>
                   </Section>
+
+                  {/* Mobile, last step: preview + what is still missing */}
+                  {step === LAST_STEP && (
+                    <div className="space-y-4 lg:hidden">
+                      <div>
+                        <p className="mb-2.5 px-1 text-sm font-semibold text-[#0A0A0A]">
+                          How your listing will look
+                        </p>
+                        <Preview form={form} />
+                      </div>
+                      {doneCount < totalReq && (
+                        <p className="rounded-2xl bg-white px-4 py-3 text-xs text-[#5F5F5F] ring-1 ring-black/[0.07]">
+                          {totalReq - doneCount} required{" "}
+                          {totalReq - doneCount === 1 ? "field is" : "fields are"}{" "}
+                          still empty. We&rsquo;ll take you right to{" "}
+                          {totalReq - doneCount === 1 ? "it" : "them"} when you
+                          tap send.
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Desktop sidebar: preview + checklist */}
@@ -1171,7 +1351,7 @@ Hassle-Free Way              </span>
                 >
                   <div className="sticky top-24 space-y-5">
                     <div>
-                      <p className="mb-2.5 text-sm font-semibold text-[#0A0A0A] mt-6 px-4">
+                      <p className="mb-2.5 mt-6 px-4 text-sm font-semibold text-[#0A0A0A]">
                         How your listing will look
                       </p>
                       <Preview form={form} />
@@ -1255,27 +1435,35 @@ Hassle-Free Way              </span>
           </AnimatePresence>
         </div>
 
-        {/* Mobile action bar */}
+        {/* Mobile action bar: Back + Continue / Send */}
         {!success && (
           <motion.div
             initial={{ y: 100 }}
             animate={{ y: 0 }}
             transition={{ delay: 0.8, duration: 0.5, ease }}
-            className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-4 border-t border-[#D4AF37]/40 bg-black/95 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] text-[#FAF9F6] backdrop-blur lg:hidden"
+            className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-3 border-t border-[#D4AF37]/40 bg-black/95 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] text-[#FAF9F6] backdrop-blur lg:hidden"
           >
+            <AnimatePresence initial={false}>
+              {step > 0 && (
+                <motion.button
+                  key="back"
+                  type="button"
+                  aria-label="Previous step"
+                  onClick={() => setStep((s) => Math.max(s - 1, 0))}
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: 48 }}
+                  exit={{ opacity: 0, width: 0 }}
+                  whileTap={{ scale: 0.92 }}
+                  transition={{ duration: 0.2 }}
+                  className={`flex h-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/40 text-white active:bg-white/15 ${touch} ${focusRing}`}
+                >
+                  <ArrowLeft size={20} aria-hidden="true" />
+                </motion.button>
+              )}
+            </AnimatePresence>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-medium text-[#FAF9F6]/90">
-                {doneCount} of {totalReq} required done
-              </p>
-              <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-[#FAF9F6]/20">
-                <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-[#E2A10D] to-[#FFCD39]"
-                  animate={{ width: `${(doneCount / totalReq) * 100}%` }}
-                  transition={{ duration: 0.5, ease }}
-                />
-              </div>
+              {step === LAST_STEP ? submitBtn : nextBtn}
             </div>
-            <div className="w-44 shrink-0">{submitBtn}</div>
           </motion.div>
         )}
       </div>

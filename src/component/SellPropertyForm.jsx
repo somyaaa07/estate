@@ -942,7 +942,7 @@ export default function SellPropertyForm() {
             variants={heroV}
             initial="hidden"
             animate="show"
-            className="relative mx-auto max-w-6xl"
+            className="relative mx-auto max-w-7xl"
           >
             <motion.span
               variants={riseV}

@@ -510,47 +510,61 @@ function Section({
   );
 }
 
-/* Mobile only: step progress at the top of the form */
+/* Mobile only: numbered step tracker at the top of the form */
 function MobileStepper({ step, onJump }) {
+  const pct = (step / (STEPS.length - 1)) * 80;
   return (
-    <div className={`rounded-2xl bg-white p-4 ${cardShadow} lg:hidden`}>
-      <div className="mb-3 flex items-baseline justify-between gap-3">
-        <p className="font-[family-name:var(--font-display)] text-lg leading-tight">
-          {STEPS[step].label}
-        </p>
-        <p className="text-xs font-semibold tabular-nums text-[#5F5F5F]">
-          Step {step + 1} of {STEPS.length}
-        </p>
-      </div>
-      <div className="flex gap-1.5" role="list">
+    <nav
+      aria-label="Progress"
+      className={`rounded-2xl bg-white px-2 pb-3.5 pt-4 ${cardShadow} lg:hidden`}
+    >
+      <ol className="relative flex items-start">
+        <span
+          aria-hidden="true"
+          className="absolute left-[10%] right-[10%] top-[17px] h-0.5 rounded-full bg-black/10"
+        />
+        <motion.span
+          aria-hidden="true"
+          className="absolute left-[10%] top-[17px] h-0.5 rounded-full bg-[#D4AF37]"
+          animate={{ width: `${pct}%` }}
+          transition={{ duration: 0.4, ease }}
+        />
         {STEPS.map((s, i) => {
           const past = i < step;
           const now = i === step;
           return (
-            <button
+            <li
               key={s.id}
-              type="button"
-              role="listitem"
-              disabled={!past}
-              onClick={() => onJump(i)}
-              aria-label={`${s.label}${past ? " (completed, tap to edit)" : now ? " (current)" : ""}`}
-              aria-current={now ? "step" : undefined}
-              className={`group flex h-6 flex-1 items-center ${touch} ${focusRing}`}
+              className="relative z-10 flex w-1/5 flex-col items-center"
             >
-              <span
-                className={`h-1.5 w-full rounded-full transition-colors duration-300 ${
+              <button
+                type="button"
+                disabled={!past}
+                onClick={() => onJump(i)}
+                aria-label={`${s.label}${past ? " (done, tap to edit)" : now ? " (current step)" : ""}`}
+                aria-current={now ? "step" : undefined}
+                className={`flex h-9 w-9 items-center justify-center rounded-full text-[13px] font-bold transition-all duration-300 ${touch} ${focusRing} ${
                   past
-                    ? "bg-[#D4AF37]"
+                    ? "bg-[#D4AF37] text-black"
                     : now
-                      ? "bg-black"
-                      : "bg-black/10"
+                      ? "scale-110 bg-black text-[#F5D77A] ring-4 ring-[#D4AF37]/30"
+                      : "bg-[#EFEADD] text-[#5F5F5F]"
                 }`}
-              />
-            </button>
+              >
+                {past ? <Check size={16} strokeWidth={3} /> : i + 1}
+              </button>
+              <span
+                className={`mt-2 text-[11px] leading-none ${
+                  now ? "font-bold text-black" : "font-medium text-[#5F5F5F]"
+                }`}
+              >
+                {s.label}
+              </span>
+            </li>
           );
         })}
-      </div>
-    </div>
+      </ol>
+    </nav>
   );
 }
 
@@ -878,7 +892,7 @@ export default function SellPropertyForm() {
       className={`${goldBtn} min-h-[48px] ${touch} ${focusRing}`}
     >
       <span className="relative">
-        {step === 3 ? "Continue (optional step)" : "Continue"}
+        Continue
       </span>
       <ArrowRight size={16} className="relative" />
     </motion.button>
@@ -987,7 +1001,7 @@ export default function SellPropertyForm() {
           />
         </header>
 
-        <div className="relative z-10 mx-auto -mt-10 max-w-7xl px-4 pb-32 sm:-mt-12 sm:px-6 lg:px-8 lg:pb-20">
+        <div className="relative z-10 mx-auto -mt-10 max-w-7xl px-4 pb-12 sm:-mt-12 sm:px-6 lg:px-8 lg:pb-20">
           <AnimatePresence mode="wait">
             {success ? (
               <motion.div
@@ -1050,7 +1064,22 @@ export default function SellPropertyForm() {
                 animate={{ opacity: 1 }}
                 className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-10"
               >
-                <div className="space-y-5 lg:space-y-6">
+                <div
+                  className="space-y-5 lg:space-y-6"
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === "Enter" &&
+                      !e.defaultPrevented &&
+                      e.target.tagName === "INPUT" &&
+                      window.innerWidth < 1024 &&
+                      step < LAST_STEP
+                    ) {
+                      e.preventDefault();
+                      e.target.blur();
+                      handleNext();
+                    }
+                  }}
+                >
                   {/* Mobile: step progress */}
                   <div ref={topRef} className="scroll-mt-16 lg:hidden">
                     <MobileStepper
@@ -1340,6 +1369,42 @@ export default function SellPropertyForm() {
                       )}
                     </div>
                   )}
+
+                  {/* Mobile: inline Back + Continue / Send (no fixed bar, no overlap) */}
+                  <div className="space-y-3 pt-1 lg:hidden">
+                    <div className="flex items-center gap-3">
+                      {step > 0 && (
+                        <motion.button
+                          type="button"
+                          onClick={() => setStep((s) => Math.max(s - 1, 0))}
+                          whileTap={{ scale: 0.94 }}
+                          className={`flex h-12 shrink-0 items-center justify-center gap-1.5 rounded-full border border-black/20 bg-white px-5 text-sm font-semibold text-black active:bg-black/5 ${touch} ${focusRing}`}
+                        >
+                          <ArrowLeft size={16} aria-hidden="true" /> Back
+                        </motion.button>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        {step === LAST_STEP ? submitBtn : nextBtn}
+                      </div>
+                    </div>
+                    <p className="text-center text-xs text-[#5F5F5F]">
+                      {step < LAST_STEP
+                        ? `Next: ${STEPS[step + 1].label}`
+                        : "Last step. Review and send."}
+                      {step === 3 && (
+                        <>
+                          {" · "}
+                          <button
+                            type="button"
+                            onClick={() => setStep(4)}
+                            className={`font-semibold text-black underline underline-offset-2 ${touch} ${focusRing}`}
+                          >
+                            Skip this step
+                          </button>
+                        </>
+                      )}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Desktop sidebar: preview + checklist */}
@@ -1435,37 +1500,6 @@ export default function SellPropertyForm() {
           </AnimatePresence>
         </div>
 
-        {/* Mobile action bar: Back + Continue / Send */}
-        {!success && (
-          <motion.div
-            initial={{ y: 100 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 0.8, duration: 0.5, ease }}
-            className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-3 border-t border-[#D4AF37]/40 bg-black/95 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] text-[#FAF9F6] backdrop-blur lg:hidden"
-          >
-            <AnimatePresence initial={false}>
-              {step > 0 && (
-                <motion.button
-                  key="back"
-                  type="button"
-                  aria-label="Previous step"
-                  onClick={() => setStep((s) => Math.max(s - 1, 0))}
-                  initial={{ opacity: 0, width: 0 }}
-                  animate={{ opacity: 1, width: 48 }}
-                  exit={{ opacity: 0, width: 0 }}
-                  whileTap={{ scale: 0.92 }}
-                  transition={{ duration: 0.2 }}
-                  className={`flex h-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/40 text-white active:bg-white/15 ${touch} ${focusRing}`}
-                >
-                  <ArrowLeft size={20} aria-hidden="true" />
-                </motion.button>
-              )}
-            </AnimatePresence>
-            <div className="min-w-0 flex-1">
-              {step === LAST_STEP ? submitBtn : nextBtn}
-            </div>
-          </motion.div>
-        )}
       </div>
     </MotionConfig>
   );

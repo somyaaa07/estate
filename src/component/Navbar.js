@@ -84,7 +84,7 @@ function Logo({ small }) {
         src="/uploads/logo.png"
         alt="Estate"
         className={`w-auto max-w-[140px] object-contain transition-all duration-300 sm:max-w-none ${
-          small ? "h-25 sm:h-25 lg:h-30" : "h-25 sm:h-25 lg:h-30"
+          small ? "h-25 sm:h-25 lg:h-32 -ml-4" : "h-25 sm:h-25 lg:h-32 -ml-4"
         }`}
       />
     </Link>
@@ -431,7 +431,7 @@ function NavbarInner() {
       >
         <nav
           aria-label="Main navigation"
-          className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-2 px-3 transition-all duration-300 min-[400px]:px-4 sm:gap-4 sm:px-6 lg:h-20 lg:px-8"
+          className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-2 px-3 transition-all duration-300 min-[400px]:px-4 sm:gap-4 sm:px-6 lg:h-16 lg:px-8"
         >
           <Logo small={scrolled} />
 
